@@ -13,7 +13,7 @@ const Login = () => {
 
   return (
     <Layout showFooter={false}>
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4 w-full">
         <div className="w-full max-w-md">
           <Card className="bg-white/10 backdrop-blur-md border-white/20 shadow-2xl">
             <CardHeader className="text-center space-y-4">
@@ -77,7 +77,7 @@ const Login = () => {
                 </Link>
               </div>
 
-              <Button className="w-full bg-gradient-to-r from-emerald-500 to-blue-500 hover:from-emerald-600 hover:to-blue-600 text-white font-medium py-3">
+              <Button className="w-full bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 hover:from-slate-800 hover:via-purple-800 hover:to-slate-800 text-white font-medium py-3">
                 Sign In
               </Button>
 
