@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { GraduationCap, Menu, X, Search, Calendar, MessageCircle, Settings, DollarSign, Users, BookOpen } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { UserAvatar } from "./UserAvatar";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -35,7 +36,7 @@ export const DashboardLayout = ({ children, userType }: DashboardLayoutProps) =>
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-purple-50 w-full max-w-full overflow-x-hidden">
       {/* Header */}
-      <header className="bg-white/95 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50 w-full">
+      <header className="bg-white/95 backdrop-blur-md border-b border-gray-100 fixed top-0 z-50 w-full">
         <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo and Menu Button */}
@@ -52,10 +53,10 @@ export const DashboardLayout = ({ children, userType }: DashboardLayoutProps) =>
               </button>
               
               <Link to="/" className="flex items-center space-x-2">
-                <div className="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-2 rounded-lg">
+                <div className="bg-gradient-to-br from-purple-600 via-purple-700 to-purple-800 p-2 rounded-lg">
                   <GraduationCap className="h-6 w-6 text-white" />
                 </div>
-                <span className="text-xl font-bold bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 bg-clip-text text-transparent">
+                <span className="text-xl font-bold bg-gradient-to-r from-purple-600 via-purple-700 to-purple-800 bg-clip-text text-transparent">
                   AfriTeach
                 </span>
               </Link>
@@ -72,7 +73,7 @@ export const DashboardLayout = ({ children, userType }: DashboardLayoutProps) =>
                     to={item.href}
                     className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors ${
                       isActive
-                        ? "bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 text-white"
+                        ? "bg-gradient-to-r from-purple-600 via-purple-700 to-purple-800 text-white"
                         : "text-gray-600 hover:text-purple-600 hover:bg-purple-50"
                     }`}
                   >
@@ -83,14 +84,9 @@ export const DashboardLayout = ({ children, userType }: DashboardLayoutProps) =>
               })}
             </nav>
 
-            {/* User Menu */}
+            {/* User Avatar */}
             <div className="flex items-center space-x-4">
-              <Button variant="ghost" size="sm" className="text-gray-600 hover:text-purple-600">
-                Profile
-              </Button>
-              <Button variant="ghost" size="sm" className="text-gray-600 hover:text-red-600">
-                Logout
-              </Button>
+              <UserAvatar userType={userType} />
             </div>
           </div>
         </div>
@@ -114,7 +110,7 @@ export const DashboardLayout = ({ children, userType }: DashboardLayoutProps) =>
                     onClick={() => setIsSidebarOpen(false)}
                     className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
                       isActive
-                        ? "bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 text-white"
+                        ? "bg-gradient-to-r from-purple-600 via-purple-700 to-purple-800 text-white"
                         : "text-gray-600 hover:text-purple-600 hover:bg-purple-50"
                     }`}
                   >
@@ -128,8 +124,8 @@ export const DashboardLayout = ({ children, userType }: DashboardLayoutProps) =>
         </div>
       )}
 
-      {/* Main Content */}
-      <main className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* Main Content - Add top padding to account for fixed header */}
+      <main className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-24">
         {children}
       </main>
     </div>
