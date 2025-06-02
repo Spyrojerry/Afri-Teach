@@ -1,4 +1,5 @@
 
+import { Layout } from "@/components/Layout";
 import { Hero } from "@/components/Hero";
 import { TeacherShowcase } from "@/components/TeacherShowcase";
 import { Features } from "@/components/Features";
@@ -7,13 +8,13 @@ import { CallToAction } from "@/components/CallToAction";
 
 const Index = () => {
   return (
-    <div className="min-h-screen">
+    <Layout>
       <Hero />
       <TeacherShowcase />
       <Features />
       <HowItWorks />
       <CallToAction />
-    </div>
+    </Layout>
   );
 };
 

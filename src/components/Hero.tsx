@@ -1,38 +1,71 @@
 
 import { Button } from "@/components/ui/button";
-import { Search, MapPin, Clock, Star } from "lucide-react";
+import { Search, MapPin, Clock, Star, ArrowRight } from "lucide-react";
 
 export const Hero = () => {
   return (
-    <section className="relative bg-gradient-to-br from-blue-50 via-white to-emerald-50 py-12 md:py-20 lg:py-24">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+    <section className="relative min-h-screen flex items-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiM5Q0EzQUYiIGZpbGwtb3BhY2l0eT0iMC4xIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIxLjUiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-40"></div>
+      
+      {/* Floating Elements */}
+      <div className="absolute top-20 left-10 w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
+      <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl"></div>
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Column - Content */}
           <div className="text-center lg:text-left">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 leading-tight mb-6">
-              Connect with
-              <span className="text-emerald-600 block">African Educators</span>
-              <span className="text-blue-600">Learn Without Limits</span>
+            <div className="mb-6">
+              <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                🌍 Connecting Continents Through Education
+              </span>
+            </div>
+            
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight mb-8">
+              Learn from
+              <span className="block bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent">
+                African Educators
+              </span>
+              <span className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl text-gray-300">
+                Anywhere, Anytime
+              </span>
             </h1>
             
-            <p className="text-lg sm:text-xl text-gray-600 mb-8 max-w-2xl mx-auto lg:mx-0">
-              Bridge continents through education. Access skilled African teachers for personalized lessons, 
-              anytime, anywhere. Quality education that transcends borders.
+            <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+              Bridge continents through personalized education. Connect with skilled African teachers 
+              for one-on-one lessons that transcend borders and transform learning.
             </p>
 
             {/* Quick Stats */}
-            <div className="flex flex-wrap justify-center lg:justify-start gap-6 mb-8">
-              <div className="flex items-center gap-2 text-sm text-gray-700">
-                <MapPin className="h-4 w-4 text-emerald-600" />
-                <span>15+ African Countries</span>
+            <div className="flex flex-wrap justify-center lg:justify-start gap-8 mb-10">
+              <div className="flex items-center gap-3 text-gray-300">
+                <div className="bg-emerald-500/20 p-2 rounded-lg">
+                  <MapPin className="h-5 w-5 text-emerald-400" />
+                </div>
+                <div>
+                  <div className="font-semibold text-white">15+ Countries</div>
+                  <div className="text-sm text-gray-400">African Teachers</div>
+                </div>
               </div>
-              <div className="flex items-center gap-2 text-sm text-gray-700">
-                <Star className="h-4 w-4 text-yellow-500" />
-                <span>4.8/5 Average Rating</span>
+              <div className="flex items-center gap-3 text-gray-300">
+                <div className="bg-yellow-500/20 p-2 rounded-lg">
+                  <Star className="h-5 w-5 text-yellow-400" />
+                </div>
+                <div>
+                  <div className="font-semibold text-white">4.9/5 Rating</div>
+                  <div className="text-sm text-gray-400">Student Satisfaction</div>
+                </div>
               </div>
-              <div className="flex items-center gap-2 text-sm text-gray-700">
-                <Clock className="h-4 w-4 text-blue-600" />
-                <span>24/7 Availability</span>
+              <div className="flex items-center gap-3 text-gray-300">
+                <div className="bg-blue-500/20 p-2 rounded-lg">
+                  <Clock className="h-5 w-5 text-blue-400" />
+                </div>
+                <div>
+                  <div className="font-semibold text-white">24/7 Access</div>
+                  <div className="text-sm text-gray-400">Flexible Scheduling</div>
+                </div>
               </div>
             </div>
 
@@ -40,14 +73,15 @@ export const Hero = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <Button 
                 size="lg" 
-                className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 text-base"
+                className="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white px-8 py-4 text-lg font-medium group shadow-xl"
               >
-                Find a Teacher
+                Find Your Teacher
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
               <Button 
                 variant="outline" 
                 size="lg" 
-                className="border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-3 text-base"
+                className="border-white/30 text-white hover:bg-white/10 px-8 py-4 text-lg font-medium backdrop-blur-sm"
               >
                 Become a Teacher
               </Button>
@@ -56,61 +90,61 @@ export const Hero = () => {
 
           {/* Right Column - Search Interface Preview */}
           <div className="relative">
-            <div className="bg-white rounded-2xl shadow-xl p-6 border border-gray-100">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Find Your Perfect Teacher</h3>
+            <div className="bg-white/10 backdrop-blur-md rounded-3xl shadow-2xl p-8 border border-white/20">
+              <h3 className="text-2xl font-semibold text-white mb-6">Find Your Perfect Teacher</h3>
               
               {/* Search Form Preview */}
               <div className="space-y-4">
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                   <input
                     type="text"
                     placeholder="Subject (e.g., Mathematics, English, Science)"
-                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    className="w-full pl-12 pr-4 py-4 bg-white/20 backdrop-blur-sm border border-white/30 rounded-xl text-white placeholder-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all"
                   />
                 </div>
                 
-                <select className="w-full py-3 px-4 border border-gray-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
-                  <option>Grade Level</option>
-                  <option>Elementary (K-5)</option>
-                  <option>Middle School (6-8)</option>
-                  <option>High School (9-12)</option>
-                  <option>College/University</option>
+                <select className="w-full py-4 px-4 bg-white/20 backdrop-blur-sm border border-white/30 rounded-xl text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all">
+                  <option className="text-gray-900">Grade Level</option>
+                  <option className="text-gray-900">Elementary (K-5)</option>
+                  <option className="text-gray-900">Middle School (6-8)</option>
+                  <option className="text-gray-900">High School (9-12)</option>
+                  <option className="text-gray-900">College/University</option>
                 </select>
 
-                <select className="w-full py-3 px-4 border border-gray-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
-                  <option>Preferred Time Zone</option>
-                  <option>Eastern Time (ET)</option>
-                  <option>Central Time (CT)</option>
-                  <option>Mountain Time (MT)</option>
-                  <option>Pacific Time (PT)</option>
+                <select className="w-full py-4 px-4 bg-white/20 backdrop-blur-sm border border-white/30 rounded-xl text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all">
+                  <option className="text-gray-900">Preferred Time Zone</option>
+                  <option className="text-gray-900">Eastern Time (ET)</option>
+                  <option className="text-gray-900">Central Time (CT)</option>
+                  <option className="text-gray-900">Mountain Time (MT)</option>
+                  <option className="text-gray-900">Pacific Time (PT)</option>
                 </select>
 
-                <Button className="w-full bg-emerald-600 hover:bg-emerald-700 py-3">
+                <Button className="w-full bg-gradient-to-r from-emerald-500 to-blue-500 hover:from-emerald-600 hover:to-blue-600 py-4 text-lg font-medium shadow-xl">
                   Search Teachers
                 </Button>
               </div>
 
               {/* Preview Stats */}
-              <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-gray-100">
+              <div className="grid grid-cols-3 gap-6 mt-8 pt-6 border-t border-white/20">
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-emerald-600">500+</div>
-                  <div className="text-xs text-gray-600">Teachers</div>
+                  <div className="text-3xl font-bold bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent">500+</div>
+                  <div className="text-sm text-gray-300">Teachers</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-blue-600">50+</div>
-                  <div className="text-xs text-gray-600">Subjects</div>
+                  <div className="text-3xl font-bold bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent">50+</div>
+                  <div className="text-sm text-gray-300">Subjects</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-purple-600">98%</div>
-                  <div className="text-xs text-gray-600">Success Rate</div>
+                  <div className="text-3xl font-bold bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent">98%</div>
+                  <div className="text-sm text-gray-300">Success Rate</div>
                 </div>
               </div>
             </div>
 
             {/* Floating elements for visual appeal */}
-            <div className="absolute -top-4 -right-4 w-20 h-20 bg-emerald-100 rounded-full opacity-60"></div>
-            <div className="absolute -bottom-6 -left-6 w-16 h-16 bg-blue-100 rounded-full opacity-60"></div>
+            <div className="absolute -top-6 -right-6 w-24 h-24 bg-emerald-400/20 rounded-full blur-xl"></div>
+            <div className="absolute -bottom-8 -left-8 w-20 h-20 bg-blue-400/20 rounded-full blur-xl"></div>
           </div>
         </div>
       </div>
