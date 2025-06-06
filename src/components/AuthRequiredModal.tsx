@@ -53,11 +53,6 @@ export const AuthRequiredModal = ({
           </Link>
         </div>
         
-        <DialogFooter className="flex flex-col sm:flex-row gap-2">
-          <Button variant="ghost" onClick={onClose} className="w-full sm:w-auto">
-            Continue as Guest
-          </Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
