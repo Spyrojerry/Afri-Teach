@@ -1,6 +1,6 @@
-
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Users, BookOpen, Globe } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export const CallToAction = () => {
   return (
@@ -53,21 +53,25 @@ export const CallToAction = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              size="lg" 
-              className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 text-lg font-medium group"
-            >
-              Start Learning Now
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-            </Button>
+            <Link to="/teachers">
+              <Button 
+                size="lg" 
+                className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 text-lg font-medium group"
+              >
+                Start Learning Now
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Link>
             
-            <Button 
-              variant="outline" 
-              size="lg" 
-              className="border-white/30 text-white hover:bg-white/10 px-8 py-4 text-lg font-medium"
-            >
-              Become a Teacher
-            </Button>
+            <Link to="/register">
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="border-white/30 text-white bg-white/10 px-8 py-4 text-lg font-medium"
+              >
+                Become a Teacher
+              </Button>
+            </Link>
           </div>
 
           {/* Trust Indicators */}

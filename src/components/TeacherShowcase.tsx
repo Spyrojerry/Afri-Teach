@@ -1,6 +1,7 @@
-
 import { Star, MapPin, Clock, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+import { useAuth } from "@/contexts/auth-context";
 
 const featuredTeachers = [
   {
@@ -51,6 +52,17 @@ const featuredTeachers = [
 ];
 
 export const TeacherShowcase = () => {
+  const { user } = useAuth();
+  
+  // Generate the correct link based on user authentication status
+  const getActionLink = (teacherId: number) => {
+    if (user) {
+      return `/student/book-lesson/${teacherId}`;
+    } else {
+      return "/teachers";
+    }
+  };
+
   return (
     <section className="py-16 md:py-20 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -136,12 +148,16 @@ export const TeacherShowcase = () => {
 
                 {/* Action Buttons */}
                 <div className="flex gap-2">
-                  <Button className="flex-1 bg-emerald-600 hover:bg-emerald-700">
-                    Book Lesson
-                  </Button>
-                  <Button variant="outline" className="px-4">
-                    View Profile
-                  </Button>
+                  <Link to={getActionLink(teacher.id)} className="flex-1">
+                    <Button className="w-full bg-emerald-600 hover:bg-emerald-700">
+                      Book Lesson
+                    </Button>
+                  </Link>
+                  <Link to={getActionLink(teacher.id)}>
+                    <Button variant="outline" className="px-4">
+                      View Profile
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -149,9 +165,11 @@ export const TeacherShowcase = () => {
         </div>
 
         <div className="text-center mt-10">
-          <Button variant="outline" size="lg" className="px-8">
-            View All Teachers
-          </Button>
+          <Link to="/teachers">
+            <Button variant="outline" size="lg" className="px-8">
+              View All Teachers
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

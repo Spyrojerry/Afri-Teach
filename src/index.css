@@ -97,5 +97,26 @@
 
   body {
     @apply bg-background text-foreground;
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+
+  html {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+
+  #root {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+
+  /* Force all pages and forms to be full width */
+  main, form, .card {
+    width: 100%;
+    max-width: 100%;
   }
 }

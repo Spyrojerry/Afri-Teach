@@ -1,114 +1,173 @@
-
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { UpcomingLessons } from "@/components/UpcomingLessons";
 import { DashboardLayout } from "@/components/DashboardLayout";
+import { format, parseISO } from "date-fns";
+import { useAuth } from "@/contexts/auth-context";
+import { getUpcomingLessons, getPastLessons, getLessonStats, Lesson } from "@/services/lessonService";
+import { getUserNotifications, Notification } from "@/services/notificationService";
 import { 
   Calendar, 
   Clock, 
-  BookOpen, 
-  Star, 
-  Video, 
+  GraduationCap, 
+  BookOpen,
   Search,
-  TrendingUp,
+  UserCheck,
+  Bell,
+  History,
+  Video,
   MessageCircle,
-  Award
+  Loader2
 } from "lucide-react";
 
 const StudentDashboard = () => {
-  const upcomingLessons = [
-    {
-      id: 1,
-      subject: "Advanced Mathematics",
-      teacher: "Dr. Amara Okonkwo",
-      time: "Today, 3:00 PM EST",
-      duration: "60 min",
-      avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b47c?w=100&h=100&fit=crop&crop=face"
-    },
-    {
-      id: 2,
-      subject: "English Literature",
-      teacher: "Prof. Kwame Asante",
-      time: "Tomorrow, 10:00 AM EST",
-      duration: "45 min",
-      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face"
-    }
-  ];
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const [isLoading, setIsLoading] = useState(true);
+  const [upcomingLessons, setUpcomingLessons] = useState<Lesson[]>([]);
+  const [pastLessons, setPastLessons] = useState<Lesson[]>([]);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [stats, setStats] = useState({
+    upcomingLessons: 0,
+    completedLessons: 0,
+    uniqueConnections: 0,
+    totalHours: 0
+  });
 
-  const recentLessons = [
-    {
-      id: 1,
-      subject: "Biology",
-      teacher: "Dr. Fatima Hassan",
-      date: "Dec 1, 2024",
-      rating: 5,
-      status: "completed"
-    },
-    {
-      id: 2,
-      subject: "Chemistry",
-      teacher: "Prof. John Mbeki",
-      date: "Nov 28, 2024",
-      rating: 4,
-      status: "completed"
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!user?.id) return;
+      
+      setIsLoading(true);
+      try {
+        // Fetch all data in parallel
+        const [upcomingData, pastData, statsData, notificationsData] = await Promise.all([
+          getUpcomingLessons(user.id, 'student'),
+          getPastLessons(user.id, 'student'),
+          getLessonStats(user.id, 'student'),
+          getUserNotifications(user.id)
+        ]);
+        
+        setUpcomingLessons(upcomingData);
+        setPastLessons(pastData);
+        setStats(statsData);
+        setNotifications(notificationsData);
+      } catch (error) {
+        console.error("Error fetching dashboard data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    fetchData();
+  }, [user?.id]);
+
+  // Handler for navigating to the find teachers page
+  const handleFindTeachers = () => {
+    navigate("/student/find-teachers");
+  };
+
+  // Format a date string for display
+  const formatDate = (dateString: string) => {
+    try {
+      return format(parseISO(dateString), "MMMM d, yyyy");
+    } catch (error) {
+      return dateString;
     }
-  ];
+  };
+
+  // Get badge color based on notification type
+  const getNotificationColor = (type: string) => {
+    switch (type) {
+      case 'lesson_reminder':
+        return 'bg-blue-50 border-blue-500 text-blue-700';
+      case 'booking_confirmation':
+        return 'bg-green-50 border-green-500 text-green-700';
+      case 'message':
+        return 'bg-purple-50 border-purple-500 text-purple-700';
+      default:
+        return 'bg-gray-50 border-gray-500 text-gray-700';
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <DashboardLayout userType="student">
+        <div className="flex items-center justify-center min-h-[60vh]">
+          <div className="text-center">
+            <Loader2 className="h-8 w-8 animate-spin mx-auto text-primary mb-4" />
+            <p className="text-muted-foreground">Loading your dashboard...</p>
+          </div>
+        </div>
+      </DashboardLayout>
+    );
+  }
 
   return (
     <DashboardLayout userType="student">
-      <div className="w-full max-w-full space-y-8">
-        {/* Welcome Header */}
-        <div className="mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Welcome back, Sarah!</h1>
-          <p className="text-gray-600">Ready to continue your learning journey?</p>
+      <div className="container mx-auto py-4 space-y-8">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight">Student Dashboard</h1>
+          <p className="text-gray-500">Welcome back{user?.user_metadata?.first_name ? `, ${user.user_metadata.first_name}` : ''}! Manage your learning journey</p>
         </div>
 
-        {/* Quick Stats */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-8">
-          <Card className="bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 text-white">
-            <CardContent className="p-4 lg:p-6">
+        {/* Stats Overview */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <Card>
+            <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-slate-100 text-sm">Total Lessons</p>
-                  <p className="text-2xl lg:text-3xl font-bold">24</p>
+                  <p className="text-sm font-medium text-gray-500">Upcoming Lessons</p>
+                  <p className="text-2xl font-bold mt-1">{stats.upcomingLessons}</p>
                 </div>
-                <BookOpen className="h-6 w-6 lg:h-8 lg:w-8 text-slate-200" />
+                <div className="p-3 bg-blue-100 rounded-full">
+                  <Calendar className="h-6 w-6 text-blue-700" />
+                </div>
               </div>
             </CardContent>
           </Card>
           
-          <Card className="bg-gradient-to-r from-blue-500 to-blue-600 text-white">
-            <CardContent className="p-4 lg:p-6">
+          <Card>
+            <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-blue-100 text-sm">Hours Learned</p>
-                  <p className="text-2xl lg:text-3xl font-bold">36</p>
+                  <p className="text-sm font-medium text-gray-500">Completed Lessons</p>
+                  <p className="text-2xl font-bold mt-1">{stats.completedLessons}</p>
                 </div>
-                <Clock className="h-6 w-6 lg:h-8 lg:w-8 text-blue-200" />
+                <div className="p-3 bg-green-100 rounded-full">
+                  <GraduationCap className="h-6 w-6 text-green-700" />
+                </div>
               </div>
             </CardContent>
           </Card>
           
-          <Card className="bg-gradient-to-r from-purple-500 to-purple-600 text-white">
-            <CardContent className="p-4 lg:p-6">
+          <Card>
+            <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-purple-100 text-sm">Avg Rating</p>
-                  <p className="text-2xl lg:text-3xl font-bold">4.8</p>
+                  <p className="text-sm font-medium text-gray-500">Teachers</p>
+                  <p className="text-2xl font-bold mt-1">{stats.uniqueConnections}</p>
                 </div>
-                <Star className="h-6 w-6 lg:h-8 lg:w-8 text-purple-200" />
+                <div className="p-3 bg-purple-100 rounded-full">
+                  <UserCheck className="h-6 w-6 text-purple-700" />
+                </div>
               </div>
             </CardContent>
           </Card>
           
-          <Card className="bg-gradient-to-r from-orange-500 to-orange-600 text-white">
-            <CardContent className="p-4 lg:p-6">
+          <Card>
+            <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-orange-100 text-sm">Teachers Met</p>
-                  <p className="text-2xl lg:text-3xl font-bold">8</p>
+                  <p className="text-sm font-medium text-gray-500">Study Hours</p>
+                  <p className="text-2xl font-bold mt-1">{stats.totalHours}</p>
                 </div>
-                <Award className="h-6 w-6 lg:h-8 lg:w-8 text-orange-200" />
+                <div className="p-3 bg-orange-100 rounded-full">
+                  <Clock className="h-6 w-6 text-orange-700" />
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -118,138 +177,98 @@ const StudentDashboard = () => {
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-6 lg:space-y-8">
             {/* Upcoming Lessons */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-lg lg:text-xl">
-                  <Calendar className="h-5 w-5" />
-                  Upcoming Lessons
-                </CardTitle>
-                <CardDescription>Your scheduled learning sessions</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {upcomingLessons.map((lesson) => (
-                  <div key={lesson.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-gray-50 rounded-lg gap-4">
-                    <div className="flex items-center gap-4">
-                      <img
-                        src={lesson.avatar}
-                        alt={lesson.teacher}
-                        className="w-12 h-12 rounded-full object-cover flex-shrink-0"
-                      />
-                      <div className="min-w-0">
-                        <h4 className="font-semibold text-gray-900 truncate">{lesson.subject}</h4>
-                        <p className="text-sm text-gray-600 truncate">{lesson.teacher}</p>
-                        <div className="flex items-center gap-4 text-sm text-gray-500 mt-1">
-                          <span className="flex items-center gap-1">
-                            <Clock className="h-4 w-4" />
-                            {lesson.time}
-                          </span>
-                          <span>{lesson.duration}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex gap-2 flex-shrink-0">
-                      <Button variant="outline" size="sm" className="text-xs">
-                        <MessageCircle className="h-4 w-4 mr-1" />
-                        Message
-                      </Button>
-                      <Button size="sm" className="bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 hover:from-slate-800 hover:via-purple-800 hover:to-slate-800 text-xs">
-                        <Video className="h-4 w-4 mr-1" />
-                        Join
-                      </Button>
-                    </div>
-                  </div>
-                ))}
-                
-                {upcomingLessons.length === 0 && (
-                  <div className="text-center py-8">
-                    <Calendar className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                    <p className="text-gray-500">No upcoming lessons</p>
-                    <Button className="mt-4 bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 hover:from-slate-800 hover:via-purple-800 hover:to-slate-800">
-                      <Search className="h-4 w-4 mr-2" />
-                      Find a Teacher
-                    </Button>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
+            <UpcomingLessons 
+              lessons={upcomingLessons}
+              userRole="student"
+              emptyMessage="No upcoming lessons. Find a teacher to book your first lesson!"
+            />
 
-            {/* Recent Lessons */}
+            {/* Past Lessons */}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-lg lg:text-xl">
-                  <BookOpen className="h-5 w-5" />
-                  Recent Lessons
+                  <History className="h-5 w-5" />
+                  Past Lessons
                 </CardTitle>
                 <CardDescription>Your learning history</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  {recentLessons.map((lesson) => (
-                    <div key={lesson.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 border rounded-lg gap-4">
-                      <div className="min-w-0">
-                        <h4 className="font-semibold text-gray-900">{lesson.subject}</h4>
-                        <p className="text-sm text-gray-600">{lesson.teacher}</p>
-                        <p className="text-xs text-gray-500">{lesson.date}</p>
-                      </div>
-                      <div className="flex items-center gap-4 flex-shrink-0">
-                        <div className="flex items-center gap-1">
-                          {Array.from({ length: 5 }).map((_, i) => (
-                            <Star
-                              key={i}
-                              className={`h-4 w-4 ${
-                                i < lesson.rating ? "text-yellow-400 fill-current" : "text-gray-300"
-                              }`}
-                            />
-                          ))}
+                {pastLessons.length > 0 ? (
+                  <div className="space-y-4">
+                    {pastLessons.map((lesson) => (
+                      <div key={lesson.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 border rounded-lg gap-4">
+                        <div className="min-w-0">
+                          <h4 className="font-semibold text-gray-900">{lesson.subject}</h4>
+                          <p className="text-sm text-gray-600">by {lesson.teacherName || "Teacher"}</p>
+                          <div className="flex items-center gap-2 text-xs text-gray-500 mt-1">
+                            <span>{formatDate(lesson.date)}</span>
+                            <span>•</span>
+                            <span>{`${lesson.startTime} - ${lesson.endTime}`}</span>
+                          </div>
                         </div>
-                        <Badge variant="outline" className="text-green-600 border-green-600">
-                          {lesson.status}
-                        </Badge>
+                        <div className="flex gap-2 flex-shrink-0">
+                          <Badge variant="outline" className="text-green-600 border-green-600">
+                            {lesson.status}
+                          </Badge>
+                          <Button variant="outline" size="sm">
+                            Rate
+                          </Button>
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-8">
+                    <History className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                    <p className="text-gray-500">No past lessons yet</p>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </div>
 
           {/* Sidebar */}
-          <div className="space-y-6">
-            {/* Learning Progress */}
+          <div className="space-y-6 lg:space-y-8">
+            {/* Notifications */}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-lg">
-                  <TrendingUp className="h-5 w-5" />
-                  Learning Progress
+                  <Bell className="h-5 w-5" />
+                  Notifications
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <div className="flex justify-between text-sm mb-2">
-                    <span>Mathematics</span>
-                    <span>80%</span>
+              <CardContent className="space-y-3">
+                {notifications.length > 0 ? (
+                  notifications.map(notification => (
+                    <div 
+                      key={notification.id} 
+                      className={`p-3 rounded-lg border-l-4 ${getNotificationColor(notification.type)}`}
+                    >
+                      <p className="text-sm font-medium">{notification.title}</p>
+                      <p className="text-xs">{notification.message}</p>
+                    </div>
+                  ))
+                ) : (
+                  <div className="text-center py-6">
+                    <p className="text-sm text-gray-500">No new notifications</p>
                   </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div className="bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 h-2 rounded-full" style={{ width: "80%" }}></div>
-                  </div>
-                </div>
-                <div>
-                  <div className="flex justify-between text-sm mb-2">
-                    <span>English</span>
-                    <span>65%</span>
-                  </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div className="bg-blue-600 h-2 rounded-full" style={{ width: "65%" }}></div>
-                  </div>
-                </div>
-                <div>
-                  <div className="flex justify-between text-sm mb-2">
-                    <span>Science</span>
-                    <span>45%</span>
-                  </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div className="bg-purple-600 h-2 rounded-full" style={{ width: "45%" }}></div>
-                  </div>
+                )}
+              </CardContent>
+            </Card>
+            
+            {/* Find Teachers Card */}
+            <Card>
+              <CardContent className="p-6">
+                <div className="text-center space-y-4">
+                  <Search className="h-8 w-8 mx-auto text-blue-600" />
+                  <h3 className="font-semibold text-lg">Find New Teachers</h3>
+                  <p className="text-sm text-gray-500">Explore our network of qualified teachers from across Africa</p>
+                  <Button 
+                    className="w-full bg-gradient-to-r from-emerald-500 to-blue-500 hover:from-emerald-600 hover:to-blue-600"
+                    onClick={handleFindTeachers}
+                  >
+                    Browse Teachers
+                  </Button>
                 </div>
               </CardContent>
             </Card>

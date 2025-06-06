@@ -2,10 +2,27 @@
 import { createClient } from '@supabase/supabase-js';
 import type { Database } from './types';
 
-const SUPABASE_URL = "https://bxpryqfdmmiemvbhyjwf.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ4cHJ5cWZkbW1pZW12Ymh5andmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg4MTc3MDcsImV4cCI6MjA2NDM5MzcwN30.ACSOCPGORLJnu7rMpwQTWMZfcmcZZYJsupDSwG2l6uY";
+// Use environment variables or fallback to the hardcoded values
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || "https://bxpryqfdmmiemvbhyjwf.supabase.co";
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ4cHJ5cWZkbW1pZW12Ymh5andmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg4MTc3MDcsImV4cCI6MjA2NDM5MzcwN30.ACSOCPGORLJnu7rMpwQTWMZfcmcZZYJsupDSwG2l6uY";
+
+// Define APP_URL correctly ensuring it matches the URL in your Supabase Dashboard
+// For localhost development, port 5173 is the Vite default 
+const APP_URL = import.meta.env.VITE_APP_URL || window.location.origin;
 
 // Import the supabase client like this:
 // import { supabase } from "@/integrations/supabase/client";
 
-export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+export const supabase = createClient<Database>(
+  SUPABASE_URL, 
+  SUPABASE_ANON_KEY,
+  {
+    auth: {
+      autoRefreshToken: true,
+      persistSession: true,
+      redirectTo: `${APP_URL}/auth/callback`,
+      storageKey: 'afri-teach-auth-token',
+      detectSessionInUrl: true
+    }
+  }
+);

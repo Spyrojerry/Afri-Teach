@@ -1,4 +1,3 @@
-
 import { Search, Calendar, Video, Star } from "lucide-react";
 
 const steps = [

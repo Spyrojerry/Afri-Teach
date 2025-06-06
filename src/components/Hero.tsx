@@ -1,6 +1,6 @@
-
 import { Button } from "@/components/ui/button";
 import { Search, MapPin, Clock, Star, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export const Hero = () => {
   return (
@@ -71,20 +71,24 @@ export const Hero = () => {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Button 
-                size="lg" 
-                className="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white px-6 lg:px-8 py-3 lg:py-4 text-base lg:text-lg font-medium group shadow-xl"
-              >
-                Find Your Teacher
-                <ArrowRight className="ml-2 h-4 w-4 lg:h-5 lg:w-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
-              <Button 
-                variant="outline" 
-                size="lg" 
-                className="border-white/30 text-white hover:bg-white/10 px-6 lg:px-8 py-3 lg:py-4 text-base lg:text-lg font-medium backdrop-blur-sm"
-              >
-                Become a Teacher
-              </Button>
+              <Link to="/teachers">
+                <Button 
+                  size="lg" 
+                  className="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white px-6 lg:px-8 py-3 lg:py-4 text-base lg:text-lg font-medium group shadow-xl"
+                >
+                  Find Your Teacher
+                  <ArrowRight className="ml-2 h-4 w-4 lg:h-5 lg:w-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
+              <Link to="/register">
+                <Button 
+                  variant="outline" 
+                  size="lg" 
+                  className="border-white/30 text-white bg-white/10 px-6 lg:px-8 py-3 lg:py-4 text-base lg:text-lg font-medium backdrop-blur-sm"
+                >
+                  Become a Teacher
+                </Button>
+              </Link>
             </div>
           </div>
 
@@ -120,9 +124,11 @@ export const Hero = () => {
                   <option className="text-gray-900">Pacific Time (PT)</option>
                 </select>
 
-                <Button className="w-full bg-gradient-to-r from-emerald-500 to-blue-500 hover:from-emerald-600 hover:to-blue-600 py-3 lg:py-4 text-base lg:text-lg font-medium shadow-xl">
-                  Search Teachers
-                </Button>
+                <Link to="/teachers">
+                  <Button className="w-full bg-gradient-to-r from-emerald-500 to-blue-500 hover:from-emerald-600 hover:to-blue-600 py-3 lg:py-4 mt-4 text-base lg:text-lg font-medium shadow-xl">
+                    Search Teachers
+                  </Button>
+                </Link>
               </div>
 
               {/* Preview Stats */}

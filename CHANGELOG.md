@@ -1,0 +1,255 @@
+# Changelog
+
+All notable changes to the Afri-Teach project will be documented in this file.
+
+## [Unreleased]
+
+### Added
+- Updated landing page buttons to navigate properly based on user authentication status
+- Improved "Find Your Teacher" buttons to lead to find-teachers page for non-authenticated users
+- Enhanced "Become a Teacher" buttons to lead to the sign-up page
+- Fixed "Search Teachers" button to lead to the find-teachers page with filters
+- Updated TeacherShowcase component to route users to the correct pages based on authentication status
+- Added local storage backup for teacher availability when database is inaccessible
+- Added teacher_availability table with JSONB storage for recurring slots, specific dates, and break periods
+- Added learning modules and progress tracking functionality to the BookLesson page
+- Created ModuleSelector component for selecting learning modules when booking lessons
+- Added real implementation for booking lessons with teachers
+- Added learning_modules and student_progress tables to track student learning progress
+- Added confirmation dialog after booking completion with option to start learning
+- Added module_id column to bookings table to associate bookings with learning modules
+- Enhanced BookingCalendar to fetch real teacher availability data
+- Added real-time database integration for booking creation and notification
+- Integrated TeacherSchedule page with real database for availability management and upcoming lessons
+- Created SQL schema file with full database setup instructions
+- Improved database diagnostics to directly query tables instead of using information_schema
+- Real database integration for booking requests management, replacing mock data
+- Booking Requests system for teachers to manage lesson requests from students
+- Booking Requests page with filters and status tracking
+- Dashboard integration of pending booking requests with Accept/Reject functionality
+- Notifications page for students and teachers to view, filter, and manage their notifications
+- Messages page for both students and teachers with real-time chat functionality
+- My Students page for teachers to view and manage student information, progress, and notes
+- Updated navigation system with optimized tabs for teachers and students
+- Notifications dropdown in the header with real-time notification display
+- Back button support for Teacher Schedule and Earnings pages
+- Teacher Earnings page with transaction history and monthly analytics
+- Teacher Lessons page with student information and lesson notes
+- My Lessons page for students with interactive calendar for viewing upcoming and past lessons
+- My Schedule page for teachers to manage their availability, breaks, and leave periods
+- Interactive calendar display showing lesson dates for students
+- Time zone support for displaying lesson times in student's local time zone
+- Break and leave management for teachers to set periods of unavailability
+- Tab-based interface for teacher schedule management
+- Calendar display with visual indicators for available, booked, and unavailable dates
+- Upcoming lesson display for teachers to see their scheduled lessons
+- Complete database schema overhaul with new table structure following best practices
+- New database tables: users, students, teachers, subjects, lessons, teacher_availability, bookings, payments, reviews, messages, notifications, disputes, admin_actions
+- Migration function to move data from old profiles table to new structure
+- Automatic teacher rating calculation with database triggers
+- Enhanced row-level security policies for all tables
+- Default subjects data for the platform
+- Updated teacherService to work with the new schema
+- Redesigned TeacherProfile page to match the new data structure
+- Improved ProfileModal with support for new teacher fields like introVideoUrl and timeZone
+- Better separation of student and teacher data in dedicated tables
+- Teacher verification status display and management
+- Time zone support for teachers and students
+- More detailed teacher qualifications storage using JSONB
+- Proper foreign key relationships between all tables
+- Cloudinary integration for image and media storage using the Upload Widget
+- Real data integration for teacher dashboard, including earnings and profile data
+- Teacher profile service for fetching and updating teacher information
+- Payment service for tracking and calculating teacher earnings
+- Improved TeacherDashboard with real-time data from Supabase
+- Profile summary section in TeacherDashboard showing subjects and hourly rate
+- Improved authentication flow with Google OAuth
+- New onboarding page to collect user information after registration
+- Environment variables support for better configuration management
+- Proper routing and redirection based on user role and onboarding status
+- Password confirmation field on registration page
+- Streamlined registration flow (removed fields from registration, moved to onboarding)
+- Google OAuth Sign-in integration for faster authentication
+- Authentication callback handler for OAuth
+- Real data implementation for lessons and notifications
+- Improved user experience with more intuitive authentication flow
+- Initial project setup with React, TypeScript, Vite, and shadcn/ui
+- Basic UI components for landing page, login, and registration
+- Dashboard UI for students and teachers
+- Scheduling and booking system
+- Teacher availability management interface
+- Student booking interface
+- Upcoming lessons display for both students and teachers
+- Improved navigation with user dropdown menu and logout confirmation
+- Streamlined dashboard UI with role-based navigation tabs
+- Virtual classroom with video calls, chat, and learning materials
+- Email notifications for lesson bookings
+- Database diagnostics utility to help identify table structure issues
+- SQL script for fixing database schema inconsistencies
+- Notifications table creation and management functionality
+- Enhanced database diagnostic utilities to check for table and column existence
+- Simplified database functions with proper typing for lesson retrieval
+- Additional timestamp comparison fix for past lessons function
+- Modal-based profile editing for improved user experience
+- Automatic redirection for logged-in users to their respective dashboards
+- Synchronized relationship between profiles, teacher_profiles, and student_profiles
+- Automatic UUID generation for new teacher profiles
+- Scrollable modals to better handle profile editing on all screen sizes
+- Profile image upload functionality with Supabase Storage
+- Auto-generation of teacher profiles when not found
+- Type conversion utility functions for consistent data type handling
+- Retry mechanism for critical database operations
+- Alternative approaches for handling database constraint violations
+- Detailed database schema documentation for developers
+- Fallback query implementation for RPC function permission issues
+- Automatic first_name and last_name extraction from full_name field
+- Interactive calendar display showing lesson dates for students
+- Time zone support for displaying lesson times in student's local time zone
+- Break and leave management for teachers to set periods of unavailability
+- Tab-based interface for teacher schedule management
+- Calendar display with visual indicators for available, booked, and unavailable dates
+- Upcoming lesson display for teachers to see their scheduled lessons
+- Enhanced error handling and debugging for Supabase data fetching in FindTeachers, TeacherStudents, and Messages pages
+- Added console logging for better debugging of data fetching issues
+- Implemented fallback to mock data when database queries fail for better user experience
+- Type assertions and proper error handling for Supabase queries to avoid TypeScript errors
+- Real data implementation for StudentLessons page to fetch lessons from the database
+- Real data implementation for Notifications page to display actual user notifications
+- Updated the Notifications dropdown in the DashboardLayout to use real notification data
+- Added proper type definitions for notification data throughout the application
+- Implemented proper mark-as-read functionality for notifications
+- Added StudentSettings page with account, notification, and privacy settings
+- Added TeacherSettings page with account, notification, privacy, payment, and teaching preferences settings
+- Added routes for the new StudentSettings and TeacherSettings pages in App.tsx
+- Created SQL schema update script (db_update.sql) to add missing columns to the bookings table
+- Real data implementation for TeacherLessons page to display actual lessons with students
+- Real data implementation for TeacherEarnings page to display payments and monthly earnings
+- Real data implementation for BookLesson page to display teacher profiles from the database
+- Fixed teacher availability error by implementing auto-creation of availability for new teachers
+- Added TeacherSubjectsManager component to allow teachers to select which subjects and modules they can teach
+- Updated ModuleSelector to filter modules based on teacher's selections
+- Added teacher_modules column to teachers table to track which modules each teacher can teach
+- Enhanced booking system to only show relevant modules for selected teachers
+- Added progress tracking for students in learning modules
+- Added student_progress table to track student learning progress
+- Added learning_modules table to organize educational content
+- Enhanced navigation with smooth scrolling to sections on the landing page
+- Public access to Find Teachers page for non-authenticated users
+- Authentication modal prompt when non-authenticated users try to access protected features
+- Improved section linking for How It Works and About sections
+- Teacher subject/module selection in a scrollable modal
+
+### Fixed
+- Enhanced database error handling with graceful fallbacks for teacher availability
+- Made tab navigation scrollable horizontally on mobile devices in TeacherSchedule
+- Fixed database queries for teacher availability with better error handling
+- Fixed column name mismatch in booking requests queries (full_name vs first_name/last_name)
+- Fixed database schema mismatches with tables and columns in the codebase
+- Resolved missing notifications table error by creating required table structure
+- Fixed first_name/last_name references by updating to use full_name column
+- Resolved is.not.null query syntax issues by updating the query structure
+- Teacher profile update now works with different database column naming conventions
+- Google OAuth redirect now properly handles authentication flow
+- Teacher profile update now works for both new and existing profiles
+- Page layout improved for better responsiveness on all screen sizes
+- All pages now properly fill the screen width on both mobile and desktop
+- Form input fields and buttons better aligned on mobile devices
+- Fixed type mismatches in database functions for upcoming and past lessons
+- Resolved timestamp comparison errors in lesson retrieval functions
+- Improved lessonService to fetch profile data separately, avoiding JOIN errors
+- Fixed timestamp with time zone comparison error in get_past_lessons function
+- Improved student profile page with better name field display
+- Reorganized teacher profile page with profile summary at the top
+- Fixed "null value in column 'id' violates not-null constraint" error for teacher profiles
+- Implemented proper relationship between profiles and teacher/student profiles
+- Fixed modal overflowing issues on smaller screens with scrollable content
+- Fixed avatar fallback to properly show user initials when no image is uploaded
+- Improved profile update to sync between auth metadata and profile tables
+- Resolved browser compatibility issues with Cloudinary by switching to the Upload Widget
+- Updated image uploading to work directly in the browser without Node.js dependencies
+- Fixed teacher profile update error by ensuring proper type conversion for hourly rate
+- Added proper constraints and data type validations for teacher profiles in the database
+- Resolved foreign key constraint issue between profiles and teacher_profiles tables
+- Fixed "insert or update on table teacher_profiles violates foreign key constraint" error
+- Ensured proper table relationship sequence when creating and updating profiles
+- Added code-based workarounds for database constraints that can't be fixed via SQL
+- Implemented retries for profile updates to handle intermittent database issues
+- Fixed column naming mismatch in profiles table ('id' vs 'user_id')
+- Corrected profile upsert operation to use the proper 'id' column for conflict resolution
+- Addressed RPC function permission issue with fallback direct query approach
+- Created updated RPC function with SECURITY DEFINER to avoid permission errors
+- Fixed "null value in column 'first_name' violates not-null constraint" error in profiles table
+- Added automatic first_name/last_name extraction from full_name field
+- Implemented fallback defaults for first_name and last_name when not available
+- Fixed const reassignment errors in lessonService.ts by using let declarations for variables that need to be reassigned
+- Resolved "student_profiles is not a view" error by properly sequencing view creation before policy creation
+- Updated getLessonStats function to use the new database structure with bookings and lessons tables
+- Improved paymentService to handle both old and new payment table structures with proper column detection
+- Fixed "column payments.amount does not exist" error by updating queries to use amount_usd or teacher_payout_usd
+- Added database diagnostics utilities to detect column existence for backward compatibility
+- Enhanced teacherEarnings function to properly join through bookings for the new schema
+- Implemented fallback approaches for all services to support both legacy and new database schemas
+- Fixed compatibility views for teacher_profiles and student_profiles for backward compatibility
+- Resolved duplicate findUserIdColumn function definition in databaseDiagnostics.ts
+- Fixed "Could not embed because more than one relationship was found for 'payments' and 'bookings'" error by specifying the exact relationship to use
+- Fixed "new row violates row-level security policy for table users" error by adding proper RLS policies and SECURITY DEFINER functions
+- Fixed TypeScript errors in FindTeachers.tsx related to Supabase query types
+- Improved error handling in Messages.tsx to better identify the 400 error issue
+- Removed unnecessary mock data loading in TeacherStudents.tsx that was causing duplicate data
+- Added proper type assertions and null checks to prevent runtime errors
+- Better handling of empty or invalid data responses from Supabase
+- Improved handling of optional fields in teacher and student data
+- Fixed "column bookings.date does not exist" error by removing order by date clauses in queries
+- Added database table structure inspection to help diagnose column issues
+- Added fallbacks for missing data in all components that fetch from Supabase
+- Replaced non-existent RPC function call with direct object inspection for debugging
+- Added dynamic inspection of database record structure for better diagnostics
+- Improved TypeScript type definitions to avoid 'any' type while supporting flexible record shapes
+- Fixed "column bookings.subject does not exist" error in StudentLessons.tsx by removing the non-existent column from the query
+- Improved error handling and type safety in StudentLessons data fetching
+- Fixed "column bookings.start_time does not exist" error in StudentLessons.tsx by removing non-existent columns from the query
+- Fixed 404 error when accessing the settings pages by adding the required routes
+- Fixed "column bookings.notes does not exist" error by simplifying the database query and providing an SQL update script
+- Fixed SQL errors in db_update.sql related to generated columns and UUID handling
+- Replaced stored generated column with regular column and trigger for better compatibility
+- Added missing subject column to bookings table to fix TeacherLessons page error
+- Modified FindTeachers page to show all teachers regardless of verification status
+- Fixed database type errors in TeacherLessons and FindTeachers components
+- Fixed relationship error in TeacherEarnings page by specifying the correct foreign key
+
+## [0.1.0] - Phase 1: MVP Implementation - Completed
+
+### Completed
+- Authentication system with Supabase
+- User profiles for students and teachers
+- Basic teacher discovery functionality
+- Login page with form handling and authentication logic
+- Register page with react-hook-form and zod validation
+- ForgotPassword and ResetPassword components
+- Routes for password reset functionality
+- UserAvatar component integrated with authentication context
+- Logout functionality with confirmation dialog
+- StudentProfile and TeacherProfile pages with edit functionality
+- FindTeachers page for teacher discovery
+- Protected routes for profile and teacher discovery pages
+- TeacherAvailability component for setting recurring and specific availability
+- BookingCalendar component for booking lessons with teachers
+- ManageAvailability page for teachers to set their availability
+- BookLesson page for students to book lessons with teachers
+- UpcomingLessons component for displaying scheduled lessons
+- Integration of booking functionality with teacher discovery
+- Improved navigation with user dropdown and role-based access control
+- Virtual classroom integration with video conferencing, chat, and materials sharing
+- Email notifications for booking confirmations and reminders
+
+## [Next Steps - Phase 2]
+- Payment processing integration
+- Enhanced analytics for teachers
+- More advanced scheduling features
+- Student reviews and ratings system
+- Mobile app development
+
+### Fixed
+- Login page syntax error with incomplete useState hook
+- Navigation UI improved with better organization of elements
+- Dashboard layout optimized for both student and teacher users

@@ -1,11 +1,24 @@
-
 import { Button } from "@/components/ui/button";
 import { GraduationCap, Menu, X } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
+
+  // Function to scroll to section if on home page, otherwise navigate to home with hash
+  const scrollToSection = (sectionId: string) => {
+    if (isHomePage) {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      window.location.href = `/#${sectionId}`;
+    }
+  };
 
   return (
     <header className="bg-white/95 backdrop-blur-md border-b border-gray-100 fixed top-0 z-50 w-full">
@@ -26,21 +39,28 @@ export const Header = () => {
             <Link to="/" className="text-gray-600 hover:text-purple-600 transition-colors">
               Home
             </Link>
+
+            <button 
+              onClick={() => scrollToSection('features')} 
+              className="text-gray-600 hover:text-purple-600 transition-colors"
+            >
+              About
+            </button>
+            <button 
+              onClick={() => scrollToSection('how-it-works')} 
+              className="text-gray-600 hover:text-purple-600 transition-colors"
+            >
+              How It Works
+            </button>
             <Link to="/teachers" className="text-gray-600 hover:text-purple-600 transition-colors">
               Find Teachers
-            </Link>
-            <Link to="/how-it-works" className="text-gray-600 hover:text-purple-600 transition-colors">
-              How It Works
-            </Link>
-            <Link to="/about" className="text-gray-600 hover:text-purple-600 transition-colors">
-              About
             </Link>
           </nav>
 
           {/* Desktop Auth Buttons */}
-          <div className="hidden md:flex items-center space-x-4 flex-shrink-0">
+          <div className="hidden md:flex items-center space-x-4">
             <Link to="/login">
-              <Button variant="ghost" className="text-gray-600 hover:text-purple-600">
+              <Button variant="ghost" className="text-gray-600">
                 Sign In
               </Button>
             </Link>
@@ -52,15 +72,11 @@ export const Header = () => {
           </div>
 
           {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2 flex-shrink-0"
+          <button 
+            className="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            {isMenuOpen ? (
-              <X className="h-6 w-6 text-gray-600" />
-            ) : (
-              <Menu className="h-6 w-6 text-gray-600" />
-            )}
+            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
 
@@ -75,26 +91,30 @@ export const Header = () => {
               >
                 Home
               </Link>
+              <button
+                className="text-left text-gray-600 hover:text-purple-600 transition-colors px-2 py-1"
+                onClick={() => {
+                  scrollToSection('how-it-works');
+                  setIsMenuOpen(false);
+                }}
+              >
+                How It Works
+              </button>
+              <button
+                className="text-left text-gray-600 hover:text-purple-600 transition-colors px-2 py-1"
+                onClick={() => {
+                  scrollToSection('features');
+                  setIsMenuOpen(false);
+                }}
+              >
+                About
+              </button>
               <Link
-                to="/teachers"
+                to="/student/find-teachers"
                 className="text-gray-600 hover:text-purple-600 transition-colors px-2 py-1"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Find Teachers
-              </Link>
-              <Link
-                to="/how-it-works"
-                className="text-gray-600 hover:text-purple-600 transition-colors px-2 py-1"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                How It Works
-              </Link>
-              <Link
-                to="/about"
-                className="text-gray-600 hover:text-purple-600 transition-colors px-2 py-1"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                About
               </Link>
               <hr className="border-gray-200" />
               <Link to="/login" onClick={() => setIsMenuOpen(false)}>
