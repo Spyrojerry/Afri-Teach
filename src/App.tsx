@@ -32,12 +32,14 @@ import BookingRequests from "./pages/BookingRequests";
 import StudentSettings from "./pages/StudentSettings";
 import TeacherSettings from "./pages/TeacherSettings";
 import PublicFindTeachers from "./pages/PublicFindTeachers";
+import { Analytics } from "@vercel/analytics/react";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <AuthProvider>
+      <Analytics />
       <TooltipProvider>
         <Toaster />
         <Sonner />
