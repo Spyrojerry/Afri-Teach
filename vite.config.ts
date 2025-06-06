@@ -8,6 +8,8 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
+    // Ensures SPA fallback works for client-side routes
+    historyApiFallback: true,
   },
   plugins: [
     react(),
