@@ -52,9 +52,6 @@ export const HowItWorks = () => {
                     <IconComponent className="h-8 w-8" />
                   </div>
                   
-                  <div className="absolute -top-2 -right-2 bg-gradient-to-br from-purple-600 via-purple-700 to-purple-800 text-white text-sm font-bold w-8 h-8 rounded-full flex items-center justify-center">
-                    {step.number}
-                  </div>
                 </div>
                 
                 <h3 className="text-lg font-semibold text-gray-900 mb-3">

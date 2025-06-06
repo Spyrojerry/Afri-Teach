@@ -16,7 +16,7 @@ const featuredTeachers = [
     price: "$25/hour",
     nextAvailable: "Today 3:00 PM EST",
     specialties: ["Calculus", "Algebra", "Statistics"],
-    image: "https://images.unsplash.com/photo-1494790108755-2616b612b47c?w=400&h=400&fit=crop&crop=face",
+    image: "https://plus.unsplash.com/premium_photo-1713890429200-e725c894ab95?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?w=400&h=400&fit=crop&crop=face",
     verified: true
   },
   {
@@ -31,7 +31,7 @@ const featuredTeachers = [
     price: "$22/hour",
     nextAvailable: "Tomorrow 10:00 AM EST",
     specialties: ["Creative Writing", "Grammar", "Poetry"],
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face",
+    image: "https://images.unsplash.com/photo-1674505441276-3ef7c441d973?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?w=400&h=400&fit=crop&crop=face",
     verified: true
   },
   {
@@ -46,7 +46,7 @@ const featuredTeachers = [
     price: "$28/hour",
     nextAvailable: "Today 7:00 PM EST",
     specialties: ["Molecular Biology", "Genetics", "Ecology"],
-    image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&h=400&fit=crop&crop=face",
+    image: "https://plus.unsplash.com/premium_photo-1683121143565-1bee7a1a67bf?q=80&w=1440&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?w=400&h=400&fit=crop&crop=face",
     verified: true
   }
 ];
