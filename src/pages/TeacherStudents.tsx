@@ -544,7 +544,7 @@ const TeacherStudents = () => {
 
   return (
     <DashboardLayout userType="teacher">
-      <div className="container mx-auto px-4 py-8 pt-4">
+      <div className="space-y-6">
         <h1 className="text-3xl font-bold mb-6">My Students</h1>
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

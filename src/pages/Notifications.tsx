@@ -62,8 +62,7 @@ const Notifications = () => {
         console.error("Error fetching notifications:", err);
         setError("Failed to load notifications. Please try again later.");
         
-        // Fallback to mock data
-        setNotifications(getMockNotifications());
+        setNotifications([]);
       } finally {
         setIsLoading(false);
       }
@@ -71,42 +70,6 @@ const Notifications = () => {
     
     fetchNotifications();
   }, [user?.id]);
-
-  // Mock notifications data for fallback
-  const getMockNotifications = (): NotificationType[] => {
-    return [
-      {
-        id: "1",
-        userId: user?.id || "",
-        title: "New Lesson Booked",
-        message: "John Smith has booked a Mathematics lesson with you for tomorrow at 2:00 PM.",
-        timestamp: new Date(Date.now() - 10 * 60000).toISOString(), // 10 minutes ago
-        isRead: false,
-        type: "lesson",
-        createdAt: new Date(Date.now() - 10 * 60000).toISOString()
-      },
-      {
-        id: "2",
-        userId: user?.id || "",
-        title: "Upcoming Lesson Reminder",
-        message: "Your lesson with Prof. Chinua Achebe starts in 1 hour. Don't forget to join on time.",
-        timestamp: new Date(Date.now() - 55 * 60000).toISOString(), // 55 minutes ago
-        isRead: false,
-        type: "lesson",
-        createdAt: new Date(Date.now() - 55 * 60000).toISOString()
-      },
-      {
-        id: "3",
-        userId: user?.id || "",
-        title: "Payment Processed",
-        message: "Your payment of $50 for last week's lesson has been processed successfully.",
-        timestamp: new Date(Date.now() - 2 * 3600000).toISOString(), // 2 hours ago
-        isRead: true,
-        type: "payment",
-        createdAt: new Date(Date.now() - 2 * 3600000).toISOString()
-      }
-    ];
-  };
 
   // Filter notifications based on selected tab and type
   const filteredNotifications = notifications.filter(notification => {
@@ -219,7 +182,7 @@ const Notifications = () => {
 
   return (
     <DashboardLayout userType={userRole}>
-      <div className="container mx-auto px-4 py-8 pt-4">
+      <div className="space-y-6">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold">Notifications</h1>
           {notifications.some(n => !n.isRead) && (

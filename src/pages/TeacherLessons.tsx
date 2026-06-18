@@ -37,6 +37,7 @@ import {
 } from "date-fns";
 import { useAuth } from "@/contexts/auth-context";
 import { supabase } from "@/integrations/supabase/client";
+import { useNavigate } from "react-router-dom";
 
 // Define types for lesson and student
 interface Student {
@@ -84,7 +85,8 @@ interface StudentRecord {
 }
 
 const TeacherLessons = () => {
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
+  const navigate = useNavigate();
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [activeTab, setActiveTab] = useState("upcoming");
   const [lessons, setLessons] = useState<Lesson[]>([]);
   const [filteredLessons, setFilteredLessons] = useState<Lesson[]>([]);
@@ -116,6 +118,7 @@ const TeacherLessons = () => {
             end_time,
             start_time_utc,
             end_time_utc
+            ,subject
           `)
           .eq('teacher_id', user.id);
         
@@ -163,19 +166,11 @@ const TeacherLessons = () => {
           };
           
           // Extract date and time
-          let bookingDate = booking.created_at || new Date().toISOString();
-          let startTime = "00:00";
-          let endTime = "01:00";
-          
-          // Use start_time and end_time if available
-          if (booking.start_time) {
-            bookingDate = new Date(booking.start_time).toISOString().split('T')[0];
-            startTime = new Date(booking.start_time).toISOString().split('T')[1].substring(0, 5);
-          }
-          
-          if (booking.end_time) {
-            endTime = new Date(booking.end_time).toISOString().split('T')[1].substring(0, 5);
-          }
+          const start = new Date(booking.start_time_utc);
+          const end = new Date(booking.end_time_utc);
+          const bookingDate = start.toISOString().slice(0, 10);
+          const startTime = start.toTimeString().slice(0, 5);
+          const endTime = end.toTimeString().slice(0, 5);
           
           // Determine lesson status
           let status: "upcoming" | "completed" | "cancelled";
@@ -189,7 +184,7 @@ const TeacherLessons = () => {
             status = "cancelled";
           } else {
             // Determine based on date
-            const lessonDate = booking.start_time ? new Date(booking.start_time) : new Date(bookingDate);
+            const lessonDate = start;
             if (isPast(lessonDate) && !isToday(lessonDate)) {
               status = "completed";
             } else {
@@ -211,7 +206,7 @@ const TeacherLessons = () => {
               avatar: student.profile_picture_url,
               profile_picture_url: student.profile_picture_url
             },
-            subject: "General Lesson",
+            subject: booking.subject || "General Lesson",
             meetingLink: booking.meeting_link,
             notes: booking.notes
           };
@@ -223,54 +218,7 @@ const TeacherLessons = () => {
         console.error("Error fetching lessons:", err);
         setError("Failed to load your lessons. Please try again later.");
         
-        // Fallback to mock data
-        const mockLessons: Lesson[] = [
-          {
-            id: 1,
-            date: format(startOfToday(), 'yyyy-MM-dd'),
-            startTime: "14:00",
-            endTime: "15:00",
-            status: "upcoming",
-            student: {
-              id: 1,
-              name: "John Smith",
-              avatar: "/avatars/student-1.jpg",
-              email: "john.smith@example.com"
-            },
-            subject: "Mathematics",
-            meetingLink: "https://meet.google.com/abc-defg-hij"
-          },
-          {
-            id: 2,
-            date: format(addDays(startOfToday(), 2), 'yyyy-MM-dd'),
-            startTime: "10:00",
-            endTime: "11:00",
-            status: "upcoming",
-            student: {
-              id: 2,
-              name: "Emily Johnson",
-              avatar: "/avatars/student-2.jpg",
-              email: "emily.j@example.com"
-            },
-            subject: "Algebra",
-            meetingLink: "https://meet.google.com/klm-nopq-rst"
-          },
-          {
-            id: 3,
-            date: format(addDays(startOfToday(), -3), 'yyyy-MM-dd'),
-            startTime: "09:00",
-            endTime: "10:00",
-            status: "completed",
-            student: {
-              id: 3,
-              name: "Michael Brown",
-              avatar: "/avatars/student-3.jpg"
-            },
-            subject: "Geometry",
-            notes: "Covered coordinate geometry and distance formula. Michael needs more practice with circle equations."
-          }
-        ];
-        setLessons(mockLessons);
+        setLessons([]);
       } finally {
         setIsLoading(false);
       }
@@ -353,7 +301,7 @@ const TeacherLessons = () => {
 
   return (
     <DashboardLayout userType="teacher">
-      <div className="container mx-auto px-4 py-8 pt-4">
+      <div className="space-y-6">
         <h1 className="text-3xl font-bold mb-6">My Lessons</h1>
         
         {isLoading ? (
@@ -478,7 +426,11 @@ const TeacherLessons = () => {
                               
                               {lesson.meetingLink && lesson.status === 'upcoming' && (
                                 <div className="mt-4">
-                                  <Button className="w-full sm:w-auto" size="sm" onClick={() => window.open(lesson.meetingLink, '_blank')}>
+                                  <Button
+                                    className="w-full sm:w-auto"
+                                    size="sm"
+                                    onClick={() => navigate(`/teacher/classroom/${lesson.id}`)}
+                                  >
                                     <Video className="h-4 w-4 mr-2" />
                                     Start Lesson
                                   </Button>

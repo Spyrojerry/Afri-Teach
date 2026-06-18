@@ -1,0 +1,1538 @@
+PS C:\WINDOWS\system32> psql -d postgresql://postgres.laridrbrppkvcexopyaa:Oluwayomi.14@aws-1-eu-central-1.pooler.supabase.com:5432/postgres -f C:\Users\Jerry A\Downloads\db_cluster-01-08-2025@16-31-42.backup\db_cluster-01-08-2025@16-31-42.backup
+psql:C:/Users/Jerry:1: error: invalid command \WINDOWS
+psql:C:/Users/Jerry:84: error: invalid command \Microsoft
+psql:C:/Users/Jerry:87: error: invalid command \Microsoft
+psql:C:/Users/Jerry:88: error: invalid command \ProgramData
+psql:C:/Users/Jerry:89: error: invalid command \ProgramData
+psql:C:/Users/Jerry:90: error: invalid command \ProgramData
+psql:C:/Users/Jerry:91: error: invalid command \ProgramData
+psql:C:/Users/Jerry:92: error: invalid command \ProgramData
+psql:C:/Users/Jerry:95: error: invalid command \ProgramData
+psql:C:/Users/Jerry:98: error: invalid command \ProgramData
+psql:C:/Users/Jerry:100: error: invalid command \Microsoft
+psql:C:/Users/Jerry:101: error: invalid command \Microsoft
+psql:C:/Users/Jerry:105: error: invalid command \WINDOWS
+psql:C:/Users/Jerry:114: error: invalid command \Users
+psql:C:/Users/Jerry:115: error: invalid command \Users
+psql:C:/Users/Jerry:116: error: invalid command \Users
+psql:C:/Users/Jerry:119: error: invalid command \ProgramData
+psql:C:/Users/Jerry:120: error: invalid command \ProgramData
+psql:C:/Users/Jerry:122: error: invalid command \Users
+psql:C:/Users/Jerry:123: error: invalid command \Users
+psql:C:/Users/Jerry:124: error: invalid command \ProgramData
+psql:C:/Users/Jerry:125: error: invalid command \ProgramData
+psql:C:/Users/Jerry:129: ERROR:  syntax error at or near "["
+LINE 1: [7E00:2EF8][2025-09-04T10:32:15]i001: Burn v3.14.1.8722, Win...
+        ^
+PS C:\WINDOWS\system32> cd ../..
+PS C:\> psql -d postgresql://postgres.laridrbrppkvcexopyaa:Oluwayomi.14@aws-1-eu-central-1.pooler.supabase.com:5432/postgres -f .\Users\Jerry A\Downloads\db_cluster-01-08-2025@16-31-42.backup\db_cluster-01-08-2025@16-31-42.backup
+psql:Users/Jerry:1: error: invalid command \WINDOWS
+psql:Users/Jerry:84: error: invalid command \Microsoft
+psql:Users/Jerry:87: error: invalid command \Microsoft
+psql:Users/Jerry:88: error: invalid command \ProgramData
+psql:Users/Jerry:89: error: invalid command \ProgramData
+psql:Users/Jerry:90: error: invalid command \ProgramData
+psql:Users/Jerry:91: error: invalid command \ProgramData
+psql:Users/Jerry:92: error: invalid command \ProgramData
+psql:Users/Jerry:95: error: invalid command \ProgramData
+psql:Users/Jerry:98: error: invalid command \ProgramData
+psql:Users/Jerry:100: error: invalid command \Microsoft
+psql:Users/Jerry:101: error: invalid command \Microsoft
+psql:Users/Jerry:105: error: invalid command \WINDOWS
+psql:Users/Jerry:114: error: invalid command \Users
+psql:Users/Jerry:115: error: invalid command \Users
+psql:Users/Jerry:116: error: invalid command \Users
+psql:Users/Jerry:119: error: invalid command \ProgramData
+psql:Users/Jerry:120: error: invalid command \ProgramData
+psql:Users/Jerry:122: error: invalid command \Users
+psql:Users/Jerry:123: error: invalid command \Users
+psql:Users/Jerry:124: error: invalid command \ProgramData
+psql:Users/Jerry:125: error: invalid command \ProgramData
+psql:Users/Jerry:129: ERROR:  syntax error at or near "["
+LINE 1: [7E00:2EF8][2025-09-04T10:32:15]i001: Burn v3.14.1.8722, Win...
+        ^
+PS C:\> psql -d postgresql://postgres.laridrbrppkvcexopyaa:Oluwayomi.14@aws-1-eu-central-1.pooler.supabase.com:5432/postgres -f .\Users\Jerry A\Downloads\db_cluster-01-08-2025@16-31-42.backup
+psql:Users/Jerry:1: error: invalid command \WINDOWS
+psql:Users/Jerry:84: error: invalid command \Microsoft
+psql:Users/Jerry:87: error: invalid command \Microsoft
+psql:Users/Jerry:88: error: invalid command \ProgramData
+psql:Users/Jerry:89: error: invalid command \ProgramData
+psql:Users/Jerry:90: error: invalid command \ProgramData
+psql:Users/Jerry:91: error: invalid command \ProgramData
+psql:Users/Jerry:92: error: invalid command \ProgramData
+psql:Users/Jerry:95: error: invalid command \ProgramData
+psql:Users/Jerry:98: error: invalid command \ProgramData
+psql:Users/Jerry:100: error: invalid command \Microsoft
+psql:Users/Jerry:101: error: invalid command \Microsoft
+psql:Users/Jerry:105: error: invalid command \WINDOWS
+psql:Users/Jerry:114: error: invalid command \Users
+psql:Users/Jerry:115: error: invalid command \Users
+psql:Users/Jerry:116: error: invalid command \Users
+psql:Users/Jerry:119: error: invalid command \ProgramData
+psql:Users/Jerry:120: error: invalid command \ProgramData
+psql:Users/Jerry:122: error: invalid command \Users
+psql:Users/Jerry:123: error: invalid command \Users
+psql:Users/Jerry:124: error: invalid command \ProgramData
+psql:Users/Jerry:125: error: invalid command \ProgramData
+psql:Users/Jerry:129: ERROR:  syntax error at or near "["
+LINE 1: [7E00:2EF8][2025-09-04T10:32:15]i001: Burn v3.14.1.8722, Win...
+        ^
+PS C:\> psql -d postgresql://postgres.laridrbrppkvcexopyaa:Oluwayomi.14@aws-1-eu-central-1.pooler.supabase.com:5432/postgres -f .\Users\Jerry A\Downloads\db_cluster-01-08-2025@16-31-42.backup
+psql:Users/Jerry:1: error: invalid command \WINDOWS
+psql:Users/Jerry:84: error: invalid command \Microsoft
+psql:Users/Jerry:87: error: invalid command \Microsoft
+psql:Users/Jerry:88: error: invalid command \ProgramData
+psql:Users/Jerry:89: error: invalid command \ProgramData
+psql:Users/Jerry:90: error: invalid command \ProgramData
+psql:Users/Jerry:91: error: invalid command \ProgramData
+psql:Users/Jerry:92: error: invalid command \ProgramData
+psql:Users/Jerry:95: error: invalid command \ProgramData
+psql:Users/Jerry:98: error: invalid command \ProgramData
+psql:Users/Jerry:100: error: invalid command \Microsoft
+psql:Users/Jerry:101: error: invalid command \Microsoft
+psql:Users/Jerry:105: error: invalid command \WINDOWS
+psql:Users/Jerry:114: error: invalid command \Users
+psql:Users/Jerry:115: error: invalid command \Users
+psql:Users/Jerry:116: error: invalid command \Users
+psql:Users/Jerry:119: error: invalid command \ProgramData
+psql:Users/Jerry:120: error: invalid command \ProgramData
+psql:Users/Jerry:122: error: invalid command \Users
+psql:Users/Jerry:123: error: invalid command \Users
+psql:Users/Jerry:124: error: invalid command \ProgramData
+psql:Users/Jerry:125: error: invalid command \ProgramData
+psql:Users/Jerry:129: ERROR:  syntax error at or near "["
+LINE 1: [7E00:2EF8][2025-09-04T10:32:15]i001: Burn v3.14.1.8722, Win...
+        ^
+PS C:\> psql -d postgresql://postgres.laridrbrppkvcexopyaa:Oluwayomi.14@aws-1-eu-central-1.pooler.supabase.com:5432/postgres -f .\Users\Jerry" "A\Downloads\db_cluster-01-08-2025@16-31-42.backup
+SET
+SET
+SET
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:14: ERROR:  role "anon" already exists
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:15: ERROR:  "anon" is a reserved role, only superusers can modify it
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:16: ERROR:  role "authenticated" already exists
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:17: ERROR:  "authenticated" is a reserved role, only superusers can modify it
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:18: ERROR:  role "authenticator" already exists
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:19: ERROR:  "authenticator" is a reserved role, only superusers can modify it
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:20: ERROR:  role "dashboard_user" already exists
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:21: ERROR:  "dashboard_user" is a reserved role, only superusers can modify it
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:22: ERROR:  role "pgbouncer" already exists
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:23: ERROR:  "pgbouncer" is a reserved role, only superusers can modify it
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:24: ERROR:  role "postgres" already exists
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:25: ERROR:  permission denied to alter role
+DETAIL:  Only superusers can alter privileged roles.
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:26: ERROR:  role "service_role" already exists
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:27: ERROR:  "service_role" is a reserved role, only superusers can modify it
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:28: ERROR:  role "supabase_admin" already exists
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:29: ERROR:  "supabase_admin" is a reserved role, only superusers can modify it
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:30: ERROR:  role "supabase_auth_admin" already exists
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:31: ERROR:  "supabase_auth_admin" is a reserved role, only superusers can modify it
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:32: ERROR:  role "supabase_read_only_user" already exists
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:33: ERROR:  "supabase_read_only_user" is a reserved role, only superusers can modify it
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:34: ERROR:  role "supabase_realtime_admin" already exists
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:35: ERROR:  "supabase_realtime_admin" is a reserved role, only superusers can modify it
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:36: ERROR:  role "supabase_replication_admin" already exists
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:37: ERROR:  "supabase_replication_admin" is a reserved role, only superusers can modify it
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:38: ERROR:  role "supabase_storage_admin" already exists
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:39: ERROR:  "supabase_storage_admin" is a reserved role, only superusers can modify it
+ALTER ROLE
+ALTER ROLE
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:61: ERROR:  permission denied to set parameter "session_preload_libraries"
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:75: ERROR:  "supabase_admin" is a reserved role, only superusers can modify it
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:76: ERROR:  "supabase_admin" is a reserved role, only superusers can modify it
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:82: ERROR:  "supabase_auth_admin" is a reserved role, only superusers can modify it
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:83: ERROR:  "supabase_auth_admin" is a reserved role, only superusers can modify it
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:84: ERROR:  "supabase_auth_admin" is a reserved role, only superusers can modify it
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:90: ERROR:  "supabase_read_only_user" is a reserved role, only superusers can modify it
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:96: ERROR:  "supabase_storage_admin" is a reserved role, only superusers can modify it
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:97: ERROR:  "supabase_storage_admin" is a reserved role, only superusers can modify it
+GRANT ROLE
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:105: ERROR:  permission denied to grant privileges as role "supabase_admin"
+DETAIL:  Only roles with privileges of role "supabase_admin" may grant privileges as this role.
+GRANT ROLE
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:107: ERROR:  permission denied to grant privileges as role "supabase_admin"
+DETAIL:  Only roles with privileges of role "supabase_admin" may grant privileges as this role.
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:108: ERROR:  "authenticator" role memberships are reserved, only superusers can grant them
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:109: ERROR:  permission denied to grant privileges as role "supabase_admin"
+DETAIL:  Only roles with privileges of role "supabase_admin" may grant privileges as this role.
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:110: ERROR:  permission denied to grant privileges as role "supabase_admin"
+DETAIL:  Only roles with privileges of role "supabase_admin" may grant privileges as this role.
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:111: ERROR:  "supabase_read_only_user" is a reserved role, only superusers can modify it
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:112: ERROR:  permission denied to grant privileges as role "supabase_admin"
+DETAIL:  Only roles with privileges of role "supabase_admin" may grant privileges as this role.
+GRANT ROLE
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:114: ERROR:  permission denied to grant privileges as role "supabase_admin"
+DETAIL:  Only roles with privileges of role "supabase_admin" may grant privileges as this role.
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:115: ERROR:  "supabase_realtime_admin" role memberships are reserved, only superusers can grant them
+psql (17.5, server 17.6)
+SSL connection (protocol: TLSv1.3, cipher: TLS_AES_256_GCM_SHA384, compression: off, ALPN: none)
+You are now connected to database "template1" as user "postgres.laridrbrppkvcexopyaa".
+SET
+SET
+SET
+SET
+SET
+ set_config
+------------
+
+(1 row)
+
+
+SET
+SET
+SET
+SET
+psql (17.5, server 17.6)
+SSL connection (protocol: TLSv1.3, cipher: TLS_AES_256_GCM_SHA384, compression: off, ALPN: none)
+You are now connected to database "postgres" as user "postgres.laridrbrppkvcexopyaa".
+SET
+SET
+SET
+SET
+SET
+ set_config
+------------
+
+(1 row)
+
+
+SET
+SET
+SET
+SET
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:182: ERROR:  schema "auth" already exists
+ALTER SCHEMA
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:191: ERROR:  schema "extensions" already exists
+ALTER SCHEMA
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:200: ERROR:  schema "graphql" already exists
+ALTER SCHEMA
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:209: ERROR:  schema "graphql_public" already exists
+ALTER SCHEMA
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:218: ERROR:  schema "pgbouncer" already exists
+ALTER SCHEMA
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:227: ERROR:  schema "realtime" already exists
+ALTER SCHEMA
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:236: ERROR:  schema "storage" already exists
+ALTER SCHEMA
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:245: ERROR:  schema "vault" already exists
+ALTER SCHEMA
+CREATE EXTENSION
+COMMENT
+CREATE EXTENSION
+COMMENT
+CREATE EXTENSION
+COMMENT
+CREATE EXTENSION
+COMMENT
+CREATE EXTENSION
+COMMENT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:328: ERROR:  permission denied for schema auth
+ALTER TYPE
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:340: ERROR:  permission denied for schema auth
+ALTER TYPE
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:352: ERROR:  permission denied for schema auth
+ALTER TYPE
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:365: ERROR:  permission denied for schema auth
+ALTER TYPE
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:381: ERROR:  permission denied for schema auth
+ALTER TYPE
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:396: ERROR:  type "action" already exists
+ALTER TYPE
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:413: ERROR:  type "equality_op" already exists
+ALTER TYPE
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:426: ERROR:  type "user_defined_filter" already exists
+ALTER TYPE
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:442: ERROR:  type "wal_column" already exists
+ALTER TYPE
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:456: ERROR:  type "wal_rls" already exists
+ALTER TYPE
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:473: ERROR:  permission denied for schema auth
+ALTER FUNCTION
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:482: ERROR:  must be owner of function auth.email
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:497: ERROR:  permission denied for schema auth
+ALTER FUNCTION
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:514: ERROR:  permission denied for schema auth
+ALTER FUNCTION
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:523: ERROR:  must be owner of function auth.role
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:538: ERROR:  permission denied for schema auth
+ALTER FUNCTION
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:547: ERROR:  must be owner of function auth.uid
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:584: ERROR:  function "grant_pg_cron_access" already exists with same argument types
+ALTER FUNCTION
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:593: ERROR:  must be owner of function extensions.grant_pg_cron_access
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:651: ERROR:  function "grant_pg_graphql_access" already exists with same argument types
+ALTER FUNCTION
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:660: ERROR:  must be owner of function extensions.grant_pg_graphql_access
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:711: ERROR:  function "grant_pg_net_access" already exists with same argument types
+ALTER FUNCTION
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:720: ERROR:  must be owner of function extensions.grant_pg_net_access
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:753: ERROR:  function "pgrst_ddl_watch" already exists with same argument types
+ALTER FUNCTION
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:786: ERROR:  function "pgrst_drop_watch" already exists with same argument types
+ALTER FUNCTION
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:845: ERROR:  function "set_graphql_placeholder" already exists with same argument types
+ALTER FUNCTION
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:854: ERROR:  must be owner of function extensions.set_graphql_placeholder
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:877: ERROR:  permission denied for schema pgbouncer
+ALTER FUNCTION
+CREATE FUNCTION
+ALTER FUNCTION
+CREATE FUNCTION
+ALTER FUNCTION
+CREATE FUNCTION
+ALTER FUNCTION
+CREATE FUNCTION
+ALTER FUNCTION
+CREATE FUNCTION
+ALTER FUNCTION
+CREATE FUNCTION
+ALTER FUNCTION
+CREATE FUNCTION
+ALTER FUNCTION
+CREATE FUNCTION
+ALTER FUNCTION
+CREATE FUNCTION
+ALTER FUNCTION
+CREATE FUNCTION
+ALTER FUNCTION
+CREATE FUNCTION
+ALTER FUNCTION
+CREATE FUNCTION
+ALTER FUNCTION
+CREATE FUNCTION
+ALTER FUNCTION
+CREATE FUNCTION
+ALTER FUNCTION
+CREATE FUNCTION
+ALTER FUNCTION
+CREATE FUNCTION
+ALTER FUNCTION
+CREATE FUNCTION
+ALTER FUNCTION
+CREATE FUNCTION
+ALTER FUNCTION
+CREATE FUNCTION
+ALTER FUNCTION
+CREATE FUNCTION
+ALTER FUNCTION
+CREATE FUNCTION
+ALTER FUNCTION
+CREATE FUNCTION
+ALTER FUNCTION
+CREATE FUNCTION
+ALTER FUNCTION
+CREATE FUNCTION
+ALTER FUNCTION
+CREATE FUNCTION
+ALTER FUNCTION
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2016: ERROR:  function "apply_rls" already exists with same argument types
+ALTER FUNCTION
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2047: ERROR:  function "broadcast_changes" already exists with same argument types
+ALTER FUNCTION
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2082: ERROR:  function "build_prepared_statement_sql" already exists with same argument types
+ALTER FUNCTION
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2100: ERROR:  function "cast" already exists with same argument types
+ALTER FUNCTION
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2141: ERROR:  function "check_equality_op" already exists with same argument types
+ALTER FUNCTION
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2179: ERROR:  function "is_visible_through_filters" already exists with same argument types
+ALTER FUNCTION
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2247: ERROR:  permission denied to set parameter "log_min_messages"
+ALTER FUNCTION
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2287: ERROR:  function "quote_wal2json" already exists with same argument types
+ALTER FUNCTION
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2313: ERROR:  function "send" already exists with same argument types
+ALTER FUNCTION
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2389: ERROR:  function "subscription_check_filters" already exists with same argument types
+ALTER FUNCTION
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2400: ERROR:  function "to_regrole" already exists with same argument types
+ALTER FUNCTION
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2413: ERROR:  function "topic" already exists with same argument types
+ALTER FUNCTION
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2432: ERROR:  permission denied for schema storage
+ALTER FUNCTION
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2453: ERROR:  permission denied for schema storage
+ALTER FUNCTION
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2471: ERROR:  permission denied for schema storage
+ALTER FUNCTION
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2489: ERROR:  permission denied for schema storage
+ALTER FUNCTION
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2507: ERROR:  permission denied for schema storage
+ALTER FUNCTION
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2555: ERROR:  permission denied for schema storage
+ALTER FUNCTION
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2601: ERROR:  permission denied for schema storage
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2604: ERROR:  function storage.list_objects_with_delimiter(text, text, text, integer, text, text) does not exist
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2616: ERROR:  permission denied for schema storage
+ALTER FUNCTION
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2687: ERROR:  permission denied for schema storage
+ALTER FUNCTION
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2703: ERROR:  permission denied for schema storage
+ALTER FUNCTION
+SET
+SET
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2722: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.audit_log_entries (
+                     ^
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2725: ERROR:  must be owner of table audit_log_entries
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2731: ERROR:  must be owner of table audit_log_entries
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2751: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.flow_state (
+                     ^
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2754: ERROR:  must be owner of table flow_state
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2760: ERROR:  must be owner of table flow_state
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2777: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.identities (
+                     ^
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2780: ERROR:  must be owner of table identities
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2786: ERROR:  must be owner of table identities
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2793: ERROR:  must be owner of relation identities
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2806: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.instances (
+                     ^
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2809: ERROR:  must be owner of table instances
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2815: ERROR:  must be owner of table instances
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2828: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.mfa_amr_claims (
+                     ^
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2831: ERROR:  must be owner of table mfa_amr_claims
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2837: ERROR:  must be owner of table mfa_amr_claims
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2852: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.mfa_challenges (
+                     ^
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2855: ERROR:  must be owner of table mfa_challenges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2861: ERROR:  must be owner of table mfa_challenges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2881: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.mfa_factors (
+                     ^
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2884: ERROR:  must be owner of table mfa_factors
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2890: ERROR:  must be owner of table mfa_factors
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2906: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.one_time_tokens (
+                     ^
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2909: ERROR:  must be owner of table one_time_tokens
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2925: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.refresh_tokens (
+                     ^
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2928: ERROR:  must be owner of table refresh_tokens
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2934: ERROR:  must be owner of table refresh_tokens
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2946: ERROR:  permission denied for schema auth
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2949: ERROR:  must be owner of sequence refresh_tokens_id_seq
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2955: ERROR:  must be owner of sequence refresh_tokens_id_seq
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2975: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.saml_providers (
+                     ^
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2978: ERROR:  must be owner of table saml_providers
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:2984: ERROR:  must be owner of table saml_providers
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3001: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.saml_relay_states (
+                     ^
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3004: ERROR:  must be owner of table saml_relay_states
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3010: ERROR:  must be owner of table saml_relay_states
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3019: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.schema_migrations (
+                     ^
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3022: ERROR:  must be owner of table schema_migrations
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3028: ERROR:  must be owner of table schema_migrations
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3047: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.sessions (
+                     ^
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3050: ERROR:  must be owner of table sessions
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3056: ERROR:  must be owner of table sessions
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3063: ERROR:  must be owner of relation sessions
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3077: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.sso_domains (
+                     ^
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3080: ERROR:  must be owner of table sso_domains
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3086: ERROR:  must be owner of table sso_domains
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3099: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.sso_providers (
+                     ^
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3102: ERROR:  must be owner of table sso_providers
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3108: ERROR:  must be owner of table sso_providers
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3115: ERROR:  must be owner of relation sso_providers
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3159: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.users (
+                     ^
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3162: ERROR:  must be owner of table users
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3168: ERROR:  must be owner of table users
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3175: ERROR:  must be owner of relation users
+CREATE TABLE
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+CREATE VIEW
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+CREATE VIEW
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+CREATE VIEW
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3617: ERROR:  relation "messages" already exists
+ALTER TABLE
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3629: ERROR:  relation "schema_migrations" already exists
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3632: ERROR:  must be owner of table schema_migrations
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3646: ERROR:  relation "subscription" already exists
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3649: ERROR:  must be owner of table subscription
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3662: ERROR:  must be owner of table subscription
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3680: ERROR:  permission denied for schema storage
+LINE 1: CREATE TABLE storage.buckets (
+                     ^
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3683: ERROR:  must be owner of table buckets
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3689: ERROR:  must be owner of relation buckets
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3701: ERROR:  permission denied for schema storage
+LINE 1: CREATE TABLE storage.migrations (
+                     ^
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3704: ERROR:  must be owner of table migrations
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3723: ERROR:  permission denied for schema storage
+LINE 1: CREATE TABLE storage.objects (
+                     ^
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3726: ERROR:  must be owner of table objects
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3732: ERROR:  must be owner of relation objects
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3749: ERROR:  permission denied for schema storage
+LINE 1: CREATE TABLE storage.s3_multipart_uploads (
+                     ^
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3752: ERROR:  must be owner of table s3_multipart_uploads
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3769: ERROR:  permission denied for schema storage
+LINE 1: CREATE TABLE storage.s3_multipart_uploads_parts (
+                     ^
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3772: ERROR:  must be owner of table s3_multipart_uploads_parts
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3778: ERROR:  must be owner of table refresh_tokens
+COPY 164
+COPY 0
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:3975: ERROR:  insert or update on table "identities" violates foreign key constraint "identities_user_id_fkey"
+DETAIL:  Key (user_id)=(38fc4fbc-48ae-4f24-b0a5-75ad4843669b) is not present in table "users".
+COPY 0
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4002: ERROR:  insert or update on table "mfa_amr_claims" violates foreign key constraint "mfa_amr_claims_session_id_fkey"
+DETAIL:  Key (session_id)=(22ce43bc-217b-4451-b15a-efcff23bec72) is not present in table "sessions".
+COPY 0
+COPY 0
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4029: ERROR:  insert or update on table "one_time_tokens" violates foreign key constraint "one_time_tokens_user_id_fkey"
+DETAIL:  Key (user_id)=(ff4068c7-3ecd-44b3-a50a-b2e6f1b01547) is not present in table "users".
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4077: ERROR:  insert or update on table "refresh_tokens" violates foreign key constraint "refresh_tokens_session_id_fkey"
+DETAIL:  Key (session_id)=(22ce43bc-217b-4451-b15a-efcff23bec72) is not present in table "sessions".
+COPY 0
+COPY 0
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4100: ERROR:  permission denied for table schema_migrations
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4162: error: invalid command \.
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4169: ERROR:  syntax error at or near "20171026211738"
+LINE 1: 20171026211738
+        ^
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4170: error: invalid command \N
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4171: error: invalid command \N
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4172: error: invalid command \N
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4173: error: invalid command \N
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4174: error: invalid command \N
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4175: error: invalid command \N
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4176: error: invalid command \N
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4177: error: invalid command \N
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4178: error: invalid command \N
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4179: error: invalid command \N
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4180: error: invalid command \N
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4181: error: invalid command \.
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4188: ERROR:  syntax error at or near "bbbe79e8"
+LINE 1: bbbe79e8-1410-4db3-881c-0b38e65a70be 3503a978-a088-452c-80a9...
+        ^
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4189: error: invalid command \.
+COPY 0
+COPY 9
+COPY 0
+COPY 0
+COPY 0
+COPY 0
+COPY 7
+COPY 0
+COPY 0
+COPY 0
+COPY 2
+COPY 0
+COPY 0
+COPY 0
+COPY 0
+COPY 9
+COPY 8
+COPY 0
+COPY 4
+COPY 9
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4468: ERROR:  duplicate key value violates unique constraint "schema_migrations_pkey"
+DETAIL:  Key (version)=(20211116024918) already exists.
+CONTEXT:  COPY schema_migrations, line 1
+COPY 0
+COPY 0
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4491: ERROR:  permission denied for table migrations
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4518: error: invalid command \.
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4525: ERROR:  syntax error at or near "0"
+LINE 1: 0 create-migrations-table e18db593bcde2aca2a408c4d1100f6abba...
+        ^
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4526: error: invalid command \.
+COPY 0
+COPY 0
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4549: ERROR:  permission denied for table secrets
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4550: error: invalid command \.
+ setval
+--------
+     80
+(1 row)
+
+
+ setval
+--------
+      1
+(1 row)
+
+
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4572: ERROR:  must be owner of table mfa_amr_claims
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4580: ERROR:  must be owner of table audit_log_entries
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4588: ERROR:  must be owner of table flow_state
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4596: ERROR:  must be owner of table identities
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4604: ERROR:  must be owner of table identities
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4612: ERROR:  must be owner of table instances
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4620: ERROR:  must be owner of table mfa_amr_claims
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4628: ERROR:  must be owner of table mfa_challenges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4636: ERROR:  must be owner of table mfa_factors
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4644: ERROR:  must be owner of table mfa_factors
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4652: ERROR:  must be owner of table one_time_tokens
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4660: ERROR:  must be owner of table refresh_tokens
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4668: ERROR:  must be owner of table refresh_tokens
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4676: ERROR:  must be owner of table saml_providers
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4684: ERROR:  must be owner of table saml_providers
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4692: ERROR:  must be owner of table saml_relay_states
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4700: ERROR:  must be owner of table schema_migrations
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4708: ERROR:  must be owner of table sessions
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4716: ERROR:  must be owner of table sso_domains
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4724: ERROR:  must be owner of table sso_providers
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4732: ERROR:  must be owner of table users
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4740: ERROR:  must be owner of table users
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4940: ERROR:  multiple primary keys for table "messages" are not allowed
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4948: ERROR:  must be owner of table subscription
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4956: ERROR:  must be owner of table schema_migrations
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4964: ERROR:  must be owner of table buckets
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4972: ERROR:  must be owner of table migrations
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4980: ERROR:  must be owner of table migrations
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4988: ERROR:  must be owner of table objects
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:4996: ERROR:  must be owner of table s3_multipart_uploads_parts
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5004: ERROR:  must be owner of table s3_multipart_uploads
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5011: ERROR:  must be owner of table audit_log_entries
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5018: ERROR:  must be owner of table users
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5025: ERROR:  must be owner of table users
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5032: ERROR:  must be owner of table users
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5039: ERROR:  must be owner of table mfa_factors
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5046: ERROR:  must be owner of table flow_state
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5053: ERROR:  must be owner of table identities
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5060: ERROR:  must be owner of index identities_email_idx
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5067: ERROR:  must be owner of table identities
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5074: ERROR:  must be owner of table flow_state
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5081: ERROR:  must be owner of table flow_state
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5088: ERROR:  must be owner of table mfa_challenges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5095: ERROR:  must be owner of table mfa_factors
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5102: ERROR:  must be owner of table mfa_factors
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5109: ERROR:  must be owner of table one_time_tokens
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5116: ERROR:  must be owner of table one_time_tokens
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5123: ERROR:  must be owner of table one_time_tokens
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5130: ERROR:  must be owner of table users
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5137: ERROR:  must be owner of table users
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5144: ERROR:  must be owner of table refresh_tokens
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5151: ERROR:  must be owner of table refresh_tokens
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5158: ERROR:  must be owner of table refresh_tokens
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5165: ERROR:  must be owner of table refresh_tokens
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5172: ERROR:  must be owner of table refresh_tokens
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5179: ERROR:  must be owner of table saml_providers
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5186: ERROR:  must be owner of table saml_relay_states
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5193: ERROR:  must be owner of table saml_relay_states
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5200: ERROR:  must be owner of table saml_relay_states
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5207: ERROR:  must be owner of table sessions
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5214: ERROR:  must be owner of table sessions
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5221: ERROR:  must be owner of table sso_domains
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5228: ERROR:  must be owner of table sso_domains
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5235: ERROR:  must be owner of table sso_providers
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5242: ERROR:  must be owner of table mfa_factors
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5249: ERROR:  must be owner of table sessions
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5256: ERROR:  must be owner of table users
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5263: ERROR:  must be owner of index users_email_partial_key
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5270: ERROR:  must be owner of table users
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5277: ERROR:  must be owner of table users
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5284: ERROR:  must be owner of table users
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5319: ERROR:  must be owner of table subscription
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5326: ERROR:  must be owner of table subscription
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5333: ERROR:  must be owner of table buckets
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5340: ERROR:  must be owner of table objects
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5347: ERROR:  must be owner of table s3_multipart_uploads
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5354: ERROR:  must be owner of table objects
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5361: ERROR:  must be owner of table objects
+CREATE TRIGGER
+CREATE TRIGGER
+CREATE TRIGGER
+CREATE TRIGGER
+CREATE TRIGGER
+CREATE TRIGGER
+CREATE TRIGGER
+CREATE TRIGGER
+CREATE TRIGGER
+CREATE TRIGGER
+CREATE TRIGGER
+CREATE TRIGGER
+CREATE TRIGGER
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5459: ERROR:  trigger "tr_check_filters" for relation "subscription" already exists
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5466: ERROR:  trigger "update_objects_updated_at" for relation "objects" already exists
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5474: ERROR:  must be owner of table identities
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5482: ERROR:  must be owner of table mfa_amr_claims
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5490: ERROR:  must be owner of table mfa_challenges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5498: ERROR:  must be owner of table mfa_factors
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5506: ERROR:  must be owner of table one_time_tokens
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5514: ERROR:  must be owner of table refresh_tokens
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5522: ERROR:  must be owner of table saml_providers
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5530: ERROR:  must be owner of table saml_relay_states
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5538: ERROR:  must be owner of table saml_relay_states
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5546: ERROR:  must be owner of table sessions
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5554: ERROR:  must be owner of table sso_domains
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5778: ERROR:  must be owner of table objects
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5786: ERROR:  must be owner of table s3_multipart_uploads
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5794: ERROR:  must be owner of table s3_multipart_uploads_parts
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5802: ERROR:  must be owner of table s3_multipart_uploads_parts
+CREATE POLICY
+CREATE POLICY
+CREATE POLICY
+CREATE POLICY
+CREATE POLICY
+CREATE POLICY
+CREATE POLICY
+CREATE POLICY
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5865: ERROR:  must be owner of table audit_log_entries
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5871: ERROR:  must be owner of table flow_state
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5877: ERROR:  must be owner of table identities
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5883: ERROR:  must be owner of table instances
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5889: ERROR:  must be owner of table mfa_amr_claims
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5895: ERROR:  must be owner of table mfa_challenges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5901: ERROR:  must be owner of table mfa_factors
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5907: ERROR:  must be owner of table one_time_tokens
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5913: ERROR:  must be owner of table refresh_tokens
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5919: ERROR:  must be owner of table saml_providers
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5925: ERROR:  must be owner of table saml_relay_states
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5931: ERROR:  must be owner of table schema_migrations
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5937: ERROR:  must be owner of table sessions
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5943: ERROR:  must be owner of table sso_domains
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5949: ERROR:  must be owner of table sso_providers
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:5955: ERROR:  must be owner of table users
+CREATE POLICY
+CREATE POLICY
+CREATE POLICY
+CREATE POLICY
+CREATE POLICY
+CREATE POLICY
+CREATE POLICY
+CREATE POLICY
+CREATE POLICY
+CREATE POLICY
+CREATE POLICY
+CREATE POLICY
+CREATE POLICY
+CREATE POLICY
+CREATE POLICY
+CREATE POLICY
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+CREATE POLICY
+CREATE POLICY
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6185: ERROR:  must be owner of table buckets
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6191: ERROR:  must be owner of table migrations
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6197: ERROR:  must be owner of table objects
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6203: ERROR:  must be owner of table s3_multipart_uploads
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6209: ERROR:  must be owner of table s3_multipart_uploads_parts
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6215: ERROR:  publication "supabase_realtime" already exists
+ALTER PUBLICATION
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6224: WARNING:  no privileges were granted for "auth"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6225: WARNING:  no privileges were granted for "auth"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6226: WARNING:  no privileges were granted for "auth"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6227: WARNING:  no privileges were granted for "auth"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6228: WARNING:  no privileges were granted for "auth"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6229: WARNING:  no privileges were granted for "auth"
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6256: WARNING:  no privileges were granted for "realtime"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6257: WARNING:  no privileges were granted for "realtime"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6258: WARNING:  no privileges were granted for "realtime"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6259: WARNING:  no privileges were granted for "realtime"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6260: WARNING:  no privileges were granted for "realtime"
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6279: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6287: WARNING:  no privileges were granted for "email"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6288: WARNING:  no privileges were granted for "email"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6295: WARNING:  no privileges were granted for "jwt"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6296: WARNING:  no privileges were granted for "jwt"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6303: WARNING:  no privileges were granted for "role"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6304: WARNING:  no privileges were granted for "role"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6311: WARNING:  no privileges were granted for "uid"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6312: WARNING:  no privileges were granted for "uid"
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6431: WARNING:  no privileges could be revoked for "grant_pg_cron_access"
+REVOKE
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6432: WARNING:  no privileges were granted for "grant_pg_cron_access"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6433: WARNING:  no privileges were granted for "grant_pg_cron_access"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6434: WARNING:  no privileges were granted for "grant_pg_cron_access"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6441: ERROR:  grant options cannot be granted back to your own grantor
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6448: WARNING:  no privileges could be revoked for "grant_pg_net_access"
+REVOKE
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6449: WARNING:  no privileges were granted for "grant_pg_net_access"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6450: WARNING:  no privileges were granted for "grant_pg_net_access"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6451: WARNING:  no privileges were granted for "grant_pg_net_access"
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6490: ERROR:  function extensions.pg_stat_statements_reset(oid, oid, bigint) does not exist
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6491: ERROR:  function extensions.pg_stat_statements_reset(oid, oid, bigint) does not exist
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6658: ERROR:  grant options cannot be granted back to your own grantor
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6665: ERROR:  grant options cannot be granted back to your own grantor
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6672: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6759: WARNING:  no privileges were granted for "graphql"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6760: WARNING:  no privileges were granted for "graphql"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6761: WARNING:  no privileges were granted for "graphql"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6762: WARNING:  no privileges were granted for "graphql"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6769: ERROR:  permission denied for function get_auth
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6770: ERROR:  permission denied for function get_auth
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:6771: ERROR:  permission denied for function get_auth
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7003: WARNING:  no privileges were granted for "apply_rls"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7004: WARNING:  no privileges were granted for "apply_rls"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7005: WARNING:  no privileges were granted for "apply_rls"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7006: WARNING:  no privileges were granted for "apply_rls"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7007: WARNING:  no privileges were granted for "apply_rls"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7008: WARNING:  no privileges were granted for "apply_rls"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7015: WARNING:  no privileges were granted for "broadcast_changes"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7016: WARNING:  no privileges were granted for "broadcast_changes"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7023: WARNING:  no privileges were granted for "build_prepared_statement_sql"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7024: WARNING:  no privileges were granted for "build_prepared_statement_sql"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7025: WARNING:  no privileges were granted for "build_prepared_statement_sql"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7026: WARNING:  no privileges were granted for "build_prepared_statement_sql"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7027: WARNING:  no privileges were granted for "build_prepared_statement_sql"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7028: WARNING:  no privileges were granted for "build_prepared_statement_sql"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7035: WARNING:  no privileges were granted for "cast"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7036: WARNING:  no privileges were granted for "cast"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7037: WARNING:  no privileges were granted for "cast"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7038: WARNING:  no privileges were granted for "cast"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7039: WARNING:  no privileges were granted for "cast"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7040: WARNING:  no privileges were granted for "cast"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7047: WARNING:  no privileges were granted for "check_equality_op"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7048: WARNING:  no privileges were granted for "check_equality_op"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7049: WARNING:  no privileges were granted for "check_equality_op"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7050: WARNING:  no privileges were granted for "check_equality_op"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7051: WARNING:  no privileges were granted for "check_equality_op"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7052: WARNING:  no privileges were granted for "check_equality_op"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7059: WARNING:  no privileges were granted for "is_visible_through_filters"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7060: WARNING:  no privileges were granted for "is_visible_through_filters"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7061: WARNING:  no privileges were granted for "is_visible_through_filters"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7062: WARNING:  no privileges were granted for "is_visible_through_filters"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7063: WARNING:  no privileges were granted for "is_visible_through_filters"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7064: WARNING:  no privileges were granted for "is_visible_through_filters"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7071: WARNING:  no privileges were granted for "list_changes"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7072: WARNING:  no privileges were granted for "list_changes"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7073: WARNING:  no privileges were granted for "list_changes"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7074: WARNING:  no privileges were granted for "list_changes"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7075: WARNING:  no privileges were granted for "list_changes"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7076: WARNING:  no privileges were granted for "list_changes"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7083: WARNING:  no privileges were granted for "quote_wal2json"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7084: WARNING:  no privileges were granted for "quote_wal2json"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7085: WARNING:  no privileges were granted for "quote_wal2json"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7086: WARNING:  no privileges were granted for "quote_wal2json"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7087: WARNING:  no privileges were granted for "quote_wal2json"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7088: WARNING:  no privileges were granted for "quote_wal2json"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7095: WARNING:  no privileges were granted for "send"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7096: WARNING:  no privileges were granted for "send"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7103: WARNING:  no privileges were granted for "subscription_check_filters"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7104: WARNING:  no privileges were granted for "subscription_check_filters"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7105: WARNING:  no privileges were granted for "subscription_check_filters"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7106: WARNING:  no privileges were granted for "subscription_check_filters"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7107: WARNING:  no privileges were granted for "subscription_check_filters"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7108: WARNING:  no privileges were granted for "subscription_check_filters"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7115: WARNING:  no privileges were granted for "to_regrole"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7116: WARNING:  no privileges were granted for "to_regrole"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7117: WARNING:  no privileges were granted for "to_regrole"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7118: WARNING:  no privileges were granted for "to_regrole"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7119: WARNING:  no privileges were granted for "to_regrole"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7120: WARNING:  no privileges were granted for "to_regrole"
+GRANT
+GRANT
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7135: WARNING:  no privileges were granted for "can_insert_object"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7142: WARNING:  no privileges were granted for "extension"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7149: WARNING:  no privileges were granted for "filename"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7156: WARNING:  no privileges were granted for "foldername"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7163: WARNING:  no privileges were granted for "get_size_by_bucket"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7170: WARNING:  no privileges were granted for "list_multipart_uploads_with_delimiter"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7177: ERROR:  function storage.list_objects_with_delimiter(text, text, text, integer, text, text) does not exist
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7184: WARNING:  no privileges were granted for "operation"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7191: WARNING:  no privileges were granted for "search"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7198: WARNING:  no privileges were granted for "update_updated_at_column"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7205: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7213: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7221: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7230: WARNING:  no privileges were granted for "audit_log_entries"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7231: ERROR:  grant options cannot be granted back to your own grantor
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7238: WARNING:  no privileges were granted for "flow_state"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7239: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7247: WARNING:  no privileges were granted for "identities"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7248: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7257: WARNING:  no privileges were granted for "instances"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7258: ERROR:  grant options cannot be granted back to your own grantor
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7265: WARNING:  no privileges were granted for "mfa_amr_claims"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7266: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7274: WARNING:  no privileges were granted for "mfa_challenges"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7275: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7283: WARNING:  no privileges were granted for "mfa_factors"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7284: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7292: WARNING:  no privileges were granted for "one_time_tokens"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7293: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7302: WARNING:  no privileges were granted for "refresh_tokens"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7303: ERROR:  grant options cannot be granted back to your own grantor
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7310: WARNING:  no privileges were granted for "refresh_tokens_id_seq"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7311: WARNING:  no privileges were granted for "refresh_tokens_id_seq"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7318: WARNING:  no privileges were granted for "saml_providers"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7319: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7327: WARNING:  no privileges were granted for "saml_relay_states"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7328: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7336: WARNING:  no privileges were granted for "sessions"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7337: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7345: WARNING:  no privileges were granted for "sso_domains"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7346: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7354: WARNING:  no privileges were granted for "sso_providers"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7355: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7364: WARNING:  no privileges were granted for "users"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7365: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7588: WARNING:  no privileges were granted for "schema_migrations"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7589: WARNING:  no privileges were granted for "schema_migrations"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7590: WARNING:  no privileges were granted for "schema_migrations"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7591: WARNING:  no privileges were granted for "schema_migrations"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7592: WARNING:  no privileges were granted for "schema_migrations"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7593: WARNING:  no privileges were granted for "schema_migrations"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7600: WARNING:  no privileges were granted for "subscription"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7601: WARNING:  no privileges were granted for "subscription"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7602: WARNING:  no privileges were granted for "subscription"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7603: WARNING:  no privileges were granted for "subscription"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7604: WARNING:  no privileges were granted for "subscription"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7605: WARNING:  no privileges were granted for "subscription"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7612: WARNING:  no privileges were granted for "subscription_id_seq"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7613: WARNING:  no privileges were granted for "subscription_id_seq"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7614: WARNING:  no privileges were granted for "subscription_id_seq"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7615: WARNING:  no privileges were granted for "subscription_id_seq"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7616: WARNING:  no privileges were granted for "subscription_id_seq"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7617: WARNING:  no privileges were granted for "subscription_id_seq"
+GRANT
+GRANT
+GRANT
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7627: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+GRANT
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7637: ERROR:  grant options cannot be granted back to your own grantor
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7644: WARNING:  no privileges were granted for "s3_multipart_uploads"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7645: WARNING:  no privileges were granted for "s3_multipart_uploads"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7646: WARNING:  no privileges were granted for "s3_multipart_uploads"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7647: WARNING:  no privileges were granted for "s3_multipart_uploads"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7654: WARNING:  no privileges were granted for "s3_multipart_uploads_parts"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7655: WARNING:  no privileges were granted for "s3_multipart_uploads_parts"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7656: WARNING:  no privileges were granted for "s3_multipart_uploads_parts"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7657: WARNING:  no privileges were granted for "s3_multipart_uploads_parts"
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7664: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7672: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7680: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7681: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7688: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7689: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7696: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7697: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7704: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7711: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7718: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7725: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7726: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7727: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7728: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7735: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7736: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7737: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7738: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7745: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7746: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7747: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7748: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7755: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7756: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7757: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7758: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7765: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7766: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7767: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7768: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7775: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7776: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7777: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7778: ERROR:  permission denied to change default privileges
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7795: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7796: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7797: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7798: ERROR:  permission denied to change default privileges
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7815: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7816: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7817: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7818: ERROR:  permission denied to change default privileges
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7835: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7836: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7837: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7838: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7845: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7846: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7853: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7854: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7861: ERROR:  permission denied to change default privileges
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7862: ERROR:  permission denied to change default privileges
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7901: ERROR:  Non-superuser owned event trigger must execute a non-superuser owned function
+DETAIL:  The current user "postgres" is not a superuser and the function "extensions.set_graphql_placeholder" is owned by a superuser
+ALTER EVENT TRIGGER
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7912: ERROR:  Non-superuser owned event trigger must execute a non-superuser owned function
+DETAIL:  The current user "postgres" is not a superuser and the function "extensions.grant_pg_cron_access" is owned by a superuser
+ALTER EVENT TRIGGER
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7923: ERROR:  Non-superuser owned event trigger must execute a non-superuser owned function
+DETAIL:  The current user "postgres" is not a superuser and the function "extensions.grant_pg_graphql_access" is owned by a superuser
+ALTER EVENT TRIGGER
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7934: ERROR:  Non-superuser owned event trigger must execute a non-superuser owned function
+DETAIL:  The current user "postgres" is not a superuser and the function "extensions.grant_pg_net_access" is owned by a superuser
+ALTER EVENT TRIGGER
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7944: ERROR:  Non-superuser owned event trigger must execute a non-superuser owned function
+DETAIL:  The current user "postgres" is not a superuser and the function "extensions.pgrst_ddl_watch" is owned by a superuser
+ALTER EVENT TRIGGER
+psql:Users/Jerry A/Downloads/db_cluster-01-08-2025@16-31-42.backup:7954: ERROR:  Non-superuser owned event trigger must execute a non-superuser owned function
+DETAIL:  The current user "postgres" is not a superuser and the function "extensions.pgrst_drop_watch" is owned by a superuser
+ALTER EVENT TRIGGER

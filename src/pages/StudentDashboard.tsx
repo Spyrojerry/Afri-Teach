@@ -108,7 +108,7 @@ const StudentDashboard = () => {
 
   return (
     <DashboardLayout userType="student">
-      <div className="container mx-auto py-4 space-y-8">
+      <div className="space-y-8">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Student Dashboard</h1>
           <p className="text-gray-500">Welcome back{user?.user_metadata?.first_name ? `, ${user.user_metadata.first_name}` : ''}! Manage your learning journey</p>

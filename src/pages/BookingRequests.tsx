@@ -232,7 +232,7 @@ const BookingRequests = () => {
 
   return (
     <DashboardLayout userType="teacher">
-      <div className="container mx-auto px-4 py-8">
+      <div className="space-y-6">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
           <div>
             <h1 className="text-3xl font-bold">Booking Requests</h1>

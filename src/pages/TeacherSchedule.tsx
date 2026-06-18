@@ -388,7 +388,7 @@ const TeacherSchedule = () => {
 
   return (
     <DashboardLayout userType="teacher" showBackButton={true} backTo="/teacher/profile">
-      <div className="mx-auto px-4 py-8 pt-4">
+      <div className="space-y-6">
         <div className="flex justify-between items-center">
           <h1 className="text-3xl font-semibold">My Schedule</h1>
           <Button 

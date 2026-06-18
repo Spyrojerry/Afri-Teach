@@ -45,18 +45,34 @@ export default function AuthCallback() {
         if (data?.session) {
           console.log('User authenticated:', data.session.user.id);
           
-          // Check if user has a profile already
-          const { data: profileData } = await supabase
-            .from('profiles')
-            .select('id, user_type')
+          // The restored schema stores the account role in public.users.
+          const { data: profileData, error: profileError } = await supabase
+            .from('users')
+            .select('id, role')
             .eq('id', data.session.user.id)
-            .single();
+            .maybeSingle();
+
+          if (profileError) {
+            throw profileError;
+          }
           
-          if (profileData) {
-            // User has a profile, redirect to the appropriate dashboard
-            const destination = profileData.user_type === 'teacher' 
-              ? '/teacher/dashboard' 
-              : '/student/dashboard';
+          const onboardingCompleted =
+            data.session.user.user_metadata?.onboarding_completed === true;
+
+          if (profileData && onboardingCompleted) {
+            const requestedDestination = sessionStorage.getItem('afriteach_auth_return_to');
+            sessionStorage.removeItem('afriteach_auth_return_to');
+            const safeRequestedDestination =
+              requestedDestination?.startsWith('/') && !requestedDestination.startsWith('//')
+                ? requestedDestination
+                : null;
+
+            const destination =
+              profileData.role === 'student' && safeRequestedDestination
+                ? safeRequestedDestination
+                : profileData.role === 'teacher'
+                  ? '/teacher/dashboard'
+                  : '/student/dashboard';
             
             toast({
               title: 'Signed in successfully',
@@ -114,4 +130,4 @@ export default function AuthCallback() {
       )}
     </div>
   );
-} 
+}

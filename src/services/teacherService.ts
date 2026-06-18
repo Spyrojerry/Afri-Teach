@@ -23,6 +23,8 @@ export interface Teacher {
   rating?: number; // Alias for averageRating
   subjects?: string[]; // List of subjects the teacher teaches
   hourlyRate?: number; // Teacher's hourly rate
+  country?: string;
+  countryFlag?: string;
 }
 
 /**
@@ -48,6 +50,9 @@ export const getTeacherProfile = async (userId: string): Promise<Teacher | null>
         is_verified,
         average_rating,
         contact_number,
+        hourly_rate,
+        country,
+        country_flag,
         created_at,
         updated_at
       `)
@@ -133,6 +138,9 @@ export const getTeacherProfile = async (userId: string): Promise<Teacher | null>
       isVerified: teacherData.is_verified,
       averageRating: toNumber(teacherData.average_rating, 0),
       contactNumber: teacherData.contact_number,
+      hourlyRate: toNumber(teacherData.hourly_rate, 0),
+      country: teacherData.country,
+      countryFlag: teacherData.country_flag,
       createdAt: teacherData.created_at,
       updatedAt: teacherData.updated_at
     };
@@ -166,6 +174,9 @@ export const updateTeacherProfile = async (
     if (profileData.experience !== undefined) data.experience = profileData.experience;
     if (profileData.timeZone !== undefined) data.time_zone = profileData.timeZone;
     if (profileData.contactNumber !== undefined) data.contact_number = profileData.contactNumber;
+    if (profileData.hourlyRate !== undefined) data.hourly_rate = profileData.hourlyRate;
+    if (profileData.country !== undefined) data.country = profileData.country;
+    if (profileData.countryFlag !== undefined) data.country_flag = profileData.countryFlag;
     
     // For backward compatibility, handle fullName by splitting it into first and last name
     if (profileData.fullName !== undefined && 
@@ -264,91 +275,19 @@ export const updateTeacherProfile = async (
  */
 export const getTeacherAvailability = async (teacherId: string) => {
   try {
-    // Create a flag to track if we need to use mock data
-    let useMockData = true;
-    let availability = {
-      recurringSlots: [],
-      specificDates: [],
-      breakPeriods: []
+    const { data, error } = await supabase
+      .from('teacher_availability')
+      .select('recurring_slots, specific_dates, break_periods')
+      .eq('teacher_id', teacherId)
+      .maybeSingle();
+
+    if (error) throw error;
+
+    return {
+      recurringSlots: data?.recurring_slots || [],
+      specificDates: data?.specific_dates || [],
+      breakPeriods: data?.break_periods || [],
     };
-    
-    // First try to get availability from local storage (as fallback)
-    try {
-      const storedData = localStorage.getItem(`teacher_availability_${teacherId}`);
-      if (storedData) {
-        availability = JSON.parse(storedData);
-        console.log('Retrieved availability from local storage:', availability);
-      }
-    } catch (storageError) {
-      console.log('Could not access local storage:', storageError);
-    }
-    
-    // Create a simple check to verify if the database is accessible
-    try {
-      // First try to get the user profile to verify the database connection
-      const { data: userData, error: userError } = await supabase
-        .from('teachers')
-        .select('id')
-        .eq('id', teacherId)
-        .maybeSingle();
-      
-      if (!userError) {
-        useMockData = false;
-        
-        // If we can access the database, look for availability data
-        // Try the teachers table first (more likely to exist)
-        const { data: teacherData, error: teacherError } = await supabase
-          .from('teachers')
-          .select('availability')
-          .eq('id', teacherId)
-          .maybeSingle();
-        
-        if (!teacherError && teacherData?.availability) {
-          availability = {
-            recurringSlots: teacherData.availability.recurringSlots || [],
-            specificDates: teacherData.availability.specificDates || [],
-            breakPeriods: teacherData.availability.breakPeriods || []
-          };
-          console.log('Retrieved availability from teachers table:', availability);
-        } else {
-          // If no data in the teachers table, try the dedicated availability table
-          try {
-            const { data, error } = await supabase
-              .from('teacher_availability')
-              .select('recurring_slots, specific_dates, break_periods')
-              .eq('teacher_id', teacherId)
-              .maybeSingle();
-            
-            if (!error && data) {
-              availability = {
-                recurringSlots: data.recurring_slots || [],
-                specificDates: data.specific_dates || [],
-                breakPeriods: data.break_periods || []
-              };
-              console.log('Retrieved availability from teacher_availability table:', availability);
-            }
-          } catch (availabilityError) {
-            console.log('Error querying teacher_availability table:', availabilityError);
-          }
-        }
-      }
-    } catch (dbError) {
-      console.log('Database seems inaccessible, using fallback data:', dbError);
-    }
-    
-    // If we couldn't get data from the database or storage, provide empty arrays
-    if (useMockData) {
-      console.log('Using empty arrays for availability as fallback');
-    }
-    
-    // Store the availability data in local storage for offline use
-    try {
-      localStorage.setItem(`teacher_availability_${teacherId}`, JSON.stringify(availability));
-    } catch (storageError) {
-      console.log('Could not save to local storage:', storageError);
-    }
-    
-    return availability;
   } catch (error) {
     console.error('Error getting teacher availability:', error);
     return {
@@ -374,61 +313,18 @@ export const saveTeacherAvailability = async (
   }
 ): Promise<boolean> => {
   try {
-    // First, save to local storage as backup
-    try {
-      localStorage.setItem(`teacher_availability_${teacherId}`, JSON.stringify(availabilityData));
-    } catch (storageError) {
-      console.log('Could not save to local storage:', storageError);
-    }
-    
-    let savedToDatabase = false;
-    
-    // Try saving to the database - first to the teachers table as it's more likely to exist
-    try {
-      const { error: updateError } = await supabase
-        .from('teachers')
-        .update({
-          availability: availabilityData,
-          updated_at: new Date().toISOString()
-        })
-        .eq('id', teacherId);
-      
-      if (!updateError) {
-        console.log('Successfully saved availability to teachers table');
-        savedToDatabase = true;
-      } else {
-        console.log('Error saving to teachers table, will try availability table:', updateError);
-      }
-    } catch (teacherError) {
-      console.log('Exception saving to teachers table:', teacherError);
-    }
-    
-    // If saving to teachers table failed, try the dedicated availability table
-    if (!savedToDatabase) {
-      try {
-        const { error } = await supabase
-          .from('teacher_availability')
-          .upsert({
-            teacher_id: teacherId,
-            recurring_slots: availabilityData.recurringSlots || [],
-            specific_dates: availabilityData.specificDates || [],
-            break_periods: availabilityData.breakPeriods || [],
-            updated_at: new Date().toISOString()
-          }, { onConflict: 'teacher_id' });
-        
-        if (!error) {
-          console.log('Successfully saved availability to teacher_availability table');
-          savedToDatabase = true;
-        } else {
-          console.log('Error saving to teacher_availability table:', error);
-        }
-      } catch (availabilityError) {
-        console.log('Exception saving to teacher_availability table:', availabilityError);
-      }
-    }
-    
-    // Return true if we saved to at least one location
-    return savedToDatabase || true; // Return true if at least saved to localStorage
+    const { error } = await supabase
+      .from('teacher_availability')
+      .upsert({
+        teacher_id: teacherId,
+        recurring_slots: availabilityData.recurringSlots || [],
+        specific_dates: availabilityData.specificDates || [],
+        break_periods: availabilityData.breakPeriods || [],
+        updated_at: new Date().toISOString(),
+      }, { onConflict: 'teacher_id' });
+
+    if (error) throw error;
+    return true;
   } catch (error) {
     console.error('Unexpected error in saveTeacherAvailability:', error);
     return false;

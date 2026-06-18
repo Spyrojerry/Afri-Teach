@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DashboardLayout } from "@/components/DashboardLayout";
 import {
   Card,
@@ -18,7 +18,6 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs";
 import {
-  Switch,
   Select,
   SelectContent,
   SelectGroup,
@@ -31,11 +30,13 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/components/ui/use-toast";
 import { useAuth } from "@/contexts/auth-context";
 import { supabase } from "@/integrations/supabase/client";
-import { Lock, Bell, Shield, User, Globe, MessageCircle } from "lucide-react";
+import { Lock, Bell, Shield, User } from "lucide-react";
+import { getUserSettings, saveUserSettings } from "@/services/settingsService";
 
 const StudentSettings = () => {
   const { user } = useAuth();
   const { toast } = useToast();
+  const isEmailUser = user?.app_metadata?.provider === "email";
   const [isUpdating, setIsUpdating] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -53,6 +54,28 @@ const StudentSettings = () => {
   const [language, setLanguage] = useState("english");
   const [timezone, setTimezone] = useState("UTC");
 
+  useEffect(() => {
+    const loadSettings = async () => {
+      if (!user?.id) return;
+      try {
+        const settings = await getUserSettings(user.id);
+        const notifications = settings.notification_preferences;
+        const privacy = settings.privacy_preferences;
+        setEmailNotifications(notifications.emailNotifications ?? true);
+        setLessonReminders(notifications.lessonReminders ?? true);
+        setMarketingEmails(notifications.marketingEmails ?? false);
+        setMessageNotifications(notifications.messageNotifications ?? true);
+        setShowProfileToTeachers(privacy.showProfileToTeachers ?? true);
+        setShareActivity(privacy.shareActivity ?? true);
+        setLanguage(settings.language);
+        setTimezone(settings.time_zone);
+      } catch (error) {
+        console.error("Failed to load student settings:", error);
+      }
+    };
+    loadSettings();
+  }, [user?.id]);
+
   const handlePasswordChange = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -67,6 +90,17 @@ const StudentSettings = () => {
 
     setIsUpdating(true);
     try {
+      if (isEmailUser) {
+        if (!user.email || !currentPassword) {
+          throw new Error("Enter your current password.");
+        }
+        const { error: reauthError } = await supabase.auth.signInWithPassword({
+          email: user.email,
+          password: currentPassword,
+        });
+        if (reauthError) throw new Error("Your current password is incorrect.");
+      }
+
       const { error } = await supabase.auth.updateUser({
         password: newPassword,
       });
@@ -82,11 +116,11 @@ const StudentSettings = () => {
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error updating password:", error);
       toast({
         title: "Update failed",
-        description: error.message || "Could not update your password. Please try again later.",
+        description: error instanceof Error ? error.message : "Could not update your password. Please try again later.",
         variant: "destructive",
       });
     } finally {
@@ -94,23 +128,60 @@ const StudentSettings = () => {
     }
   };
 
-  const handleNotificationSettingsSave = () => {
-    toast({
-      title: "Notification settings saved",
-      description: "Your notification preferences have been updated.",
-    });
+  const handleNotificationSettingsSave = async () => {
+    if (!user?.id) return;
+    setIsUpdating(true);
+    try {
+      await saveUserSettings(user.id, {
+        notification_preferences: {
+          emailNotifications,
+          lessonReminders,
+          marketingEmails,
+          messageNotifications,
+        },
+      });
+      toast({ title: "Notification settings saved", description: "Your preferences will be used across AfriTeach." });
+    } catch (error: unknown) {
+      toast({
+        title: "Save failed",
+        description: error instanceof Error ? error.message : "Your settings could not be saved.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsUpdating(false);
+    }
   };
 
-  const handlePrivacySettingsSave = () => {
-    toast({
-      title: "Privacy settings saved",
-      description: "Your privacy settings have been updated.",
-    });
+  const handlePrivacySettingsSave = async () => {
+    if (!user?.id) return;
+    setIsUpdating(true);
+    try {
+      const { error: profileError } = await supabase
+        .from("students")
+        .update({ time_zone: timezone })
+        .eq("id", user.id);
+      if (profileError) throw profileError;
+
+      await saveUserSettings(user.id, {
+        privacy_preferences: { showProfileToTeachers, shareActivity },
+        language,
+        time_zone: timezone,
+      });
+      toast({ title: "Privacy settings saved", description: "Your privacy and regional preferences were updated." });
+    } catch (error: unknown) {
+      toast({
+        title: "Save failed",
+        description: error instanceof Error ? error.message : "Your settings could not be saved.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsUpdating(false);
+    }
   };
 
   return (
     <DashboardLayout userType="student">
-      <div className="container mx-auto py-4 space-y-6">
+      <div className="space-y-6">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Account Settings</h1>
           <p className="text-gray-500">Manage your account preferences and settings</p>
@@ -177,7 +248,9 @@ const StudentSettings = () => {
                       type="password"
                       value={currentPassword}
                       onChange={(e) => setCurrentPassword(e.target.value)}
-                      required
+                      required={isEmailUser}
+                      disabled={!isEmailUser}
+                      placeholder={isEmailUser ? undefined : "Not required for social sign-in"}
                     />
                   </div>
                   <div className="space-y-2">
@@ -287,9 +360,10 @@ const StudentSettings = () => {
               <CardFooter>
                 <Button 
                   onClick={handleNotificationSettingsSave}
+                  disabled={isUpdating}
                   className="bg-gradient-to-r from-purple-600 to-purple-800"
-                >
-                  Save Notification Settings
+                  >
+                  {isUpdating ? "Saving..." : "Save Notification Settings"}
                 </Button>
               </CardFooter>
             </Card>
@@ -388,9 +462,10 @@ const StudentSettings = () => {
               <CardFooter>
                 <Button 
                   onClick={handlePrivacySettingsSave}
+                  disabled={isUpdating}
                   className="bg-gradient-to-r from-purple-600 to-purple-800"
-                >
-                  Save Privacy Settings
+                  >
+                  {isUpdating ? "Saving..." : "Save Privacy Settings"}
                 </Button>
               </CardFooter>
             </Card>
@@ -401,4 +476,4 @@ const StudentSettings = () => {
   );
 };
 
-export default StudentSettings; 
+export default StudentSettings;

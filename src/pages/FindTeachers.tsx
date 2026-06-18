@@ -93,12 +93,12 @@ const FindTeachers = ({ isPublic = false, onProtectedAction }: FindTeachersProps
               profile_picture_url: typeof teacher.profile_picture_url === 'string' ? teacher.profile_picture_url : undefined,
               subjects: Array.isArray(teacher.subjects) ? teacher.subjects : [],
               experience: typeof teacher.experience === 'string' ? teacher.experience : "New teacher",
-              average_rating: typeof teacher.average_rating === 'number' ? teacher.average_rating : 4.5,
-              hourly_rate: typeof teacher.hourly_rate === 'number' ? teacher.hourly_rate : 25,
+              average_rating: typeof teacher.average_rating === 'number' ? teacher.average_rating : 0,
+              hourly_rate: typeof teacher.hourly_rate === 'number' ? teacher.hourly_rate : 0,
               time_zone: typeof teacher.time_zone === 'string' ? teacher.time_zone : "GMT",
-              country: typeof teacher.country === 'string' ? teacher.country : "Unknown",
+              country: typeof teacher.country === 'string' ? teacher.country : "Not specified",
               country_flag: typeof teacher.country_flag === 'string' ? teacher.country_flag : "🌍",
-              reviews_count: typeof teacher.reviews_count === 'number' ? teacher.reviews_count : Math.floor(Math.random() * 100) + 1
+              reviews_count: typeof teacher.reviews_count === 'number' ? teacher.reviews_count : 0
             } as Teacher;
           });
         
@@ -109,11 +109,8 @@ const FindTeachers = ({ isPublic = false, onProtectedAction }: FindTeachersProps
         console.error("Failed to fetch teachers:", err);
         setError("Failed to load teachers data. Please try again later.");
         
-        // Fallback to mock data for testing
-        console.log("Using mock teacher data as fallback");
-        const mockTeachers = getMockTeachers();
-        setTeachers(mockTeachers);
-        setFilteredTeachers(mockTeachers);
+        setTeachers([]);
+        setFilteredTeachers([]);
       } finally {
         setIsLoading(false);
       }
@@ -121,54 +118,6 @@ const FindTeachers = ({ isPublic = false, onProtectedAction }: FindTeachersProps
     
     fetchTeachers();
   }, []);
-  
-  // Mock teachers data for fallback/testing
-  const getMockTeachers = (): Teacher[] => {
-    return [
-      {
-        id: "1",
-        first_name: "Amara",
-        last_name: "Okonkwo",
-        profile_picture_url: "https://images.unsplash.com/photo-1494790108755-2616b612b47c?w=100&h=100&fit=crop&crop=face",
-        subjects: ["Calculus", "Algebra", "Statistics"],
-        country: "Nigeria",
-        country_flag: "🇳🇬",
-        average_rating: 4.9,
-        reviews_count: 127,
-        experience: "8 years",
-        hourly_rate: 25,
-        time_zone: "Africa/Lagos"
-      },
-      {
-        id: "2",
-        first_name: "Kwame",
-        last_name: "Asante",
-        profile_picture_url: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face",
-        subjects: ["Mechanics", "Quantum Physics", "Electromagnetism"],
-        country: "Ghana",
-        country_flag: "🇬🇭",
-        average_rating: 4.8,
-        reviews_count: 93,
-        experience: "12 years",
-        hourly_rate: 30,
-        time_zone: "Africa/Accra"
-      },
-      {
-        id: "3",
-        first_name: "Fatima",
-        last_name: "Hassan",
-        profile_picture_url: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&h=100&fit=crop&crop=face",
-        subjects: ["Molecular Biology", "Genetics", "Ecology"],
-        country: "Kenya",
-        country_flag: "🇰🇪",
-        average_rating: 4.7,
-        reviews_count: 85,
-        experience: "6 years",
-        hourly_rate: 22,
-        time_zone: "Africa/Nairobi"
-      }
-    ];
-  };
   
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -183,7 +132,9 @@ const FindTeachers = ({ isPublic = false, onProtectedAction }: FindTeachersProps
       `${teacher.first_name} ${teacher.last_name}`.toLowerCase().includes(searchQuery.toLowerCase()) ||
       teacher.subjects.some(subject => 
         subject.toLowerCase().includes(searchQuery.toLowerCase())
-      )
+      ) ||
+      teacher.experience.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      teacher.country.toLowerCase().includes(searchQuery.toLowerCase())
     );
     
     setFilteredTeachers(filtered);
@@ -209,19 +160,9 @@ const FindTeachers = ({ isPublic = false, onProtectedAction }: FindTeachersProps
     navigate(`/student/book-lesson/${teacherId}`);
   };
 
-  // Get next available time (would come from availability in real app)
-  const getNextAvailable = (teacher: Teacher) => {
-    // Random availability for demo
-    const randomHour = Math.floor(Math.random() * 12) + 8;
-    const isToday = Math.random() > 0.5;
-    return isToday 
-      ? `Today ${randomHour}:00 ${randomHour >= 12 ? 'PM' : 'AM'}`
-      : `Tomorrow ${randomHour}:00 ${randomHour >= 12 ? 'PM' : 'AM'}`;
-  };
-
   return (
     <DashboardLayout userType="student">
-      <div className="container mx-auto py-4 space-y-6">
+      <div className="space-y-6">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Find Teachers</h1>
           <p className="text-gray-500">Discover and connect with expert teachers from across Africa</p>
@@ -323,7 +264,7 @@ const FindTeachers = ({ isPublic = false, onProtectedAction }: FindTeachersProps
                         </div>
                         <div className="flex items-center gap-1">
                           <Clock className="h-4 w-4" />
-                          <span>{getNextAvailable(teacher)}</span>
+                          <span>View schedule</span>
                         </div>
                       </div>
                       

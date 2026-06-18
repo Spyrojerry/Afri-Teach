@@ -42,6 +42,7 @@ interface Lesson {
     avatar?: string;
   };
   notes?: string;
+  meetingLink?: string;
 }
 
 // Message interface
@@ -113,14 +114,16 @@ export const VirtualClassroom = ({ lesson, userRole, userId, onEndSession }: Vir
   
   // Mock webcam stream (in a real implementation, this would use WebRTC)
   useEffect(() => {
+    const videoElement = videoRef.current;
+
     const setupMockVideo = async () => {
       try {
-        if (videoRef.current && isVideoEnabled) {
+        if (videoElement && isVideoEnabled) {
           const stream = await navigator.mediaDevices.getUserMedia({ 
             video: true,
             audio: isAudioEnabled
           });
-          videoRef.current.srcObject = stream;
+          videoElement.srcObject = stream;
         }
       } catch (error) {
         console.error("Error accessing media devices:", error);
@@ -129,15 +132,15 @@ export const VirtualClassroom = ({ lesson, userRole, userId, onEndSession }: Vir
     
     if (isVideoEnabled) {
       setupMockVideo();
-    } else if (videoRef.current && videoRef.current.srcObject) {
-      const tracks = (videoRef.current.srcObject as MediaStream).getTracks();
+    } else if (videoElement?.srcObject) {
+      const tracks = (videoElement.srcObject as MediaStream).getTracks();
       tracks.forEach(track => track.stop());
-      videoRef.current.srcObject = null;
+      videoElement.srcObject = null;
     }
     
     return () => {
-      if (videoRef.current && videoRef.current.srcObject) {
-        const tracks = (videoRef.current.srcObject as MediaStream).getTracks();
+      if (videoElement?.srcObject) {
+        const tracks = (videoElement.srcObject as MediaStream).getTracks();
         tracks.forEach(track => track.stop());
       }
     };
@@ -254,7 +257,14 @@ export const VirtualClassroom = ({ lesson, userRole, userId, onEndSession }: Vir
             {/* Video Tab */}
             <TabsContent value="video" className="flex-1 flex flex-col">
               <div className="flex-1 bg-gray-900 rounded-md overflow-hidden relative">
-                {isVideoEnabled ? (
+                {lesson.meetingLink ? (
+                  <iframe
+                    src={`${lesson.meetingLink}#config.prejoinPageEnabled=false`}
+                    title="AfriTeach video classroom"
+                    allow="camera; microphone; fullscreen; display-capture; autoplay"
+                    className="h-full w-full border-0"
+                  />
+                ) : isVideoEnabled ? (
                   <video 
                     ref={videoRef} 
                     autoPlay 
@@ -271,16 +281,16 @@ export const VirtualClassroom = ({ lesson, userRole, userId, onEndSession }: Vir
                   </div>
                 )}
                 
-                <div className="absolute bottom-4 right-4 flex items-center gap-2">
+                {!lesson.meetingLink && <div className="absolute bottom-4 right-4 flex items-center gap-2">
                   <Avatar className="h-20 w-20 border-2 border-white">
                     <AvatarImage src={otherParticipant.avatar} alt={otherParticipant.name} />
                     <AvatarFallback className="bg-gradient-to-r from-purple-600 to-purple-700 text-xl text-white">
                       {otherParticipant.name.split(" ").map(n => n[0]).join("")}
                     </AvatarFallback>
                   </Avatar>
-                </div>
+                </div>}
                 
-                <div className="absolute bottom-4 left-0 right-0 flex items-center justify-center gap-4">
+                {!lesson.meetingLink && <div className="absolute bottom-4 left-0 right-0 flex items-center justify-center gap-4">
                   <Button 
                     variant={isAudioEnabled ? "default" : "destructive"} 
                     size="icon" 
@@ -316,7 +326,7 @@ export const VirtualClassroom = ({ lesson, userRole, userId, onEndSession }: Vir
                   >
                     <PhoneOff className="h-5 w-5" />
                   </Button>
-                </div>
+                </div>}
               </div>
             </TabsContent>
             
@@ -482,4 +492,4 @@ export const VirtualClassroom = ({ lesson, userRole, userId, onEndSession }: Vir
       </div>
     </div>
   );
-}; 
+};

@@ -1,8 +1,10 @@
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import type { ReactNode } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { Analytics } from "@vercel/analytics/react";
 import { AuthProvider } from "@/contexts/auth-context";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
@@ -32,9 +34,59 @@ import BookingRequests from "./pages/BookingRequests";
 import StudentSettings from "./pages/StudentSettings";
 import TeacherSettings from "./pages/TeacherSettings";
 import PublicFindTeachers from "./pages/PublicFindTeachers";
-import { Analytics } from "@vercel/analytics/react";
 
 const queryClient = new QueryClient();
+
+const protect = (
+  element: ReactNode,
+  role?: "student" | "teacher",
+  skipOnboardingCheck = false,
+) => (
+  <ProtectedRoute requiredRole={role} skipOnboardingCheck={skipOnboardingCheck}>
+    {element}
+  </ProtectedRoute>
+);
+
+const AnimatedRoutes = () => {
+  const location = useLocation();
+
+  return (
+    <div key={location.pathname} className="page-transition">
+      <Routes location={location}>
+        <Route path="/" element={<Index />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/auth/callback" element={<AuthCallback />} />
+        <Route path="/teachers" element={<PublicFindTeachers />} />
+        <Route path="/onboarding" element={protect(<Onboarding />, undefined, true)} />
+        <Route path="/student/dashboard" element={protect(<StudentDashboard />, "student")} />
+        <Route path="/teacher/dashboard" element={protect(<TeacherDashboard />, "teacher")} />
+        <Route path="/student/profile" element={protect(<StudentProfile />, "student")} />
+        <Route path="/teacher/profile" element={protect(<TeacherProfile />, "teacher")} />
+        <Route path="/student/find-teachers" element={protect(<FindTeachers />, "student")} />
+        <Route path="/teacher/availability" element={protect(<ManageAvailability />, "teacher")} />
+        <Route path="/student/lessons" element={protect(<StudentLessons />, "student")} />
+        <Route path="/teacher/schedule" element={protect(<TeacherSchedule />, "teacher")} />
+        <Route path="/student/book-lesson/:teacherId" element={protect(<BookLesson />, "student")} />
+        <Route path="/student/classroom/:lessonId" element={protect(<VirtualClassroomPage />, "student")} />
+        <Route path="/teacher/classroom/:lessonId" element={protect(<VirtualClassroomPage />, "teacher")} />
+        <Route path="/teacher/earnings" element={protect(<TeacherEarnings />, "teacher")} />
+        <Route path="/teacher/lessons" element={protect(<TeacherLessons />, "teacher")} />
+        <Route path="/teacher/students" element={protect(<TeacherStudents />, "teacher")} />
+        <Route path="/teacher/booking-requests" element={protect(<BookingRequests />, "teacher")} />
+        <Route path="/student/notifications" element={protect(<Notifications />, "student")} />
+        <Route path="/teacher/notifications" element={protect(<Notifications />, "teacher")} />
+        <Route path="/student/messages" element={protect(<Messages />, "student")} />
+        <Route path="/teacher/messages" element={protect(<Messages />, "teacher")} />
+        <Route path="/student/settings" element={protect(<StudentSettings />, "student")} />
+        <Route path="/teacher/settings" element={protect(<TeacherSettings />, "teacher")} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </div>
+  );
+};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -44,194 +96,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/reset-password" element={<ResetPassword />} />
-            <Route path="/auth/callback" element={<AuthCallback />} />
-            <Route path="/teachers" element={<PublicFindTeachers />} />
-            <Route 
-              path="/onboarding" 
-              element={
-                <ProtectedRoute skipOnboardingCheck={true}>
-                  <Onboarding />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/student/dashboard" 
-              element={
-                <ProtectedRoute requiredRole="student">
-                  <StudentDashboard />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/teacher/dashboard" 
-              element={
-                <ProtectedRoute requiredRole="teacher">
-                  <TeacherDashboard />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/student/profile" 
-              element={
-                <ProtectedRoute requiredRole="student">
-                  <StudentProfile />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/teacher/profile" 
-              element={
-                <ProtectedRoute requiredRole="teacher">
-                  <TeacherProfile />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/student/find-teachers" 
-              element={
-                <ProtectedRoute requiredRole="student">
-                  <FindTeachers />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/teacher/availability" 
-              element={
-                <ProtectedRoute requiredRole="teacher">
-                  <ManageAvailability />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/student/lessons" 
-              element={
-                <ProtectedRoute requiredRole="student">
-                  <StudentLessons />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/teacher/schedule" 
-              element={
-                <ProtectedRoute requiredRole="teacher">
-                  <TeacherSchedule />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/student/book-lesson/:teacherId" 
-              element={
-                <ProtectedRoute requiredRole="student">
-                  <BookLesson />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/student/classroom/:lessonId" 
-              element={
-                <ProtectedRoute requiredRole="student">
-                  <VirtualClassroomPage />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/teacher/classroom/:lessonId" 
-              element={
-                <ProtectedRoute requiredRole="teacher">
-                  <VirtualClassroomPage />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/teacher/earnings" 
-              element={
-                <ProtectedRoute requiredRole="teacher">
-                  <TeacherEarnings />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/teacher/lessons" 
-              element={
-                <ProtectedRoute requiredRole="teacher">
-                  <TeacherLessons />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/teacher/students" 
-              element={
-                <ProtectedRoute requiredRole="teacher">
-                  <TeacherStudents />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/teacher/booking-requests" 
-              element={
-                <ProtectedRoute requiredRole="teacher">
-                  <BookingRequests />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/student/notifications" 
-              element={
-                <ProtectedRoute requiredRole="student">
-                  <Notifications />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/teacher/notifications" 
-              element={
-                <ProtectedRoute requiredRole="teacher">
-                  <Notifications />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/student/messages" 
-              element={
-                <ProtectedRoute requiredRole="student">
-                  <Messages />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/teacher/messages" 
-              element={
-                <ProtectedRoute requiredRole="teacher">
-                  <Messages />
-                </ProtectedRoute>
-              } 
-            />
-            {/* Settings Routes */}
-            <Route 
-              path="/student/settings" 
-              element={
-                <ProtectedRoute requiredRole="student">
-                  <StudentSettings />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/teacher/settings" 
-              element={
-                <ProtectedRoute requiredRole="teacher">
-                  <TeacherSettings />
-                </ProtectedRoute>
-              } 
-            />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <AnimatedRoutes />
         </BrowserRouter>
       </TooltipProvider>
     </AuthProvider>

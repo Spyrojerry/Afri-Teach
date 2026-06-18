@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Check, Plus, Trash2, Save, BookOpen, Edit, X } from "lucide-react";
+import { Check, Plus, Trash2, Save, BookOpen, Edit } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/auth-context";
@@ -19,7 +18,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface TeacherSubjectsManagerProps {
   teacherId?: string; // Optional - if not provided, uses the logged-in teacher
@@ -68,19 +66,22 @@ export const TeacherSubjectsManager = ({
           throw teacherError;
         }
         
-        // Fetch all available subjects
-        const { data: allSubjects, error: subjectsError } = await supabase
-          .from('learning_modules')
-          .select('subject')
-          .order('subject');
+        // Fetch catalogue subjects and module subjects so the picker works
+        // even when a subject does not have modules yet.
+        const [{ data: subjectRows, error: subjectsError }, { data: moduleRows, error: modulesError }] =
+          await Promise.all([
+            supabase.from('subjects').select('name').order('name'),
+            supabase.from('learning_modules').select('subject').order('subject'),
+          ]);
         
-        if (subjectsError) {
-          console.error("Error fetching subjects:", subjectsError);
-          throw subjectsError;
-        }
+        if (subjectsError) throw subjectsError;
+        if (modulesError) throw modulesError;
         
         // Get unique subjects
-        const uniqueSubjects = [...new Set(allSubjects.map(s => s.subject))];
+        const uniqueSubjects = [...new Set([
+          ...(subjectRows || []).map(row => row.name),
+          ...(moduleRows || []).map(row => row.subject),
+        ])].filter(Boolean).sort();
         setAvailableSubjects(uniqueSubjects);
         
         // Process teacher's subjects
@@ -110,14 +111,7 @@ export const TeacherSubjectsManager = ({
         console.error("Failed to fetch teacher subjects:", err);
         setError("Failed to load subjects. Please try again later.");
         
-        // Use mock data if needed
-        setSubjects([
-          {
-            name: "Mathematics",
-            modules: await getModulesForSubject("Mathematics"),
-            selectedModules: ["m1", "m2"]
-          }
-        ]);
+        setSubjects([]);
       } finally {
         setIsLoading(false);
       }
@@ -144,8 +138,8 @@ export const TeacherSubjectsManager = ({
     const modules = await getModulesForSubject(newSubject);
     
     // Add the new subject
-    setSubjects([
-      ...subjects,
+    setSubjects(currentSubjects => [
+      ...currentSubjects,
       {
         name: newSubject,
         modules,
@@ -155,6 +149,10 @@ export const TeacherSubjectsManager = ({
     
     // Clear the input
     setNewSubject("");
+    toast({
+      title: "Subject added",
+      description: `${newSubject} was added. Select modules, then save your changes.`,
+    });
   };
   
   // Remove a subject
@@ -278,6 +276,7 @@ export const TeacherSubjectsManager = ({
           
           {!readOnly && (
             <Button 
+              type="button"
               variant="default"
               onClick={() => setIsModalOpen(true)}
               size="sm"
@@ -351,8 +350,8 @@ export const TeacherSubjectsManager = ({
             </DialogDescription>
           </DialogHeader>
           
-          <ScrollArea className="flex-1 py-4">
-            <div className="space-y-6 pr-4">
+          <div className="min-h-0 flex-1 overflow-y-auto py-4">
+            <div className="space-y-6 pr-2">
               {/* Subject list (edit mode) */}
               {subjects.length === 0 ? (
                 <div className="text-center py-6 text-gray-500">
@@ -365,6 +364,7 @@ export const TeacherSubjectsManager = ({
                       <div className="flex justify-between items-center">
                         <h3 className="text-lg font-medium">{subject.name}</h3>
                         <Button 
+                          type="button"
                           variant="ghost" 
                           size="sm"
                           onClick={() => handleRemoveSubject(subject.name)}
@@ -397,6 +397,14 @@ export const TeacherSubjectsManager = ({
                                       cursor-pointer flex items-center gap-1
                                     `}
                                     onClick={() => handleToggleModule(subject.name, module.id)}
+                                    role="button"
+                                    tabIndex={0}
+                                    onKeyDown={(event) => {
+                                      if (event.key === "Enter" || event.key === " ") {
+                                        event.preventDefault();
+                                        handleToggleModule(subject.name, module.id);
+                                      }
+                                    }}
                                   >
                                     {isSelected && <Check className="h-3 w-3" />}
                                     <BookOpen className="h-3 w-3" />
@@ -434,6 +442,7 @@ export const TeacherSubjectsManager = ({
                   </Select>
                   
                   <Button 
+                    type="button"
                     onClick={handleAddSubject}
                     disabled={!newSubject}
                   >
@@ -443,10 +452,11 @@ export const TeacherSubjectsManager = ({
                 </div>
               </div>
             </div>
-          </ScrollArea>
+          </div>
           
           <DialogFooter className="flex justify-between pt-4 border-t">
             <Button 
+              type="button"
               variant="outline"
               onClick={() => setIsModalOpen(false)}
               disabled={isSaving}
@@ -455,6 +465,7 @@ export const TeacherSubjectsManager = ({
             </Button>
             
             <Button 
+              type="button"
               onClick={handleSaveChanges}
               disabled={isSaving}
               className="bg-gradient-to-r from-green-600 to-emerald-600"

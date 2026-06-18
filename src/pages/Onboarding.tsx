@@ -66,23 +66,50 @@ const Onboarding = () => {
       });
       
       if (error) {
-        toast({
-          title: "Update failed",
-          description: error.message,
-          variant: "destructive",
-        });
+        throw error;
+      }
+
+      const { error: userError } = await supabase.from("users").upsert({
+        id: user.id,
+        email: user.email,
+        role: values.userType,
+        updated_at: new Date().toISOString(),
+      });
+
+      if (userError) throw userError;
+
+      const profilePayload = {
+        id: user.id,
+        first_name: values.firstName,
+        last_name: values.lastName,
+        updated_at: new Date().toISOString(),
+      };
+
+      const { error: profileError } = values.userType === "student"
+        ? await supabase.from("students").upsert(profilePayload)
+        : await supabase.from("teachers").upsert(profilePayload);
+
+      if (profileError) throw profileError;
+
+      // A user has one active AfriTeach role/profile.
+      const { error: staleProfileError } = values.userType === "student"
+        ? await supabase.from("teachers").delete().eq("id", user.id)
+        : await supabase.from("students").delete().eq("id", user.id);
+
+      if (staleProfileError && staleProfileError.code !== "PGRST116") {
+        throw staleProfileError;
+      }
+
+      toast({
+        title: "Profile updated",
+        description: "Your information has been saved successfully",
+      });
+      
+      // Redirect to the appropriate dashboard based on role
+      if (values.userType === "student") {
+        navigate("/student/dashboard");
       } else {
-        toast({
-          title: "Profile updated",
-          description: "Your information has been saved successfully",
-        });
-        
-        // Redirect to the appropriate dashboard based on role
-        if (values.userType === "student") {
-          navigate("/student/dashboard");
-        } else if (values.userType === "teacher") {
-          navigate("/teacher/dashboard");
-        }
+        navigate("/teacher/dashboard");
       }
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : "Failed to update profile";

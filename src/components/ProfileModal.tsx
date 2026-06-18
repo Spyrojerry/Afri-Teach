@@ -196,6 +196,31 @@ export const ProfileModal = ({
                       className="min-h-[80px]"
                     />
                   </div>
+
+                  <div className="grid grid-cols-2 gap-4 mt-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="country">Country</Label>
+                      <Input
+                        id="country"
+                        name="country"
+                        value={formData.country || ''}
+                        onChange={handleChange}
+                        placeholder="Nigeria"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="hourlyRate">Hourly rate (USD)</Label>
+                      <Input
+                        id="hourlyRate"
+                        name="hourlyRate"
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        value={formData.hourlyRate ?? ''}
+                        onChange={handleChange}
+                      />
+                    </div>
+                  </div>
                 </>
               )}
               

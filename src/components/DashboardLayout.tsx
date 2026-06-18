@@ -91,6 +91,27 @@ export const DashboardLayout = ({
     
     fetchNotifications();
   }, [user?.id]);
+
+  useEffect(() => {
+    setIsSidebarOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (!isSidebarOpen) return;
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsSidebarOpen(false);
+    };
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleEscape);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleEscape);
+    };
+  }, [isSidebarOpen]);
   
   // Mark notification as read
   const handleMarkAsRead = async (id: string) => {
@@ -165,10 +186,10 @@ export const DashboardLayout = ({
         description: "You have been logged out of your account",
       });
       navigate("/login");
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "Error logging out",
-        description: error.message || "An error occurred while logging out",
+        description: error instanceof Error ? error.message : "An error occurred while logging out",
         variant: "destructive",
       });
     }
@@ -192,8 +213,12 @@ export const DashboardLayout = ({
             {/* Logo and Menu Button */}
             <div className="flex items-center space-x-4">
               <button
-                className="lg:hidden p-2"
-                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                type="button"
+                className="lg:hidden p-2 rounded-md transition-colors hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-600"
+                onClick={() => setIsSidebarOpen((open) => !open)}
+                aria-label={isSidebarOpen ? "Close navigation menu" : "Open navigation menu"}
+                aria-expanded={isSidebarOpen}
+                aria-controls="mobile-navigation"
               >
                 {isSidebarOpen ? (
                   <X className="h-6 w-6 text-gray-600" />
@@ -247,58 +272,15 @@ export const DashboardLayout = ({
 
             {/* User Avatar with Dropdown */}
             <div className="flex items-center space-x-2">
-              {/* Mobile Notifications Button */}
-              
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <div className="cursor-pointer">
-                    <UserAvatar />
-                  </div>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56" align="end">
-                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                  <DropdownMenuGroup>
-                    <DropdownMenuItem asChild>
-                      <Link to={`/${actualUserType}/profile`} className="w-full cursor-pointer">
-                        <User className="mr-2 h-4 w-4" />
-                        <span>Profile</span>
-                      </Link>
-                    </DropdownMenuItem>
-                    {actualUserType === "teacher" && (
-                      <>
-                        <DropdownMenuItem asChild>
-                          <Link to={`/${actualUserType}/schedule`} className="w-full cursor-pointer">
-                            <Calendar className="mr-2 h-4 w-4" />
-                            <span>My Schedule</span>
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
-                          <Link to={`/${actualUserType}/earnings`} className="w-full cursor-pointer">
-                            <DollarSign className="mr-2 h-4 w-4" />
-                            <span>Earnings</span>
-                          </Link>
-                        </DropdownMenuItem>
-                      </>
-                    )}
-                    <DropdownMenuItem asChild>
-                      <Link to={`/${actualUserType}/settings`} className="w-full cursor-pointer">
-                        <Settings className="mr-2 h-4 w-4" />
-                        <span>Settings</span>
-                      </Link>
-                    </DropdownMenuItem>
-                  </DropdownMenuGroup>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => setShowLogoutDialog(true)}>
-                    <LogOut className="mr-2 h-4 w-4" />
-                    <span>Logout</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-             {/* Notifications Dropdown */}
-             {!showBackButton && (
+              {/* Notifications Dropdown */}
+              {!showBackButton && (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <button className="relative flex items-center justify-center p-2 rounded-full hover:bg-gray-100 focus:outline-none">
+                    <button
+                      type="button"
+                      aria-label="Open notifications"
+                      className="relative flex items-center justify-center p-2 rounded-full hover:bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-600"
+                    >
                       <Bell className="h-5 w-5 text-gray-600" />
                       {notifications.filter(n => !n.isRead).length > 0 && (
                         <span className="absolute -top-1 -right-1 h-4 w-4 flex items-center justify-center rounded-full bg-red-500 text-white text-xs">
@@ -348,6 +330,52 @@ export const DashboardLayout = ({
                   </DropdownMenuContent>
                 </DropdownMenu>
               )}
+
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <div className="cursor-pointer">
+                    <UserAvatar />
+                  </div>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56" align="end">
+                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem asChild>
+                      <Link to={`/${actualUserType}/profile`} className="w-full cursor-pointer">
+                        <User className="mr-2 h-4 w-4" />
+                        <span>Profile</span>
+                      </Link>
+                    </DropdownMenuItem>
+                    {actualUserType === "teacher" && (
+                      <>
+                        <DropdownMenuItem asChild>
+                          <Link to={`/${actualUserType}/schedule`} className="w-full cursor-pointer">
+                            <Calendar className="mr-2 h-4 w-4" />
+                            <span>My Schedule</span>
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link to={`/${actualUserType}/earnings`} className="w-full cursor-pointer">
+                            <DollarSign className="mr-2 h-4 w-4" />
+                            <span>Earnings</span>
+                          </Link>
+                        </DropdownMenuItem>
+                      </>
+                    )}
+                    <DropdownMenuItem asChild>
+                      <Link to={`/${actualUserType}/settings`} className="w-full cursor-pointer">
+                        <Settings className="mr-2 h-4 w-4" />
+                        <span>Settings</span>
+                      </Link>
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => setShowLogoutDialog(true)}>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Logout</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
               
           </div>
@@ -355,9 +383,21 @@ export const DashboardLayout = ({
       </header>
 
       {/* Mobile Sidebar */}
-      {isSidebarOpen && (
-        <div className="lg:hidden fixed inset-0 z-40 bg-black bg-opacity-50" onClick={() => setIsSidebarOpen(false)}>
-          <div className="fixed left-0 top-0 h-full w-64 bg-white shadow-lg" onClick={(e) => e.stopPropagation()}>
+      <div
+        className={`lg:hidden fixed inset-0 z-40 transition-opacity duration-300 ease-out ${
+          isSidebarOpen ? "pointer-events-auto bg-black/50 opacity-100" : "pointer-events-none bg-black/0 opacity-0"
+        }`}
+        onClick={() => setIsSidebarOpen(false)}
+        aria-hidden={!isSidebarOpen}
+      >
+          <aside
+            id="mobile-navigation"
+            className={`fixed left-0 top-0 h-full w-64 bg-white shadow-xl transition-transform duration-300 ease-out motion-reduce:transition-none ${
+              isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+            }`}
+            onClick={(e) => e.stopPropagation()}
+            aria-label="Mobile navigation"
+          >
             <div className="p-6 border-b">
               <h3 className="text-lg font-semibold text-gray-900">Navigation</h3>
             </div>
@@ -429,9 +469,8 @@ export const DashboardLayout = ({
                 <span className="font-medium">Logout</span>
               </button>
             </nav>
-          </div>
-        </div>
-      )}
+          </aside>
+      </div>
 
       {/* Logout Confirmation Dialog */}
       <Dialog open={showLogoutDialog} onOpenChange={setShowLogoutDialog}>
@@ -455,7 +494,9 @@ export const DashboardLayout = ({
 
       {/* Main Content */}
       <main className="pt-16">
-        {children}
+        <div className="container mx-auto px-4 py-4 sm:px-6 lg:px-8">
+          {children}
+        </div>
       </main>
     </div>
   );

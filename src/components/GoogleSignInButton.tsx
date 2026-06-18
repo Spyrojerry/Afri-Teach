@@ -7,9 +7,10 @@ import { UserRole } from "@/types/user";
 interface GoogleSignInButtonProps {
   role?: UserRole;
   className?: string;
+  returnTo?: string;
 }
 
-export function GoogleSignInButton({ className }: GoogleSignInButtonProps) {
+export function GoogleSignInButton({ className, returnTo }: GoogleSignInButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
   const { signInWithGoogle } = useAuth();
   const { toast } = useToast();
@@ -17,6 +18,12 @@ export function GoogleSignInButton({ className }: GoogleSignInButtonProps) {
   const handleGoogleSignIn = async () => {
     setIsLoading(true);
     try {
+      if (returnTo && returnTo.startsWith("/") && !returnTo.startsWith("//")) {
+        sessionStorage.setItem("afriteach_auth_return_to", returnTo);
+      } else {
+        sessionStorage.removeItem("afriteach_auth_return_to");
+      }
+
       const { error } = await signInWithGoogle();
       
       if (error) {
@@ -85,4 +92,4 @@ export function GoogleSignInButton({ className }: GoogleSignInButtonProps) {
       )}
     </Button>
   );
-} 
+}

@@ -44,5 +44,6 @@ CREATE POLICY "Anyone can view avatars"
 ON storage.objects FOR SELECT TO public 
 USING (bucket_id = 'avatars');
 
--- Enable RLS for storage
-ALTER TABLE storage.objects ENABLE ROW LEVEL SECURITY; 
+-- Supabase manages storage.objects and already enables RLS on it.
+-- Do not run ALTER TABLE ... ENABLE ROW LEVEL SECURITY here because the
+-- project's postgres role is not the owner of this Supabase-managed table.

@@ -60,7 +60,9 @@ const Login = () => {
         });
       } else {
         // Redirect to the page they were trying to access or dashboard based on role
-        if (redirectTo) {
+        if (from !== "/" && redirectTo !== "/onboarding") {
+          navigate(from);
+        } else if (redirectTo) {
           navigate(redirectTo);
         } else {
           navigate(from);
@@ -99,7 +101,7 @@ const Login = () => {
             </CardHeader>
             <CardContent className="space-y-6">
               {/* Google Sign In Button */}
-              <GoogleSignInButton />
+              <GoogleSignInButton returnTo={from !== "/" ? from : undefined} />
 
               <div className="flex items-center gap-4 text-xs text-gray-300">
                 <Separator className="flex-1 bg-white/20" />

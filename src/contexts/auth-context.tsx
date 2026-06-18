@@ -46,11 +46,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
     let redirectTo = '';
     
-    if (!error) {
-      redirectTo = getRedirectPath();
+    if (!error && data.user) {
+      const role = data.user.user_metadata?.role as UserRole;
+      const onboardingCompleted =
+        data.user.user_metadata?.onboarding_completed === true;
+
+      redirectTo = !onboardingCompleted
+        ? '/onboarding'
+        : role === 'teacher'
+          ? '/teacher/dashboard'
+          : '/student/dashboard';
     }
     
     return { error, redirectTo };
@@ -59,7 +67,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signUp = async (email: string, password: string) => {
     const { data, error } = await supabase.auth.signUp({
       email,
-      password
+      password,
+      options: {
+        emailRedirectTo: new URL('/auth/callback', window.location.origin).toString(),
+      },
     });
     
     let redirectTo = '';
@@ -84,9 +95,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signInWithGoogle = async () => {
     try {
-      // Get the origin from window or environment variable
-      const appUrl = import.meta.env.VITE_APP_URL || window.location.origin;
-      const redirectUrl = `${appUrl}/auth/callback`;
+      // Always return OAuth to the origin that started the browser flow.
+      // This prevents local ports and deployed domains from drifting from .env.
+      const redirectUrl = new URL('/auth/callback', window.location.origin).toString();
       
       console.log(`Redirecting to: ${redirectUrl}`);
       

@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { format, addDays, isToday, isSameDay, parseISO, startOfToday, isFuture, addMinutes, setHours, setMinutes } from "date-fns";
+import { format, addDays, isToday, isSameDay, parseISO, startOfToday, setHours, setMinutes } from "date-fns";
 import { CalendarClock, CheckCircle, Clock, CreditCard, ArrowRight, BookOpen, Calendar as CalendarIcon } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -61,6 +61,46 @@ export const BookingCalendar = ({ teacher, onBookLesson }: BookingCalendarProps)
   const [availableDays, setAvailableDays] = useState<AvailableDay[]>([]);
   const [isLoadingAvailability, setIsLoadingAvailability] = useState(true);
   const [selectedModule, setSelectedModule] = useState<LearningModule | null>(null);
+
+  const requestedTeacherTimeZone = teacher.time_zone || teacher.timezone || "UTC";
+  const teacherTimeZone = (() => {
+    try {
+      new Intl.DateTimeFormat("en-US", { timeZone: requestedTeacherTimeZone }).format();
+      return requestedTeacherTimeZone;
+    } catch {
+      return "UTC";
+    }
+  })();
+
+  const teacherLocalTimeToUtc = (date: string, time: string) => {
+    const [year, month, day] = date.split("-").map(Number);
+    const [hour, minute] = time.split(":").map(Number);
+    const desired = Date.UTC(year, month - 1, day, hour, minute);
+    let guess = desired;
+
+    for (let attempt = 0; attempt < 3; attempt += 1) {
+      const parts = new Intl.DateTimeFormat("en-US", {
+        timeZone: teacherTimeZone,
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        hourCycle: "h23",
+      }).formatToParts(new Date(guess));
+      const values = Object.fromEntries(parts.map(part => [part.type, part.value]));
+      const represented = Date.UTC(
+        Number(values.year),
+        Number(values.month) - 1,
+        Number(values.day),
+        Number(values.hour),
+        Number(values.minute)
+      );
+      guess += desired - represented;
+    }
+
+    return new Date(guess);
+  };
   
   // Fetch real teacher availability
   useEffect(() => {
@@ -75,56 +115,10 @@ export const BookingCalendar = ({ teacher, onBookLesson }: BookingCalendarProps)
           .select('*')
           .eq('teacher_id', teacher.id);
         
-        if (error) {
-          console.error("Error fetching teacher availability:", error);
-          // Fall back to mock data in case of error
-          setAvailableDays(getMockAvailableDays());
-          return;
-        }
+        if (error) throw error;
         
-        // If no availability data found, create a default record
         if (!data || data.length === 0) {
-          console.log("No availability data found for teacher. Creating default record.");
-          
-          // Create a default availability record
-          const defaultRecurringSlots = [
-            // Monday to Friday, 9 AM - 5 PM slots
-            ...Array.from({ length: 5 }, (_, dayIndex) => {
-              // Monday is 1, Tuesday is 2, etc.
-              const dayOfWeek = dayIndex + 1;
-              return [
-                { dayOfWeek, startTime: '09:00', endTime: '10:00' },
-                { dayOfWeek, startTime: '10:30', endTime: '11:30' },
-                { dayOfWeek, startTime: '13:00', endTime: '14:00' },
-                { dayOfWeek, startTime: '14:30', endTime: '15:30' },
-                { dayOfWeek, startTime: '16:00', endTime: '17:00' }
-              ];
-            }).flat()
-          ];
-          
-          // Insert the new availability record
-          try {
-            const { error: insertError } = await supabase
-              .from('teacher_availability')
-              .insert([{
-                teacher_id: teacher.id,
-                recurring_slots: defaultRecurringSlots,
-                specific_dates: [],
-                break_periods: []
-              }]);
-              
-            if (insertError) {
-              console.error("Error creating default availability:", insertError);
-            } else {
-              console.log("Created default availability for teacher");
-            }
-          } catch (insertErr) {
-            console.error("Failed to create default availability:", insertErr);
-          }
-          
-          // Use mock data for this session
-          setAvailableDays(getMockAvailableDays());
-          setIsLoadingAvailability(false);
+          setAvailableDays([]);
           return;
         }
         
@@ -171,8 +165,8 @@ export const BookingCalendar = ({ teacher, onBookLesson }: BookingCalendarProps)
               const date = specificDate.date;
               const parsedDate = parseISO(date);
               
-              // Only include future dates
-              if (isFuture(parsedDate)) {
+              // Include today and future dates.
+              if (parsedDate >= startOfToday()) {
                 const formattedSlots = specificDate.slots.map((slot, index) => ({
                   id: `specific-${date}-${index}`,
                   startTime: slot.startTime,
@@ -220,7 +214,12 @@ export const BookingCalendar = ({ teacher, onBookLesson }: BookingCalendarProps)
         }
       } catch (err) {
         console.error("Failed to fetch teacher availability:", err);
-        setAvailableDays(getMockAvailableDays());
+        setAvailableDays([]);
+        toast({
+          title: "Could not load availability",
+          description: "Please refresh and try again.",
+          variant: "destructive",
+        });
       } finally {
         setIsLoadingAvailability(false);
       }
@@ -229,34 +228,6 @@ export const BookingCalendar = ({ teacher, onBookLesson }: BookingCalendarProps)
     fetchTeacherAvailability();
   }, [teacher?.id]);
   
-  // Mock data for available days (fallback)
-  const getMockAvailableDays = (): AvailableDay[] => {
-    return [
-      {
-        date: format(startOfToday(), 'yyyy-MM-dd'),
-        slots: [
-          { id: '1', startTime: '14:00', endTime: '15:00' },
-          { id: '2', startTime: '16:30', endTime: '17:30' },
-        ]
-      },
-      {
-        date: format(addDays(startOfToday(), 1), 'yyyy-MM-dd'),
-        slots: [
-          { id: '3', startTime: '09:00', endTime: '10:00' },
-          { id: '4', startTime: '11:00', endTime: '12:00' },
-          { id: '5', startTime: '15:00', endTime: '16:00' },
-        ]
-      },
-      {
-        date: format(addDays(startOfToday(), 3), 'yyyy-MM-dd'),
-        slots: [
-          { id: '6', startTime: '10:00', endTime: '11:00' },
-          { id: '7', startTime: '13:00', endTime: '14:00' },
-        ]
-      },
-    ];
-  };
-
   // Check if a date has available slots
   const hasAvailableSlots = (date: Date) => {
     return availableDays.some(day => 
@@ -356,11 +327,8 @@ export const BookingCalendar = ({ teacher, onBookLesson }: BookingCalendarProps)
       
       // Create start and end time in UTC
       const dateStr = format(selectedDate, 'yyyy-MM-dd');
-      const [startHour, startMinute] = selectedSlot.startTime.split(':').map(n => parseInt(n, 10));
-      const [endHour, endMinute] = selectedSlot.endTime.split(':').map(n => parseInt(n, 10));
-      
-      const startDate = setHours(setMinutes(parseISO(dateStr), startMinute), startHour);
-      const endDate = setHours(setMinutes(parseISO(dateStr), endMinute), endHour);
+      const startDate = teacherLocalTimeToUtc(dateStr, selectedSlot.startTime);
+      const endDate = teacherLocalTimeToUtc(dateStr, selectedSlot.endTime);
       
       // Create the booking
       const bookingData = {
@@ -437,7 +405,7 @@ export const BookingCalendar = ({ teacher, onBookLesson }: BookingCalendarProps)
                 <div className="flex items-center gap-3 p-3 bg-blue-50 rounded-md text-sm text-blue-800">
                   <Clock className="h-4 w-4 text-blue-600" />
                   <span>
-                    Select a date that shows availability. Times are shown in your local timezone.
+                    Select a date that shows availability. Times are shown in {teacherTimeZone}.
                   </span>
                 </div>
                 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DashboardLayout } from "@/components/DashboardLayout";
 import {
   Card,
@@ -27,26 +27,23 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { useAuth } from "@/contexts/auth-context";
 import { supabase } from "@/integrations/supabase/client";
+import { getUserSettings, saveUserSettings } from "@/services/settingsService";
 import {
   Lock,
   Bell,
   Shield,
   User,
   DollarSign,
-  Calendar,
-  Clock,
-  Video,
-  VideoOff,
   Zap
 } from "lucide-react";
 
 const TeacherSettings = () => {
   const { user } = useAuth();
   const { toast } = useToast();
+  const isEmailUser = user?.app_metadata?.provider === "email";
   const [isUpdating, setIsUpdating] = useState(false);
   
   // Password change state
@@ -81,6 +78,49 @@ const TeacherSettings = () => {
   const [preferredPlatform, setPreferredPlatform] = useState("zoom");
   const [defaultMeetingLink, setDefaultMeetingLink] = useState("");
 
+  useEffect(() => {
+    const loadSettings = async () => {
+      if (!user?.id) return;
+
+      try {
+        const settings = await getUserSettings(user.id);
+        const notifications = settings.notification_preferences;
+        const privacy = settings.privacy_preferences;
+        const payment = settings.payment_preferences;
+        const teaching = settings.teaching_preferences;
+
+        setEmailNotifications(notifications.emailNotifications ?? true);
+        setLessonReminders(notifications.lessonReminders ?? true);
+        setBookingNotifications(notifications.bookingNotifications ?? true);
+        setMessageNotifications(notifications.messageNotifications ?? true);
+        setPaymentNotifications(notifications.paymentNotifications ?? true);
+        setShowRatings(privacy.showRatings ?? true);
+        setShareAvailability(privacy.shareAvailability ?? true);
+        setLanguage(settings.language);
+        setTimezone(settings.time_zone);
+        setPaymentMethod(payment.paymentMethod || "bank_transfer");
+        setBankName(payment.bankName || "");
+        setAccountNumber(payment.accountNumber || "");
+        setAccountName(payment.accountName || "");
+        setSwiftCode(payment.swiftCode || "");
+        setAutoAcceptBookings(teaching.autoAcceptBookings === true);
+        setLessonBufferTime(String(teaching.lessonBufferTime || "15"));
+        setMaxDailyLessons(String(teaching.maxDailyLessons || "5"));
+        setPreferredPlatform(String(teaching.preferredPlatform || "zoom"));
+        setDefaultMeetingLink(String(teaching.defaultMeetingLink || ""));
+      } catch (error) {
+        console.error("Failed to load teacher settings:", error);
+        toast({
+          title: "Settings unavailable",
+          description: "Your saved settings could not be loaded. Please refresh and try again.",
+          variant: "destructive",
+        });
+      }
+    };
+
+    loadSettings();
+  }, [toast, user?.id]);
+
   // Form handlers
   const handlePasswordChange = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -96,6 +136,17 @@ const TeacherSettings = () => {
 
     setIsUpdating(true);
     try {
+      if (isEmailUser) {
+        if (!user.email || !currentPassword) {
+          throw new Error("Enter your current password.");
+        }
+        const { error: reauthError } = await supabase.auth.signInWithPassword({
+          email: user.email,
+          password: currentPassword,
+        });
+        if (reauthError) throw new Error("Your current password is incorrect.");
+      }
+
       const { error } = await supabase.auth.updateUser({
         password: newPassword,
       });
@@ -111,11 +162,11 @@ const TeacherSettings = () => {
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error updating password:", error);
       toast({
         title: "Update failed",
-        description: error.message || "Could not update your password. Please try again later.",
+        description: error instanceof Error ? error.message : "Could not update your password. Please try again later.",
         variant: "destructive",
       });
     } finally {
@@ -123,61 +174,160 @@ const TeacherSettings = () => {
     }
   };
 
-  const handleNotificationSettingsSave = () => {
-    toast({
-      title: "Notification settings saved",
-      description: "Your notification preferences have been updated.",
-    });
+  const handleNotificationSettingsSave = async () => {
+    if (!user?.id) return;
+    setIsUpdating(true);
+    try {
+      await saveUserSettings(user.id, {
+        notification_preferences: {
+          emailNotifications,
+          lessonReminders,
+          bookingNotifications,
+          messageNotifications,
+          paymentNotifications,
+        },
+      });
+      toast({
+        title: "Notification settings saved",
+        description: "Your notification preferences have been updated.",
+      });
+    } catch (error: unknown) {
+      toast({
+        title: "Save failed",
+        description: error instanceof Error ? error.message : "Your settings could not be saved.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsUpdating(false);
+    }
   };
 
-  const handlePrivacySettingsSave = () => {
-    toast({
-      title: "Privacy settings saved",
-      description: "Your privacy settings have been updated.",
-    });
+  const handlePrivacySettingsSave = async () => {
+    if (!user?.id) return;
+    setIsUpdating(true);
+    try {
+      const { error: profileError } = await supabase
+        .from("teachers")
+        .update({ time_zone: timezone })
+        .eq("id", user.id);
+      if (profileError) throw profileError;
+
+      await saveUserSettings(user.id, {
+        privacy_preferences: { showRatings, shareAvailability },
+        language,
+        time_zone: timezone,
+      });
+      toast({
+        title: "Privacy settings saved",
+        description: "Your privacy and regional preferences have been updated.",
+      });
+    } catch (error: unknown) {
+      toast({
+        title: "Save failed",
+        description: error instanceof Error ? error.message : "Your settings could not be saved.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsUpdating(false);
+    }
   };
   
-  const handlePaymentInfoSave = () => {
-    toast({
-      title: "Payment information saved",
-      description: "Your payment details have been updated.",
-    });
+  const handlePaymentInfoSave = async () => {
+    if (!user?.id) return;
+    setIsUpdating(true);
+    try {
+      await saveUserSettings(user.id, {
+        payment_preferences: {
+          paymentMethod,
+          bankName,
+          accountNumber,
+          accountName,
+          swiftCode,
+        },
+      });
+      toast({
+        title: "Payment information saved",
+        description: "Your payment details have been updated.",
+      });
+    } catch (error: unknown) {
+      toast({
+        title: "Save failed",
+        description: error instanceof Error ? error.message : "Your settings could not be saved.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsUpdating(false);
+    }
   };
   
-  const handleTeachingPreferencesSave = () => {
-    toast({
-      title: "Teaching preferences saved",
-      description: "Your teaching preferences have been updated.",
-    });
+  const handleTeachingPreferencesSave = async () => {
+    if (!user?.id) return;
+    if (defaultMeetingLink) {
+      try {
+        new URL(defaultMeetingLink);
+      } catch {
+        toast({
+          title: "Invalid meeting link",
+          description: "Enter a complete link, including https://.",
+          variant: "destructive",
+        });
+        return;
+      }
+    }
+
+    setIsUpdating(true);
+    try {
+      await saveUserSettings(user.id, {
+        teaching_preferences: {
+          autoAcceptBookings,
+          lessonBufferTime,
+          maxDailyLessons,
+          preferredPlatform,
+          defaultMeetingLink,
+        },
+      });
+      toast({
+        title: "Teaching preferences saved",
+        description: "Your teaching preferences have been updated.",
+      });
+    } catch (error: unknown) {
+      toast({
+        title: "Save failed",
+        description: error instanceof Error ? error.message : "Your settings could not be saved.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsUpdating(false);
+    }
   };
 
   return (
     <DashboardLayout userType="teacher">
-      <div className="container mx-auto py-4 space-y-6">
+      <div className="space-y-6">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Teacher Settings</h1>
           <p className="text-gray-500">Manage your account preferences and teaching settings</p>
         </div>
 
         <Tabs defaultValue="account" className="w-full">
-          <TabsList className="grid grid-cols-5 w-full max-w-3xl">
-            <TabsTrigger value="account" className="flex items-center gap-2">
+          <TabsList className="flex w-full max-w-3xl justify-start overflow-x-auto">
+            <TabsTrigger value="account" className="flex flex-none items-center gap-2 md:flex-1">
               <User size={16} />
               <span>Account</span>
             </TabsTrigger>
-            <TabsTrigger value="notifications" className="flex items-center gap-2">
+            <TabsTrigger value="notifications" className="flex flex-none items-center gap-2 md:flex-1">
               <Bell size={16} />
               <span>Notifications</span>
             </TabsTrigger>
-            <TabsTrigger value="privacy" className="flex items-center gap-2">
+            <TabsTrigger value="privacy" className="flex flex-none items-center gap-2 md:flex-1">
               <Shield size={16} />
               <span>Privacy</span>
             </TabsTrigger>
-            <TabsTrigger value="payment" className="flex items-center gap-2">
+            <TabsTrigger value="payment" className="flex flex-none items-center gap-2 md:flex-1">
               <DollarSign size={16} />
               <span>Payment</span>
             </TabsTrigger>
-            <TabsTrigger value="teaching" className="flex items-center gap-2">
+            <TabsTrigger value="teaching" className="flex flex-none items-center gap-2 md:flex-1">
               <Zap size={16} />
               <span>Teaching</span>
             </TabsTrigger>
@@ -228,7 +378,9 @@ const TeacherSettings = () => {
                       type="password"
                       value={currentPassword}
                       onChange={(e) => setCurrentPassword(e.target.value)}
-                      required
+                      required={isEmailUser}
+                      disabled={!isEmailUser}
+                      placeholder={isEmailUser ? undefined : "Not required for social sign-in"}
                     />
                   </div>
                   <div className="space-y-2">
@@ -353,9 +505,10 @@ const TeacherSettings = () => {
               <CardFooter>
                 <Button 
                   onClick={handleNotificationSettingsSave}
+                  disabled={isUpdating}
                   className="bg-gradient-to-r from-purple-600 to-purple-800"
                 >
-                  Save Notification Settings
+                  {isUpdating ? "Saving..." : "Save Notification Settings"}
                 </Button>
               </CardFooter>
             </Card>
@@ -454,9 +607,10 @@ const TeacherSettings = () => {
               <CardFooter>
                 <Button 
                   onClick={handlePrivacySettingsSave}
+                  disabled={isUpdating}
                   className="bg-gradient-to-r from-purple-600 to-purple-800"
                 >
-                  Save Privacy Settings
+                  {isUpdating ? "Saving..." : "Save Privacy Settings"}
                 </Button>
               </CardFooter>
             </Card>
@@ -568,9 +722,10 @@ const TeacherSettings = () => {
               <CardFooter>
                 <Button 
                   onClick={handlePaymentInfoSave}
+                  disabled={isUpdating}
                   className="bg-gradient-to-r from-purple-600 to-purple-800"
                 >
-                  Save Payment Information
+                  {isUpdating ? "Saving..." : "Save Payment Information"}
                 </Button>
               </CardFooter>
             </Card>
@@ -678,9 +833,10 @@ const TeacherSettings = () => {
               <CardFooter>
                 <Button 
                   onClick={handleTeachingPreferencesSave}
+                  disabled={isUpdating}
                   className="bg-gradient-to-r from-purple-600 to-purple-800"
                 >
-                  Save Teaching Preferences
+                  {isUpdating ? "Saving..." : "Save Teaching Preferences"}
                 </Button>
               </CardFooter>
             </Card>
@@ -691,4 +847,4 @@ const TeacherSettings = () => {
   );
 };
 
-export default TeacherSettings; 
+export default TeacherSettings;

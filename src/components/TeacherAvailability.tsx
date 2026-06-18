@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -8,6 +8,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Switch } from "@/components/ui/switch";
 import { addDays, format, getDay, isSameDay, startOfToday } from "date-fns";
 import { Clock, Plus, Save, Trash } from "lucide-react";
+import { useAuth } from "@/contexts/auth-context";
+import { useToast } from "@/components/ui/use-toast";
+import { getTeacherAvailability, saveTeacherAvailability } from "@/services/teacherService";
 
 // Time slot interface
 interface TimeSlot {
@@ -25,12 +28,43 @@ interface AvailableDate {
 }
 
 export const TeacherAvailability = () => {
+  const { user } = useAuth();
+  const { toast } = useToast();
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(startOfToday());
   const [recurringSlots, setRecurringSlots] = useState<TimeSlot[]>([]);
   const [specificDates, setSpecificDates] = useState<AvailableDate[]>([]);
   const [startTime, setStartTime] = useState("09:00");
   const [endTime, setEndTime] = useState("10:00");
   const [isRecurring, setIsRecurring] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
+
+  useEffect(() => {
+    const loadAvailability = async () => {
+      if (!user?.id) return;
+
+      setIsLoading(true);
+      const availability = await getTeacherAvailability(user.id);
+      setRecurringSlots(
+        (availability.recurringSlots || []).map((slot: any) => ({
+          id: slot.id || crypto.randomUUID(),
+          day: slot.day ?? slot.dayOfWeek,
+          startTime: slot.startTime,
+          endTime: slot.endTime,
+          isRecurring: true,
+        }))
+      );
+      setSpecificDates(
+        (availability.specificDates || []).map((entry: any) => ({
+          date: new Date(`${entry.date}T00:00:00`),
+          timeSlots: entry.timeSlots || entry.slots || [],
+        }))
+      );
+      setIsLoading(false);
+    };
+
+    loadAvailability();
+  }, [user?.id]);
 
   // Days of the week
   const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -115,14 +149,37 @@ export const TeacherAvailability = () => {
   };
 
   // Save availability (would connect to backend in real implementation)
-  const saveAvailability = () => {
-    console.log("Saving availability:", {
-      recurringSlots,
-      specificDates
+  const saveAvailability = async () => {
+    if (!user?.id) return;
+
+    setIsSaving(true);
+    const success = await saveTeacherAvailability(user.id, {
+      recurringSlots: recurringSlots.map(slot => ({
+        id: slot.id,
+        dayOfWeek: slot.day,
+        startTime: slot.startTime,
+        endTime: slot.endTime,
+      })),
+      specificDates: specificDates.map(entry => ({
+        date: format(entry.date, 'yyyy-MM-dd'),
+        slots: entry.timeSlots,
+      })),
+      breakPeriods: [],
     });
-    // Here you would make an API call to save the data
-    alert("Availability saved successfully!");
+    setIsSaving(false);
+
+    toast({
+      title: success ? "Availability saved" : "Could not save availability",
+      description: success
+        ? "Students can now book these time slots."
+        : "Please try again.",
+      variant: success ? "default" : "destructive",
+    });
   };
+
+  if (isLoading) {
+    return <div className="py-12 text-center text-gray-500">Loading availability…</div>;
+  }
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -263,10 +320,11 @@ export const TeacherAvailability = () => {
 
           <Button 
             onClick={saveAvailability} 
+            disabled={isSaving}
             className="w-full bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 hover:from-slate-800 hover:via-purple-800 hover:to-slate-800"
           >
             <Save className="h-4 w-4 mr-2" />
-            Save All Changes
+            {isSaving ? "Saving…" : "Save All Changes"}
           </Button>
         </CardContent>
       </Card>

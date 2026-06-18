@@ -70,7 +70,7 @@ Afri-Teach aims to bridge educational gaps by leveraging technology to connect s
    VITE_AGORA_APP_ID=your_agora_app_id
    
    # Other Configuration
-   VITE_APP_URL=http://localhost:5173
+   VITE_APP_URL=http://localhost:8080
    ```
 
 4. Start the development server:
@@ -78,7 +78,7 @@ Afri-Teach aims to bridge educational gaps by leveraging technology to connect s
    npm run dev
    ```
 
-5. Open your browser and visit `http://localhost:5173`
+5. Open your browser and visit `http://localhost:8080`
 
 ## Environment Variables
 

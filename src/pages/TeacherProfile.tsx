@@ -61,7 +61,9 @@ const TeacherProfile = () => {
         profilePictureUrl: formData.profile_picture_url || formData.avatar_url,
         introVideoUrl: formData.introVideoUrl,
         timeZone: formData.timeZone,
-        contactNumber: formData.contactNumber
+        contactNumber: formData.contactNumber,
+        hourlyRate: formData.hourlyRate,
+        country: formData.country
       };
       
       // Handle update with retry mechanism
@@ -96,7 +98,9 @@ const TeacherProfile = () => {
           profilePictureUrl: formData.profile_picture_url || formData.avatar_url,
           introVideoUrl: formData.introVideoUrl,
           timeZone: formData.timeZone,
-          contactNumber: formData.contactNumber
+          contactNumber: formData.contactNumber,
+          hourlyRate: formData.hourlyRate,
+          country: formData.country
         }));
         
         setIsModalOpen(false);
@@ -146,7 +150,7 @@ const TeacherProfile = () => {
 
   return (
     <DashboardLayout userType="teacher">
-      <div className="container mx-auto py-4 space-y-6">
+      <div className="space-y-6">
         <div className="flex justify-between items-center">
           <div>
             <h1 className="text-2xl font-bold tracking-tight">Teacher Profile</h1>
@@ -296,7 +300,9 @@ const TeacherProfile = () => {
           profile_picture_url: teacherProfile?.profilePictureUrl || "",
           introVideoUrl: teacherProfile?.introVideoUrl || "",
           timeZone: teacherProfile?.timeZone || "",
-          contactNumber: teacherProfile?.contactNumber || ""
+          contactNumber: teacherProfile?.contactNumber || "",
+          hourlyRate: teacherProfile?.hourlyRate || 0,
+          country: teacherProfile?.country || ""
         }}
         profileType="teacher"
         userId={user?.id || ""}

@@ -37,6 +37,7 @@ import {
 } from "date-fns";
 import { useAuth } from "@/contexts/auth-context";
 import { supabase } from "@/integrations/supabase/client";
+import { useNavigate } from "react-router-dom";
 
 // Define types for lesson and teacher
 interface Teacher {
@@ -86,7 +87,8 @@ interface TeacherData {
 }
 
 const StudentLessons = () => {
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
+  const navigate = useNavigate();
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [activeTab, setActiveTab] = useState("upcoming");
   const [lessons, setLessons] = useState<Lesson[]>([]);
   const [filteredLessons, setFilteredLessons] = useState<Lesson[]>([]);
@@ -111,6 +113,11 @@ const StudentLessons = () => {
             teacher_id,
             student_id,
             status,
+            subject,
+            notes,
+            meeting_link,
+            start_time_utc,
+            end_time_utc,
             created_at
           `)
           .eq('student_id', user.id);
@@ -163,23 +170,17 @@ const StudentLessons = () => {
           };
           
           // Extract date and time from booking
-          let bookingDate = booking.created_at || new Date().toISOString();
-          let startTime = "00:00";
-          let endTime = "01:00";
-          
-          // Skip the parsing of start_time and end_time since those columns don't exist
-          // Determine lesson status without time checks
+          const start = new Date(booking.start_time_utc);
+          const end = new Date(booking.end_time_utc);
+          const bookingDate = start.toISOString().slice(0, 10);
+          const startTime = start.toTimeString().slice(0, 5);
+          const endTime = end.toTimeString().slice(0, 5);
+
           let status: "upcoming" | "completed" | "cancelled" = "upcoming";
-          if (booking.status === "completed") {
+          if (booking.status === "completed" || end < new Date()) {
             status = "completed";
           } else if (booking.status === "cancelled") {
             status = "cancelled";
-          } else {
-            // Create a date from the created_at field + 1 day to approximate lesson time
-            const lessonDate = new Date(bookingDate);
-            if (isPast(lessonDate) && !isToday(lessonDate)) {
-              status = "completed";
-            }
           }
           
           // Use teacher's first subject or default to "General"
@@ -201,11 +202,11 @@ const StudentLessons = () => {
               last_name: teacher.last_name,
               avatar: teacher.profile_picture_url,
               profile_picture_url: teacher.profile_picture_url,
-              subject: subjectFromTeacher,
+              subject: booking.subject || subjectFromTeacher,
               timezone: teacher.time_zone
             },
-            meetingLink: undefined,
-            notes: undefined
+            meetingLink: booking.meeting_link,
+            notes: booking.notes
           };
         });
         
@@ -215,8 +216,7 @@ const StudentLessons = () => {
         console.error("Error fetching lessons:", err);
         setError("Failed to load your lessons. Please try again later.");
         
-        // Fallback to mock data
-        setLessons(getMockLessons());
+        setLessons([]);
       } finally {
         setIsLoading(false);
       }
@@ -224,57 +224,6 @@ const StudentLessons = () => {
     
     fetchLessons();
   }, [user?.id]);
-
-  // Mock data for fallback
-  const getMockLessons = (): Lesson[] => {
-    return [
-      {
-        id: 1,
-        date: format(startOfToday(), 'yyyy-MM-dd'),
-        startTime: "14:00",
-        endTime: "15:00",
-        status: "upcoming",
-        teacher: {
-          id: "1",
-          name: "Dr. Ade Johnson",
-          avatar: "/avatars/teacher-1.jpg",
-          subject: "Mathematics",
-          timezone: "Africa/Lagos"
-        },
-        meetingLink: "https://meet.google.com/abc-defg-hij"
-      },
-      {
-        id: 2,
-        date: format(addDays(startOfToday(), 2), 'yyyy-MM-dd'),
-        startTime: "10:00",
-        endTime: "11:00",
-        status: "upcoming",
-        teacher: {
-          id: "2",
-          name: "Prof. Chinua Achebe",
-          avatar: "/avatars/teacher-2.jpg",
-          subject: "Literature",
-          timezone: "Africa/Lagos"
-        },
-        meetingLink: "https://meet.google.com/klm-nopq-rst"
-      },
-      {
-        id: 3,
-        date: format(addDays(startOfToday(), -3), 'yyyy-MM-dd'),
-        startTime: "09:00",
-        endTime: "10:00",
-        status: "completed",
-        teacher: {
-          id: "1",
-          name: "Dr. Ade Johnson",
-          avatar: "/avatars/teacher-1.jpg",
-          subject: "Mathematics",
-          timezone: "Africa/Lagos"
-        },
-        notes: "Covered quadratic equations and their applications."
-      }
-    ];
-  };
 
   // Filter lessons based on active tab and selected date
   useEffect(() => {
@@ -325,7 +274,7 @@ const StudentLessons = () => {
 
   return (
     <DashboardLayout userType="student">
-      <div className="container mx-auto px-4 py-8 pt-4">
+      <div className="space-y-6">
         <h1 className="text-3xl font-bold mb-6">My Lessons</h1>
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -435,7 +384,11 @@ const StudentLessons = () => {
                               
                               {lesson.meetingLink && lesson.status === 'upcoming' && (
                                 <div className="mt-4">
-                                  <Button className="w-full sm:w-auto" size="sm">
+                                  <Button
+                                    className="w-full sm:w-auto"
+                                    size="sm"
+                                    onClick={() => navigate(`/student/classroom/${lesson.id}`)}
+                                  >
                                     <Video className="h-4 w-4 mr-2" />
                                     Join Lesson
                                   </Button>

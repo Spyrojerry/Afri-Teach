@@ -22,8 +22,14 @@ const StudentProfile = () => {
 
   // Get user data from auth context
   const userData = {
-    firstName: user?.user_metadata?.firstName || "",
-    lastName: user?.user_metadata?.lastName || "",
+    firstName:
+      user?.user_metadata?.first_name ||
+      user?.user_metadata?.firstName ||
+      "",
+    lastName:
+      user?.user_metadata?.last_name ||
+      user?.user_metadata?.lastName ||
+      "",
     email: user?.email || "",
     bio: user?.user_metadata?.bio || "",
     avatar_url: user?.user_metadata?.avatar_url,
@@ -38,8 +44,9 @@ const StudentProfile = () => {
       // Update the user metadata in Supabase
       const { error } = await supabase.auth.updateUser({
         data: {
-          firstName: formData.firstName,
-          lastName: formData.lastName,
+          first_name: formData.firstName,
+          last_name: formData.lastName,
+          full_name: `${formData.firstName} ${formData.lastName}`.trim(),
           bio: formData.bio,
           avatar_url: formData.avatar_url,
         },
@@ -47,17 +54,25 @@ const StudentProfile = () => {
 
       if (error) throw error;
 
-      // Also update the profiles table
-      const { error: profileError } = await supabase.from("profiles").upsert({
-        user_id: user.id,
-        full_name: `${formData.firstName} ${formData.lastName}`.trim(),
-        avatar_url: formData.avatar_url,
+      // Keep the restored public profile tables in sync with Auth metadata.
+      const { error: userError } = await supabase.from("users").upsert({
+        id: user.id,
+        email: user.email,
         role: "student",
+        updated_at: new Date().toISOString(),
       });
 
-      if (profileError) {
-        console.error("Error updating profile:", profileError);
-      }
+      if (userError) throw userError;
+
+      const { error: studentError } = await supabase.from("students").upsert({
+        id: user.id,
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        profile_picture_url: formData.avatar_url,
+        updated_at: new Date().toISOString(),
+      });
+
+      if (studentError) throw studentError;
 
       toast({
         title: "Profile updated",
@@ -89,7 +104,7 @@ const StudentProfile = () => {
 
   return (
     <DashboardLayout userType="student">
-      <div className="container mx-auto py-4 space-y-6">
+      <div className="space-y-6">
         <div className="flex justify-between items-center">
           <h1 className="text-2xl font-bold tracking-tight">My Profile</h1>
           <Button
