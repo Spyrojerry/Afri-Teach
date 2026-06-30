@@ -28,7 +28,7 @@ export const ProtectedRoute = ({
   }
 
   // Check if user needs to complete onboarding
-  if (!skipOnboardingCheck && !onboardingCompleted && !isOnboardingPath) {
+  if (!skipOnboardingCheck && userRole !== 'admin' && !onboardingCompleted && !isOnboardingPath) {
     return <Navigate to="/onboarding" replace />;
   }
 
@@ -38,6 +38,8 @@ export const ProtectedRoute = ({
       return <Navigate to="/student/dashboard" replace />;
     } else if (userRole === 'teacher') {
       return <Navigate to="/teacher/dashboard" replace />;
+    } else if (userRole === 'admin') {
+      return <Navigate to="/admin" replace />;
     } else {
       return <Navigate to="/unauthorized" replace />;
     }

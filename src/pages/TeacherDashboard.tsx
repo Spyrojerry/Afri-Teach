@@ -24,7 +24,7 @@ import {
   getUserNotifications,
   Notification,
 } from "@/services/notificationService";
-import { getTeacherProfile, Teacher } from "@/services/teacherService";
+import { getTeacherAvailability, getTeacherProfile, Teacher } from "@/services/teacherService";
 import { getTeacherEarningsSummary } from "@/services/paymentService";
 import { 
   getTeacherBookingRequests, 
@@ -32,6 +32,7 @@ import {
   BookingRequest 
 } from "@/services/bookingRequestService";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { supabase } from "@/integrations/supabase/client";
 import {
   Calendar,
   Clock,
@@ -50,7 +51,10 @@ import {
   CheckCircle2,
   XCircle,
   ExternalLink,
+  AlertTriangle,
 } from "lucide-react";
+
+type ApplicationStatus = "draft" | "pending" | "approved" | "rejected";
 
 const TeacherDashboard = () => {
   const navigate = useNavigate();
@@ -60,6 +64,12 @@ const TeacherDashboard = () => {
   const [pastLessons, setPastLessons] = useState<Lesson[]>([]);
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [teacherProfile, setTeacherProfile] = useState<Teacher | null>(null);
+  const [applicationStatus, setApplicationStatus] = useState<ApplicationStatus | null>(null);
+  const [applicationNotes, setApplicationNotes] = useState<string | null>(null);
+  const [availabilitySummary, setAvailabilitySummary] = useState({
+    recurringSlots: 0,
+    specificDates: 0,
+  });
   const [bookingRequests, setBookingRequests] = useState<BookingRequest[]>([]);
   const [stats, setStats] = useState({
     upcomingLessons: 0,
@@ -85,6 +95,8 @@ const TeacherDashboard = () => {
           profileData,
           earningsData,
           bookingRequestsData,
+          applicationData,
+          availabilityData,
         ] = await Promise.all([
           getUpcomingLessons(user.id, "teacher"),
           getPastLessons(user.id, "teacher"),
@@ -93,12 +105,30 @@ const TeacherDashboard = () => {
           getTeacherProfile(user.id),
           getTeacherEarningsSummary(user.id),
           getTeacherBookingRequests(user.id),
+          supabase
+            .from("teacher_applications")
+            .select("status, review_notes")
+            .eq("teacher_id", user.id)
+            .maybeSingle(),
+          getTeacherAvailability(user.id),
         ]);
 
         setUpcomingLessons(upcomingData);
         setPastLessons(pastData);
         setTeacherProfile(profileData);
         setBookingRequests(bookingRequestsData);
+
+        if (!applicationData.data && !profileData?.isVerified) {
+          navigate("/onboarding");
+          return;
+        }
+
+        setApplicationStatus((applicationData.data?.status as ApplicationStatus) || null);
+        setApplicationNotes(applicationData.data?.review_notes || null);
+        setAvailabilitySummary({
+          recurringSlots: availabilityData.recurringSlots?.length || 0,
+          specificDates: availabilityData.specificDates?.length || 0,
+        });
 
         setStats({
           ...statsData,
@@ -115,7 +145,7 @@ const TeacherDashboard = () => {
     };
 
     fetchData();
-  }, [user?.id]);
+  }, [navigate, user?.id]);
 
   // Handler for navigating to the availability management page
   const handleManageAvailability = () => {
@@ -245,6 +275,56 @@ const TeacherDashboard = () => {
             ! Manage your teaching schedule and lessons
           </p>
         </div>
+
+        {applicationStatus && (
+          <Card
+            className={
+              applicationStatus === "approved"
+                ? "border-green-200 bg-green-50"
+                : applicationStatus === "rejected"
+                  ? "border-red-200 bg-red-50"
+                  : "border-yellow-200 bg-yellow-50"
+            }
+          >
+            <CardContent className="flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex gap-3">
+                {applicationStatus === "approved" ? (
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 text-green-700" />
+                ) : applicationStatus === "rejected" ? (
+                  <XCircle className="mt-0.5 h-5 w-5 text-red-700" />
+                ) : (
+                  <AlertTriangle className="mt-0.5 h-5 w-5 text-yellow-700" />
+                )}
+                <div>
+                  <p className="font-semibold capitalize">
+                    Teacher application {applicationStatus}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    {applicationStatus === "approved"
+                      ? "Your teacher profile is approved and visible to students."
+                      : applicationStatus === "rejected"
+                        ? "Your application was rejected. Review the note and update your profile before contacting support."
+                        : "Your teacher application is waiting for admin review."}
+                  </p>
+                  {applicationNotes && (
+                    <p className="mt-2 text-sm text-gray-700">Admin note: {applicationNotes}</p>
+                  )}
+                </div>
+              </div>
+              <Badge
+                className={
+                  applicationStatus === "approved"
+                    ? "bg-green-600"
+                    : applicationStatus === "rejected"
+                      ? "bg-red-600"
+                      : "bg-yellow-600"
+                }
+              >
+                {applicationStatus}
+              </Badge>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Stats Overview */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -533,7 +613,9 @@ const TeacherDashboard = () => {
                   <CalendarClock className="h-8 w-8 mx-auto text-blue-600" />
                   <h3 className="font-semibold text-lg">Manage Availability</h3>
                   <p className="text-sm text-gray-500">
-                    Set your teaching hours to receive more bookings
+                    {availabilitySummary.recurringSlots || availabilitySummary.specificDates
+                      ? `${availabilitySummary.recurringSlots} weekly slot(s), ${availabilitySummary.specificDates} specific date(s)`
+                      : "Set your teaching hours to receive more bookings"}
                   </p>
                   <Button
                     className="w-full bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 hover:from-slate-800 hover:via-purple-800 hover:to-slate-800"

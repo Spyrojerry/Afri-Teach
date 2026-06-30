@@ -34,12 +34,13 @@ import BookingRequests from "./pages/BookingRequests";
 import StudentSettings from "./pages/StudentSettings";
 import TeacherSettings from "./pages/TeacherSettings";
 import PublicFindTeachers from "./pages/PublicFindTeachers";
+import AdminCenter from "./pages/AdminCenter";
 
 const queryClient = new QueryClient();
 
 const protect = (
   element: ReactNode,
-  role?: "student" | "teacher",
+  role?: "student" | "teacher" | "admin",
   skipOnboardingCheck = false,
 ) => (
   <ProtectedRoute requiredRole={role} skipOnboardingCheck={skipOnboardingCheck}>
@@ -60,6 +61,7 @@ const AnimatedRoutes = () => {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/teachers" element={<PublicFindTeachers />} />
+        <Route path="/admin" element={protect(<AdminCenter />, "admin")} />
         <Route path="/onboarding" element={protect(<Onboarding />, undefined, true)} />
         <Route path="/student/dashboard" element={protect(<StudentDashboard />, "student")} />
         <Route path="/teacher/dashboard" element={protect(<TeacherDashboard />, "teacher")} />

@@ -59,7 +59,14 @@ export default function AuthCallback() {
           const onboardingCompleted =
             data.session.user.user_metadata?.onboarding_completed === true;
 
-          if (profileData && onboardingCompleted) {
+          if (profileData?.role === 'admin') {
+            toast({
+              title: 'Signed in successfully',
+              description: 'Welcome back, admin.',
+            });
+
+            navigate('/admin', { replace: true });
+          } else if (profileData && onboardingCompleted) {
             const requestedDestination = sessionStorage.getItem('afriteach_auth_return_to');
             sessionStorage.removeItem('afriteach_auth_return_to');
             const safeRequestedDestination =
@@ -70,6 +77,8 @@ export default function AuthCallback() {
             const destination =
               profileData.role === 'student' && safeRequestedDestination
                 ? safeRequestedDestination
+                : profileData.role === 'admin'
+                  ? '/admin'
                 : profileData.role === 'teacher'
                   ? '/teacher/dashboard'
                   : '/student/dashboard';
