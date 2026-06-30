@@ -73,8 +73,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsLoading(true);
       setSession(session);
       setUser(session?.user ?? null);
+      setUserRole(null);
 
       setTimeout(async () => {
         if (!isMounted) return;
@@ -97,6 +99,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     
     if (!error && data.user) {
       const role = await resolveUserRole(data.user);
+      setSession(data.session);
+      setUser(data.user);
+      setUserRole(role);
+      setIsLoading(false);
       const onboardingCompleted =
         data.user.user_metadata?.onboarding_completed === true;
 

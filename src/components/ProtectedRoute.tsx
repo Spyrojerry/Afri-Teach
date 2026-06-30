@@ -27,6 +27,10 @@ export const ProtectedRoute = ({
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
+  if (requiredRole && userRole === null) {
+    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+  }
+
   // Check if user needs to complete onboarding
   if (!skipOnboardingCheck && userRole !== 'admin' && !onboardingCompleted && !isOnboardingPath) {
     return <Navigate to="/onboarding" replace />;

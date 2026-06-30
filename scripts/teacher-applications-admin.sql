@@ -62,42 +62,38 @@ CREATE POLICY "Users can update their own record"
   USING (auth.uid() = id)
   WITH CHECK (auth.uid() = id);
 
+CREATE OR REPLACE FUNCTION public.is_admin(user_id uuid)
+RETURNS boolean
+LANGUAGE sql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+  SELECT EXISTS (
+    SELECT 1
+    FROM public.users
+    WHERE id = user_id
+      AND role IN ('admin', 'super_admin')
+  );
+$$;
+
+GRANT EXECUTE ON FUNCTION public.is_admin(uuid) TO authenticated;
+
 DROP POLICY IF EXISTS "Admins manage teacher applications" ON public.teacher_applications;
 CREATE POLICY "Admins manage teacher applications"
   ON public.teacher_applications FOR ALL TO authenticated
-  USING (EXISTS (
-    SELECT 1 FROM public.users
-    WHERE users.id = auth.uid()
-      AND users.role IN ('admin', 'super_admin')
-  ))
-  WITH CHECK (EXISTS (
-    SELECT 1 FROM public.users
-    WHERE users.id = auth.uid()
-      AND users.role IN ('admin', 'super_admin')
-  ));
+  USING (public.is_admin(auth.uid()))
+  WITH CHECK (public.is_admin(auth.uid()));
 
 DROP POLICY IF EXISTS "Admins view users" ON public.users;
 CREATE POLICY "Admins view users"
   ON public.users FOR SELECT TO authenticated
-  USING (EXISTS (
-    SELECT 1 FROM public.users admin_user
-    WHERE admin_user.id = auth.uid()
-      AND admin_user.role IN ('admin', 'super_admin')
-  ));
+  USING (public.is_admin(auth.uid()));
 
 DROP POLICY IF EXISTS "Admins update teacher profiles" ON public.teachers;
 CREATE POLICY "Admins update teacher profiles"
   ON public.teachers FOR UPDATE TO authenticated
-  USING (EXISTS (
-    SELECT 1 FROM public.users
-    WHERE users.id = auth.uid()
-      AND users.role IN ('admin', 'super_admin')
-  ))
-  WITH CHECK (EXISTS (
-    SELECT 1 FROM public.users
-    WHERE users.id = auth.uid()
-      AND users.role IN ('admin', 'super_admin')
-  ));
+  USING (public.is_admin(auth.uid()))
+  WITH CHECK (public.is_admin(auth.uid()));
 
 CREATE OR REPLACE FUNCTION public.review_teacher_application(
   application_id uuid,
