@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { AuthError, Session, User } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
+import { ensureMessageEncryptionKey } from '@/services/encryptedMessageService';
 
 type UserRole = 'student' | 'teacher' | 'admin' | null;
 
@@ -57,6 +58,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const prepareUserMessaging = async (currentUser: User | null) => {
+    if (!currentUser?.id) return;
+
+    try {
+      await ensureMessageEncryptionKey(currentUser.id);
+    } catch (error) {
+      console.error('Error preparing encrypted messaging:', error);
+    }
+  };
+
   useEffect(() => {
     let isMounted = true;
 
@@ -64,6 +75,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     supabase.auth.getSession().then(async ({ data: { session } }) => {
       if (!isMounted) return;
       const role = await resolveUserRole(session?.user ?? null);
+      await prepareUserMessaging(session?.user ?? null);
       if (!isMounted) return;
       setSession(session);
       setUser(session?.user ?? null);
@@ -81,6 +93,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setTimeout(async () => {
         if (!isMounted) return;
         const role = await resolveUserRole(session?.user ?? null);
+        await prepareUserMessaging(session?.user ?? null);
         if (!isMounted) return;
         setUserRole(role);
         setIsLoading(false);
@@ -99,6 +112,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     
     if (!error && data.user) {
       const role = await resolveUserRole(data.user);
+      await prepareUserMessaging(data.user);
       setSession(data.session);
       setUser(data.user);
       setUserRole(role);

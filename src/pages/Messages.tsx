@@ -1,9 +1,8 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { 
   Card, 
   CardContent, 
-  CardDescription, 
   CardHeader, 
   CardTitle 
 } from "@/components/ui/card";
@@ -19,9 +18,7 @@ import {
   MoreVertical,
   Phone,
   Video,
-  Info,
-  Loader2,
-  X
+  Loader2
 } from "lucide-react";
 import { useAuth } from "@/contexts/auth-context";
 import { 
@@ -34,16 +31,19 @@ import {
 } from "@/components/ui/dropdown-menu";
 import {
   Sheet,
-  SheetClose,
   SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
 } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { format } from "date-fns";
 import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/components/ui/use-toast";
+import {
+  DecryptedMessage,
+  ensureMessageEncryptionKey,
+  fetchConversationMessages,
+  markConversationAsRead,
+  sendEncryptedMessage,
+} from "@/services/encryptedMessageService";
 
 // Define interfaces for our data structures
 interface Contact {
@@ -58,14 +58,7 @@ interface Contact {
   role: "student" | "teacher";
 }
 
-interface Message {
-  id: number;
-  senderId: string;
-  receiverId: string;
-  text: string;
-  timestamp: string;
-  isRead: boolean;
-}
+type Message = DecryptedMessage;
 
 const Messages = () => {
   const [contacts, setContacts] = useState<Contact[]>([]);
@@ -75,7 +68,10 @@ const Messages = () => {
   const [newMessage, setNewMessage] = useState("");
   const messageEndRef = useRef<HTMLDivElement>(null);
   const { userRole, user } = useAuth();
+  const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingMessages, setIsLoadingMessages] = useState(false);
+  const [isSending, setIsSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isMobileView, setIsMobileView] = useState(window.innerWidth < 1024);
 
@@ -89,18 +85,20 @@ const Messages = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // For demo purposes, define your own user ID
-  const currentUserId = user?.id || "999"; // This would come from auth context in a real app
+  const currentUserId = user?.id;
 
   // Load contacts from Supabase
   useEffect(() => {
     const fetchContacts = async () => {
       try {
         setIsLoading(true);
+        setError(null);
         if (!user?.id) {
           console.log("No user ID available, cannot fetch contacts");
           return;
         }
+
+        await ensureMessageEncryptionKey(user.id);
         
         console.log("Fetching contacts for user:", user.id, "with role:", userRole);
         
@@ -165,10 +163,8 @@ const Messages = () => {
             first_name: student.first_name || "Unknown",
             last_name: student.last_name || "Student",
             profile_picture_url: student.profile_picture_url,
-            lastMessage: "Hello teacher, I have a question about my lessons.",
-            lastMessageTime: new Date(Date.now() - Math.random() * 48 * 3600000).toISOString(),
-            status: Math.random() > 0.5 ? "online" : "offline",
-            unreadCount: Math.floor(Math.random() * 3),
+            status: "offline" as const,
+            unreadCount: 0,
             role: "student" as const
           }));
         } else {
@@ -222,10 +218,8 @@ const Messages = () => {
             first_name: teacher.first_name || "Unknown",
             last_name: teacher.last_name || "Teacher",
             profile_picture_url: teacher.profile_picture_url,
-            lastMessage: "I've shared some materials for our next lesson.",
-            lastMessageTime: new Date(Date.now() - Math.random() * 48 * 3600000).toISOString(),
-            status: Math.random() > 0.5 ? "online" : "offline",
-            unreadCount: Math.floor(Math.random() * 3),
+            status: "offline" as const,
+            unreadCount: 0,
             role: "teacher" as const
           }));
         }
@@ -237,7 +231,39 @@ const Messages = () => {
           return;
         }
         
-        console.log("Final contacts data:", contactsQuery);
+        const contactIds = contactsQuery.map(contact => contact.id);
+
+        if (contactIds.length > 0) {
+          const { data: latestMessages, error: latestMessagesError } = await supabase
+            .from("messages")
+            .select("id, sender_id, receiver_id, sent_at, read_at, message_text, encryption_version")
+            .or(`sender_id.eq.${user.id},receiver_id.eq.${user.id}`)
+            .order("sent_at", { ascending: false });
+
+          if (latestMessagesError) {
+            console.error("Error fetching latest messages:", latestMessagesError);
+          } else {
+            contactsQuery = contactsQuery.map(contact => {
+              const conversationMessages = (latestMessages || []).filter(message =>
+                (message.sender_id === user.id && message.receiver_id === contact.id) ||
+                (message.sender_id === contact.id && message.receiver_id === user.id)
+              );
+              const lastMessage = conversationMessages[0];
+              const unreadCount = conversationMessages.filter(message =>
+                message.sender_id === contact.id && message.receiver_id === user.id && !message.read_at
+              ).length;
+
+              return {
+                ...contact,
+                lastMessage: lastMessage
+                  ? (lastMessage.encryption_version ? "Encrypted message" : lastMessage.message_text)
+                  : undefined,
+                lastMessageTime: lastMessage?.sent_at,
+                unreadCount,
+              };
+            });
+          }
+        }
         
         // Sort by most recent message
         contactsQuery.sort((a, b) => {
@@ -249,9 +275,6 @@ const Messages = () => {
       } catch (err) {
         console.error("Error fetching contacts:", err);
         setError("Failed to load contacts. Please try again later.");
-        
-        // Fallback to mock data for testing
-        setContacts(getMockContacts());
       } finally {
         setIsLoading(false);
       }
@@ -260,114 +283,67 @@ const Messages = () => {
     fetchContacts();
   }, [userRole, user?.id]);
   
-  // Mock contacts for fallback/testing
-  const getMockContacts = (): Contact[] => {
-    return [
-      {
-        id: "1",
-        first_name: "John",
-        last_name: "Smith",
-        profile_picture_url: "/avatars/student-1.jpg",
-        lastMessage: "When is our next lesson?",
-        lastMessageTime: new Date(Date.now() - 10 * 60000).toISOString(),
-        status: "online",
-        unreadCount: 2,
-        role: "student"
-      },
-      {
-        id: "2",
-        first_name: "Emily",
-        last_name: "Johnson",
-        profile_picture_url: "/avatars/student-2.jpg",
-        lastMessage: "Thanks for the great lesson!",
-        lastMessageTime: new Date(Date.now() - 3 * 3600000).toISOString(),
-        status: "offline",
-        unreadCount: 0,
-        role: "student"
-      },
-      {
-        id: "3",
-        first_name: "Ade",
-        last_name: "Johnson",
-        profile_picture_url: "/avatars/teacher-1.jpg",
-        lastMessage: "I've shared some additional resources for you",
-        lastMessageTime: new Date(Date.now() - 1 * 24 * 3600000).toISOString(),
-        status: "away",
-        unreadCount: 1,
-        role: "teacher"
-      }
-    ];
-  };
+  const selectedContactId = selectedContact?.id;
 
-  // Load mock messages when a contact is selected
+  // Load encrypted messages when a contact is selected
   useEffect(() => {
-    if (selectedContact) {
-      // This would be an API call in a real app
-      const mockMessages: Message[] = [
-        {
-          id: 1,
-          senderId: selectedContact.id,
-          receiverId: currentUserId,
-          text: "Hello, how are you?",
-          timestamp: new Date(Date.now() - 3 * 24 * 3600000).toISOString(),
-          isRead: true
-        },
-        {
-          id: 2,
-          senderId: currentUserId,
-          receiverId: selectedContact.id,
-          text: "I'm doing well, thanks for asking! How about you?",
-          timestamp: new Date(Date.now() - 3 * 24 * 3600000 + 10 * 60000).toISOString(),
-          isRead: true
-        },
-        {
-          id: 3,
-          senderId: selectedContact.id,
-          receiverId: currentUserId,
-          text: "I'm good too. I wanted to ask about our next lesson.",
-          timestamp: new Date(Date.now() - 1 * 24 * 3600000).toISOString(),
-          isRead: true
-        },
-        {
-          id: 4,
-          senderId: currentUserId,
-          receiverId: selectedContact.id,
-          text: "Sure, I'm available next Tuesday at 2 PM. Does that work for you?",
-          timestamp: new Date(Date.now() - 1 * 24 * 3600000 + 30 * 60000).toISOString(),
-          isRead: true
-        },
-        {
-          id: 5,
-          senderId: selectedContact.id,
-          receiverId: currentUserId,
-          text: "That works perfectly. I'll book the slot.",
-          timestamp: new Date(Date.now() - 12 * 3600000).toISOString(),
-          isRead: true
-        },
-        {
-          id: 6,
-          senderId: selectedContact.id,
-          receiverId: currentUserId,
-          text: selectedContact.lastMessage || "When is our next lesson?",
-          timestamp: selectedContact.lastMessageTime || new Date().toISOString(),
-          isRead: selectedContact.unreadCount === 0
-        }
-      ];
+    if (!selectedContactId || !currentUserId) {
+      setMessages([]);
+      return;
+    }
 
-      setMessages(mockMessages);
+    let isMounted = true;
 
-      // Mark contact messages as read
-      if (selectedContact.unreadCount > 0) {
-        setContacts(prevContacts => 
-          prevContacts.map(contact => 
-            contact.id === selectedContact.id 
-              ? { ...contact, unreadCount: 0 } 
-              : contact
+    const loadMessages = async () => {
+      try {
+        setIsLoadingMessages(true);
+        const conversationMessages = await fetchConversationMessages(currentUserId, selectedContactId);
+        if (!isMounted) return;
+        setMessages(conversationMessages);
+        await markConversationAsRead(currentUserId, selectedContactId);
+        setContacts(prevContacts =>
+          prevContacts.map(contact =>
+            contact.id === selectedContactId ? { ...contact, unreadCount: 0 } : contact
           )
         );
+    } catch (error) {
+      console.error("Error loading encrypted messages:", error);
+      toast({
+        title: "Could not load messages",
+        description: "Please refresh and try again.",
+        variant: "destructive",
+      });
+    } finally {
+        if (isMounted) setIsLoadingMessages(false);
       }
-    }
-  }, [selectedContact, currentUserId]);
+    };
+
+    loadMessages();
+
+    const channel = supabase
+      .channel(`messages:${currentUserId}:${selectedContactId}`)
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "messages",
+          filter: `receiver_id=eq.${currentUserId}`,
+        },
+        async payload => {
+          const row = payload.new as { sender_id?: string };
+          if (row.sender_id === selectedContactId) {
+            await loadMessages();
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      isMounted = false;
+      supabase.removeChannel(channel);
+    };
+  }, [currentUserId, selectedContactId, toast]);
 
   // Scroll to bottom of messages when new ones arrive
   useEffect(() => {
@@ -375,39 +351,45 @@ const Messages = () => {
   }, [messages]);
 
   // Filter contacts based on search query
-  const filteredContacts = contacts.filter(contact => 
+  const filteredContacts = useMemo(() => contacts.filter(contact => 
     `${contact.first_name} ${contact.last_name}`.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  ), [contacts, searchQuery]);
 
   // Handle sending a new message
-  const handleSendMessage = () => {
-    if (!newMessage.trim() || !selectedContact) return;
+  const handleSendMessage = async () => {
+    if (!newMessage.trim() || !selectedContact || !currentUserId || isSending) return;
 
-    const newMessageObj: Message = {
-      id: messages.length + 1,
-      senderId: currentUserId,
-      receiverId: selectedContact.id,
-      text: newMessage,
-      timestamp: new Date().toISOString(),
-      isRead: false
-    };
-
-    setMessages([...messages, newMessageObj]);
-    
-    // Update last message in contacts
-    setContacts(prevContacts => 
-      prevContacts.map(contact => 
-        contact.id === selectedContact.id 
-          ? { 
-              ...contact, 
-              lastMessage: newMessage,
-              lastMessageTime: new Date().toISOString()
-            } 
-          : contact
-      )
-    );
-    
+    const messageText = newMessage.trim();
     setNewMessage("");
+    setIsSending(true);
+
+    try {
+      const sentMessage = await sendEncryptedMessage(currentUserId, selectedContact.id, messageText);
+      setMessages(prevMessages => [...prevMessages, sentMessage]);
+    
+      // Update last message in contacts
+      setContacts(prevContacts => 
+        prevContacts.map(contact => 
+          contact.id === selectedContact.id 
+            ? { 
+                ...contact, 
+                lastMessage: "Encrypted message",
+                lastMessageTime: sentMessage.timestamp
+              } 
+            : contact
+        )
+      );
+    } catch (error) {
+      console.error("Error sending encrypted message:", error);
+      setNewMessage(messageText);
+      toast({
+        title: "Could not send message",
+        description: error instanceof Error ? error.message : "Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSending(false);
+    }
   };
 
   // Format timestamp
@@ -443,6 +425,8 @@ const Messages = () => {
         return "bg-gray-400";
     }
   };
+
+  const layoutUserType = userRole === "teacher" ? "teacher" : "student";
   
   // Render chat content for both desktop and mobile views
   const renderChatContent = () => (
@@ -464,7 +448,12 @@ const Messages = () => {
             </div>
             <div>
               <h3 className="font-medium">{selectedContact?.first_name} {selectedContact?.last_name}</h3>
-              <p className="text-xs text-gray-500 capitalize">{selectedContact?.status}</p>
+              <div className="flex items-center gap-2">
+                <p className="text-xs text-gray-500 capitalize">{selectedContact?.status}</p>
+                <Badge variant="outline" className="h-5 px-1.5 text-[10px] text-emerald-700 border-emerald-200 bg-emerald-50">
+                  E2EE
+                </Badge>
+              </div>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -496,7 +485,17 @@ const Messages = () => {
       <CardContent className="flex-grow p-4 overflow-y-auto h-[calc(70vh-220px)]">
         <ScrollArea className="h-full pr-4">
           <div className="space-y-4">
-            {messages.map((message) => (
+            {isLoadingMessages ? (
+              <div className="flex justify-center items-center py-12 text-gray-500">
+                <Loader2 className="h-5 w-5 animate-spin mr-2" />
+                Decrypting messages...
+              </div>
+            ) : messages.length === 0 ? (
+              <div className="text-center py-12 text-gray-500">
+                <MessageCircle className="h-12 w-12 mx-auto mb-3 text-gray-300" />
+                <p>No messages yet. Start the encrypted conversation.</p>
+              </div>
+            ) : messages.map((message) => (
               <div 
                 key={message.id} 
                 className={`flex ${message.senderId === currentUserId ? 'justify-end' : 'justify-start'}`}
@@ -515,6 +514,7 @@ const Messages = () => {
                     }`}
                   >
                     {formatBubbleTime(message.timestamp)}
+                    {message.encrypted && " • encrypted"}
                   </div>
                 </div>
               </div>
@@ -536,15 +536,20 @@ const Messages = () => {
             onChange={(e) => setNewMessage(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
             className="flex-grow"
+            disabled={isSending}
           />
           <Button 
             variant="default" 
             size="icon" 
             className="rounded-full bg-purple-600 hover:bg-purple-700"
             onClick={handleSendMessage}
-            disabled={!newMessage.trim()}
+            disabled={!newMessage.trim() || isSending}
           >
-            <SendHorizontal className="h-5 w-5" />
+            {isSending ? (
+              <Loader2 className="h-5 w-5 animate-spin" />
+            ) : (
+              <SendHorizontal className="h-5 w-5" />
+            )}
           </Button>
         </div>
       </div>
@@ -552,7 +557,7 @@ const Messages = () => {
   );
 
   return (
-    <DashboardLayout userType={userRole}>
+    <DashboardLayout userType={layoutUserType}>
       <div className="space-y-6">
         <h1 className="text-3xl font-bold mb-6">Messages</h1>
         
