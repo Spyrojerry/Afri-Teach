@@ -47,7 +47,7 @@ const daysOfWeek = [
 type UserType = "student" | "teacher";
 
 const Onboarding = () => {
-  const { user } = useAuth();
+  const { user, userRole } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
@@ -69,6 +69,11 @@ const Onboarding = () => {
   const totalSteps = userType === "teacher" ? 4 : 1;
 
   useEffect(() => {
+    if (userRole === "admin") {
+      navigate("/admin", { replace: true });
+      return;
+    }
+
     const loadSubjects = async () => {
       const { data, error } = await supabase.from("subjects").select("name").order("name");
       if (!error && data?.length) {
@@ -77,7 +82,7 @@ const Onboarding = () => {
     };
 
     loadSubjects();
-  }, []);
+  }, [navigate, userRole]);
 
   const selectedTimeZoneLabel = useMemo(
     () => timeZones.find((zone) => zone.value === timeZone)?.label || timeZone,

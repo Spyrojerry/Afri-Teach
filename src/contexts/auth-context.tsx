@@ -4,6 +4,11 @@ import { supabase } from '@/integrations/supabase/client';
 
 type UserRole = 'student' | 'teacher' | 'admin' | null;
 
+const configuredAdminEmails = (import.meta.env.VITE_ADMIN_EMAILS || "")
+  .split(",")
+  .map((email: string) => email.trim().toLowerCase())
+  .filter(Boolean);
+
 interface AuthContextType {
   session: Session | null;
   user: User | null;
@@ -29,6 +34,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (!currentUser) return null;
 
     const metadataRole = currentUser.user_metadata?.role as UserRole;
+    const emailRole = currentUser.email && configuredAdminEmails.includes(currentUser.email.toLowerCase())
+      ? 'admin'
+      : null;
 
     try {
       const { data, error } = await supabase
@@ -39,13 +47,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (error) {
         console.error('Error resolving user role:', error);
-        return metadataRole;
+        return emailRole || metadataRole;
       }
 
-      return (data?.role as UserRole) || metadataRole;
+      return (data?.role as UserRole) || emailRole || metadataRole;
     } catch (error) {
       console.error('Unexpected error resolving user role:', error);
-      return metadataRole;
+      return emailRole || metadataRole;
     }
   };
 
@@ -160,6 +168,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const getRedirectPath = () => {
     const onboardingCompleted = user?.user_metadata?.onboarding_completed === true;
+
+    if (userRole === 'admin') {
+      return '/admin';
+    }
     
     if (!onboardingCompleted) {
       return '/onboarding';
@@ -173,10 +185,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return '/teacher/dashboard';
     }
 
-    if (userRole === 'admin') {
-      return '/admin';
-    }
-    
     return '/onboarding';
   };
 
