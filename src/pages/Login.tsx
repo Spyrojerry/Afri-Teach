@@ -23,6 +23,16 @@ interface LocationState {
   };
 }
 
+const canReturnToPathForRole = (from: string, redirectTo?: string) => {
+  if (!redirectTo || redirectTo === "/onboarding" || from === "/") return false;
+
+  if (redirectTo.startsWith("/teacher")) return from.startsWith("/teacher");
+  if (redirectTo.startsWith("/student")) return from.startsWith("/student");
+  if (redirectTo.startsWith("/admin")) return from.startsWith("/admin");
+
+  return false;
+};
+
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
@@ -59,8 +69,8 @@ const Login = () => {
           variant: "destructive",
         });
       } else {
-        // Redirect to the page they were trying to access or dashboard based on role
-        if (from !== "/" && redirectTo !== "/onboarding") {
+        // Only return users to protected paths that match their resolved role.
+        if (canReturnToPathForRole(from, redirectTo)) {
           navigate(from);
         } else if (redirectTo) {
           navigate(redirectTo);

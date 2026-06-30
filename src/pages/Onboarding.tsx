@@ -415,12 +415,12 @@ const Onboarding = () => {
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div className="space-y-2">
-                      <Label className="text-white" htmlFor="experience">Experience</Label>
+                      <Label className="text-white" htmlFor="experience">Experience (years)</Label>
                       <Input
                         id="experience"
                         value={experience}
                         onChange={(event) => setExperience(event.target.value)}
-                        placeholder="e.g. 5 years"
+                        placeholder="e.g. 5"
                         className="bg-white/20 border-white/30 text-white placeholder-gray-300"
                       />
                     </div>

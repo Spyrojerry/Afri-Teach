@@ -4,8 +4,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { format, addDays, isToday, isSameDay, parseISO, startOfToday, setHours, setMinutes } from "date-fns";
-import { CalendarClock, CheckCircle, Clock, CreditCard, ArrowRight, BookOpen, Calendar as CalendarIcon } from "lucide-react";
+import { format, addDays, isToday, isSameDay, parseISO, startOfToday } from "date-fns";
+import { CalendarClock, CheckCircle, Clock, CreditCard, ArrowRight, BookOpen } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/auth-context";
@@ -101,6 +101,33 @@ export const BookingCalendar = ({ teacher, onBookLesson }: BookingCalendarProps)
 
     return new Date(guess);
   };
+
+  const getRecurringDay = (slot: Record<string, unknown>) => {
+    const rawDay = slot.dayOfWeek ?? slot.day ?? slot.day_of_week;
+    const day = Number(rawDay);
+    return Number.isFinite(day) ? day : null;
+  };
+
+  const getSlotTimes = (slot: Record<string, unknown>) => {
+    const startTime = slot.startTime ?? slot.start_time;
+    const endTime = slot.endTime ?? slot.end_time;
+
+    if (typeof startTime !== "string" || typeof endTime !== "string") {
+      return null;
+    }
+
+    return { startTime, endTime };
+  };
+
+  const normalizeSlot = (slot: Record<string, unknown>, id: string): TimeSlot | null => {
+    const times = getSlotTimes(slot);
+    return times ? { id, ...times } : null;
+  };
+
+  const getSpecificDateSlots = (specificDate: Record<string, unknown>) => {
+    const slots = specificDate.slots ?? specificDate.timeSlots ?? specificDate.time_slots;
+    return Array.isArray(slots) ? slots : [];
+  };
   
   // Fetch real teacher availability
   useEffect(() => {
@@ -139,20 +166,20 @@ export const BookingCalendar = ({ teacher, onBookLesson }: BookingCalendarProps)
             
             // Find slots for this day of the week
             const slotsForDay = recurringSlots.filter(slot => 
-              slot.dayOfWeek === dayOfWeek
+              getRecurringDay(slot) === dayOfWeek
             );
             
             if (slotsForDay.length > 0) {
-              const formattedSlots = slotsForDay.map((slot, index) => ({
-                id: `recurring-${i}-${index}`,
-                startTime: slot.startTime,
-                endTime: slot.endTime
-              }));
+              const formattedSlots = slotsForDay
+                .map((slot, index) => normalizeSlot(slot, `recurring-${i}-${index}`))
+                .filter((slot): slot is TimeSlot => Boolean(slot));
               
-              availableDays.push({
-                date: format(currentDate, 'yyyy-MM-dd'),
-                slots: formattedSlots
-              });
+              if (formattedSlots.length > 0) {
+                availableDays.push({
+                  date: format(currentDate, 'yyyy-MM-dd'),
+                  slots: formattedSlots
+                });
+              }
             }
           }
         }
@@ -161,21 +188,22 @@ export const BookingCalendar = ({ teacher, onBookLesson }: BookingCalendarProps)
         const specificDates = availabilityData.specific_dates;
         if (specificDates && Array.isArray(specificDates)) {
           specificDates.forEach(specificDate => {
-            if (specificDate.slots && Array.isArray(specificDate.slots)) {
+            const slots = getSpecificDateSlots(specificDate);
+            if (typeof specificDate.date === "string" && slots.length > 0) {
               const date = specificDate.date;
               const parsedDate = parseISO(date);
               
               // Include today and future dates.
               if (parsedDate >= startOfToday()) {
-                const formattedSlots = specificDate.slots.map((slot, index) => ({
-                  id: `specific-${date}-${index}`,
-                  startTime: slot.startTime,
-                  endTime: slot.endTime
-                }));
+                const formattedSlots = slots
+                  .map((slot, index) => normalizeSlot(slot, `specific-${date}-${index}`))
+                  .filter((slot): slot is TimeSlot => Boolean(slot));
                 
                 // Check if we already have this date from recurring slots
                 const existingDayIndex = availableDays.findIndex(day => day.date === date);
-                if (existingDayIndex >= 0) {
+                if (formattedSlots.length === 0) {
+                  return;
+                } else if (existingDayIndex >= 0) {
                   // Merge slots
                   availableDays[existingDayIndex].slots = [
                     ...availableDays[existingDayIndex].slots,
@@ -195,6 +223,11 @@ export const BookingCalendar = ({ teacher, onBookLesson }: BookingCalendarProps)
         
         // Remove slots during break periods
         const breakPeriods = availabilityData.break_periods;
+        const publishAvailableDays = (days: AvailableDay[]) => {
+          const sortedDays = [...days].sort((a, b) => a.date.localeCompare(b.date));
+          setAvailableDays(sortedDays);
+        };
+
         if (breakPeriods && Array.isArray(breakPeriods)) {
           // Filter out days that fall within break periods
           const filteredDays = availableDays.filter(day => {
@@ -208,9 +241,9 @@ export const BookingCalendar = ({ teacher, onBookLesson }: BookingCalendarProps)
             });
           });
           
-          setAvailableDays(filteredDays);
+          publishAvailableDays(filteredDays);
         } else {
-          setAvailableDays(availableDays);
+          publishAvailableDays(availableDays);
         }
       } catch (err) {
         console.error("Failed to fetch teacher availability:", err);
@@ -258,8 +291,13 @@ export const BookingCalendar = ({ teacher, onBookLesson }: BookingCalendarProps)
   // Handle date selection
   const handleDateSelect = (date: Date | undefined) => {
     setSelectedDate(date);
+    setSelectedSlot(null);
+    setSelectedModule(null);
+
     if (date && hasAvailableSlots(date)) {
       setCurrentStep('time');
+    } else {
+      setCurrentStep('date');
     }
   };
 
@@ -422,6 +460,34 @@ export const BookingCalendar = ({ teacher, onBookLesson }: BookingCalendarProps)
                   }}
                   disabled={{ before: startOfToday() }}
                 />
+
+                {availableDays.length === 0 ? (
+                  <div className="rounded-md border border-dashed p-4 text-sm text-gray-600">
+                    This teacher has not added any available lesson times yet.
+                  </div>
+                ) : selectedDate && !hasAvailableSlots(selectedDate) ? (
+                  <div className="rounded-md border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+                    <p className="font-medium">No bookable time slots on {format(selectedDate, "MMMM d")}.</p>
+                    <p className="mt-1">Choose one of the highlighted dates, or pick the next available day below.</p>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {availableDays.slice(0, 4).map(day => {
+                        const date = parseISO(day.date);
+                        return (
+                          <Button
+                            key={day.date}
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            className="bg-white"
+                            onClick={() => handleDateSelect(date)}
+                          >
+                            {format(date, "MMM d")}
+                          </Button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ) : null}
               </div>
             )}
             

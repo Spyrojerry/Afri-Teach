@@ -5,7 +5,7 @@ import { BookingCalendar } from "@/components/BookingCalendar";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { CalendarClock, Star, MapPin, Clock, BookOpen, GraduationCap, Languages, Monitor, Loader2, CheckCircle } from "lucide-react";
+import { Star, Clock, BookOpen, GraduationCap, Languages, Monitor, Loader2, CheckCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
@@ -107,7 +107,7 @@ const BookLesson = () => {
             : "General",
           specialties: Array.isArray(data.subjects) ? data.subjects : [],
           subjects: Array.isArray(data.subjects) ? data.subjects : [],
-          country: data.country || "Unknown",
+          country: data.country,
           countryFlag: data.country_flag || "🌍",
           country_flag: data.country_flag,
           rating: data.average_rating || 4.5,
@@ -212,6 +212,12 @@ const BookLesson = () => {
       </DashboardLayout>
     );
   }
+
+  const teacherCountry = teacher.country?.trim();
+  const hasTeacherCountry = Boolean(teacherCountry && teacherCountry.toLowerCase() !== "unknown");
+  const teacherTimezone = teacher.timezone || teacher.time_zone || "Timezone not set";
+  const profileBadgeIcon = hasTeacherCountry ? (teacher.countryFlag || teacher.country_flag || "🌍") : "🕒";
+  const profileBadgeLabel = hasTeacherCountry ? teacherCountry : teacherTimezone;
   
   return (
     <DashboardLayout userType="student">
@@ -241,8 +247,8 @@ const BookLesson = () => {
                     <span className="text-sm text-gray-500 ml-1">({teacher.reviews || teacher.reviews_count || 0} reviews)</span>
                   </div>
                   <Badge variant="outline" className="mt-2 flex items-center gap-1">
-                    <span>{teacher.countryFlag || teacher.country_flag || "🌍"}</span>
-                    <span>{teacher.country || "Unknown"}</span>
+                    <span>{profileBadgeIcon}</span>
+                    <span>{profileBadgeLabel}</span>
                   </Badge>
                 </div>
                 
