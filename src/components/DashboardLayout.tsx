@@ -185,7 +185,6 @@ export const DashboardLayout = ({
         title: "Logged out successfully",
         description: "You have been logged out of your account",
       });
-      navigate("/login");
     } catch (error: unknown) {
       toast({
         title: "Error logging out",

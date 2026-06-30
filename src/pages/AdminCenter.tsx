@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 import {
   CheckCircle2,
@@ -58,7 +57,6 @@ const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Frida
 const AdminCenter = () => {
   const { signOut, user } = useAuth();
   const { toast } = useToast();
-  const navigate = useNavigate();
   const [applications, setApplications] = useState<TeacherApplication[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [filter, setFilter] = useState<ApplicationStatus | "all">("pending");
@@ -135,7 +133,6 @@ const AdminCenter = () => {
 
   const handleLogout = async () => {
     await signOut();
-    navigate("/login");
   };
 
   return (

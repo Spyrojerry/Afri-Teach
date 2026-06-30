@@ -136,8 +136,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return { error, user: data?.user ?? null, redirectTo };
   };
 
-  const signOut = async () => {
+  const signOut = async (redirectToLogin = true) => {
     await supabase.auth.signOut();
+    setSession(null);
+    setUser(null);
+    setUserRole(null);
+    setIsLoading(false);
+    sessionStorage.removeItem("afriteach_auth_return_to");
+
+    if (redirectToLogin) {
+      window.location.assign("/login");
+    }
   };
 
   const resetPassword = async (email: string) => {
